@@ -75,7 +75,7 @@ export default function Layout({children}: Props) {
                         <ListItemButton onClick={() => navigate(item.path)}>
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={
-                                <Typography fontWeight={500} fontSize={18} align={'center'} color={location.pathname === item.path ? 'white' : 'normal'}>
+                                <Typography fontWeight={500} fontSize={17} align={'center'} color={location.pathname === item.path ? 'white' : 'normal'}>
                                     {item.title}
                                 </Typography>}/>
                         </ListItemButton>
