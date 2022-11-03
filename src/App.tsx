@@ -1,26 +1,52 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+
+import Layout from "./components/layout/Layout";
+import Homepage from "./pages/Homepage";
+import ServicePage from "./pages/ServicePage";
+
+// Set primary color here
+let primary = '#97A94D'
+
+// Set secondary color here
+let secondary = '#B2C561'
+
+// Dashboard theme setup here
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: primary
+        },
+        secondary: {
+            main: secondary
+        },
+        background: {
+            default: `linear-gradient(to right, ${primary}, ${secondary})`
+        }
+    },
+    typography: {
+        fontFamily: [
+            'Poppins',
+            'Roboto',
+        ].join(','),
+    }
+});
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <Layout>
+                <Routes>
+                    <Route path="/" element={<Homepage/>}/>
+                </Routes>
+                <Routes>
+                    <Route path="/servicePath" element={<ServicePage/>}/>
+                </Routes>
+            </Layout>
+        </ThemeProvider>
+    );
 }
 
 export default App;
