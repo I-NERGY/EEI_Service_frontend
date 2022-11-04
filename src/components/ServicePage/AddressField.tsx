@@ -23,7 +23,7 @@ interface Props {
 const AddressField = ({address, setAddress, addresses}: Props) => {
     return (
         <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={6}>
                 <Stack direction="row" spacing={2} sx={{alignItems: 'center'}}>
                     <LocationOnIcon fontSize="large"
                                     sx={{width: '60px', height: '60px', color: '#A1B927', ml: 2, my: 1}}/>
@@ -32,7 +32,7 @@ const AddressField = ({address, setAddress, addresses}: Props) => {
                     </Typography>
                 </Stack>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
                     <Autocomplete
                         options={addresses}
@@ -44,7 +44,6 @@ const AddressField = ({address, setAddress, addresses}: Props) => {
                         }}
                         getOptionLabel={(option) => option.address}
                         isOptionEqualToValue={(option, value) => option.address === value.address}
-                        sx={{width: 300}}
                         renderInput={(params) => <TextField {...params} label="Address"/>}/>
                 </FormControl>
             </Grid>
