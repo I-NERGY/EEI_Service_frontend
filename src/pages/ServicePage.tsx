@@ -6,6 +6,7 @@ import Link from '@mui/material/Link';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import AddressField from "../components/ServicePage/AddressField";
+import ImageField from "../components/ServicePage/ImageField";
 
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
@@ -26,6 +27,8 @@ interface AddressOptionType {
 
 const ServicePage = () => {
     const [address, setAddress] = useState<AddressOptionType | null>(null);
+    const [chosenImage, setChosenImage] = useState<number | null>(null)
+
 
     const addresses = [
         {address: 'The Shawshank Redemption', cadastre: 1994, id: 1},
@@ -38,6 +41,7 @@ const ServicePage = () => {
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
                 <AddressField address={address} setAddress={setAddress} addresses={addresses} />
+                <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
             </Container>
         </>
     );
