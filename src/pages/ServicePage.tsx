@@ -8,24 +8,36 @@ import Breadcrumb from "../components/layout/Breadcrumb";
 import AddressField from "../components/ServicePage/AddressField";
 
 const breadcrumbs = [
-    <Link fontSize={'20px'} underline="hover" key="1" color="inherit" href="/">
+    <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
         Dashboard
     </Link>, <Typography
+        key={2}
         color="secondary"
         fontSize={'20px'}
         fontWeight={600}>
         Load Forecasting
     </Typography>,];
 
+interface AddressOptionType {
+    address: string;
+    cadastre: number;
+    id: number;
+}
+
 const ServicePage = () => {
-    const [address, setAddress] = useState<string>('')
+    const [address, setAddress] = useState<AddressOptionType | null>(null);
+
+    const addresses = [
+        {address: 'The Shawshank Redemption', cadastre: 1994, id: 1},
+        {address: 'sassafras', cadastre: 1111, id: 2},
+    ]
 
     return (
         <>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
-                <AddressField address={address} setAddress={setAddress} />
+                <AddressField address={address} setAddress={setAddress} addresses={addresses} />
             </Container>
         </>
     );
