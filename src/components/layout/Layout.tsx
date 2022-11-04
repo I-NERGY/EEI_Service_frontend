@@ -20,6 +20,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import FooterContent from "./FooterContent";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 
 const drawerWidth = 260;
 
@@ -28,6 +30,11 @@ interface Props {
 }
 
 export default function Layout({children}: Props) {
+    const navigate = useNavigate()
+    const location = useLocation()
+    const theme = useTheme();
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+
     const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(({theme}) => ({
         flexGrow: 1, // padding: theme.spacing(3),
         paddingTop: theme.spacing(3), paddingBottom: theme.spacing(3), transition: theme.transitions.create('margin', {
@@ -43,20 +50,40 @@ export default function Layout({children}: Props) {
         ...theme.mixins.toolbar, minHeight: '40px !important', justifyContent: 'flex-end',
     }));
 
-    const navigate = useNavigate()
-    const location = useLocation()
-    const theme = useTheme();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    interface FooterProps extends MuiAppBarProps {
+        open?: boolean;
+    }
+
+    const Footer = styled(MuiAppBar, {
+        shouldForwardProp: (prop) => prop !== 'open',
+    })<FooterProps>(({theme, open}) => ({
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        ...(open && {
+            width: `calc(100% - ${drawerWidth}px)`,
+            marginLeft: `${drawerWidth}px`,
+            transition: theme.transitions.create(['margin', 'width'], {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.enteringScreen,
+            }),
+        }),
+    }));
 
     const navItems = [
         {title: 'Homepage', icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>, path: '/'},
-        {title: 'Service Title', icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/> , path: '/servicePath'}
+        {
+            title: 'Service Title',
+            icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
+            path: '/servicePath'
+        }
     ];
 
     const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
     const drawer = (
-        <Box sx={{textAlign: 'center'}}>
+        <Box sx={{textAlign: 'center', minHeight: '100vh'}}>
             <DrawerHeader>
                 <img src="/images/i-nergy_logo_trans_back.png" alt="" height={'60px'} style={{objectFit: 'cover'}}/>
                 <IconButton onClick={handleDrawerToggle}>
@@ -70,12 +97,13 @@ export default function Layout({children}: Props) {
                               sx={{
                                   background: location.pathname === item.path ? 'linear-gradient(270deg, rgba(151,169,77,1) 60%, rgba(255,255,255,1) 100%)' : '',
                                   border: location.pathname === item.path ? '1px solid rgba(151,169,77,1)' : '',
-                                  borderRadius:'10px', margin: 1, width: '95%'
+                                  borderRadius: '10px', margin: 1, width: '95%'
                               }}>
                         <ListItemButton onClick={() => navigate(item.path)}>
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={
-                                <Typography fontWeight={500} fontSize={17} align={'center'} color={location.pathname === item.path ? 'white' : 'normal'}>
+                                <Typography fontWeight={500} fontSize={17} align={'center'}
+                                            color={location.pathname === item.path ? 'white' : 'normal'}>
                                     {item.title}
                                 </Typography>}/>
                         </ListItemButton>
@@ -86,7 +114,7 @@ export default function Layout({children}: Props) {
     );
 
     return (
-        <Box sx={{display: 'flex'}}>
+        <Box sx={{display: 'flex', minHeight: '100vh'}}>
             <AppBar component="nav" sx={{
                 background: theme.palette.background.default, ...(mobileOpen && {
                     width: `calc(100% - ${drawerWidth}px)`,
@@ -124,7 +152,7 @@ export default function Layout({children}: Props) {
             </AppBar>
             <Box component="nav">
                 <Drawer
-                    variant="temporary"
+                    variant="persistent"
                     open={mobileOpen}
                     hideBackdrop={true}
                     onClose={handleDrawerToggle}
@@ -138,11 +166,12 @@ export default function Layout({children}: Props) {
                     {drawer}
                 </Drawer>
             </Box>
-            <Main style={{overflow: 'hidden', paddingBottom: 0}}>
+            <Main style={{overflow: 'auto',paddingBottom: 0, display: 'flex', flexDirection: 'column'}}>
                 <Toolbar/>
-                <Box component="main" sx={{p: 3}}>
+                <Box sx={{p: 3}}>
                     {children}
                 </Box>
+                <Footer sx={{position: 'sticky', mt: 'auto'}}><FooterContent/></Footer>
             </Main>
         </Box>
     );
