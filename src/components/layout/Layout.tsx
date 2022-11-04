@@ -21,7 +21,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import FooterContent from "./FooterContent";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
 
 const drawerWidth = 260;
 
@@ -166,11 +166,9 @@ export default function Layout({children}: Props) {
                     {drawer}
                 </Drawer>
             </Box>
-            <Main style={{overflow: 'auto',paddingBottom: 0, display: 'flex', flexDirection: 'column'}}>
+            <Main style={{overflow: 'auto', paddingBottom: 0, display: 'flex', flexDirection: 'column'}}>
                 <Toolbar/>
-                <Box sx={{p: 3}}>
-                    {children}
-                </Box>
+                {children}
                 <Footer sx={{position: 'sticky', mt: 'auto'}}><FooterContent/></Footer>
             </Main>
         </Box>
