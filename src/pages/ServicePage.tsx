@@ -7,6 +7,7 @@ import Link from '@mui/material/Link';
 import Breadcrumb from "../components/layout/Breadcrumb";
 import AddressField from "../components/ServicePage/AddressField";
 import ImageField from "../components/ServicePage/ImageField";
+import MapField from "../components/ServicePage/MapField";
 
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
@@ -42,6 +43,7 @@ const ServicePage = () => {
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
                 <AddressField address={address} setAddress={setAddress} addresses={addresses} />
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
+                <MapField/>
             </Container>
         </>
     );
