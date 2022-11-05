@@ -48,7 +48,7 @@ const ImageField = ({chosenImage, setChosenImage}: Props) => {
                     </Stack>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <ImageList sx={{height: 450}} cols={4} rowHeight={164}>
+                    <ImageList sx={{height: 350}} cols={4} rowHeight={164}>
                         {building_type_images.map((item) => (
                             <ImageListItem key={item.id} sx={{position: 'relative'}} onClick={() => setChosenImage(item.id)}>
                                 <Box height={'50px'} sx={{
