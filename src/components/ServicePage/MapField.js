@@ -10,6 +10,7 @@ import LeafletRuler from "./LeafletRuler";
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
@@ -21,12 +22,12 @@ let DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const MapField = ({address, setPerimeter}) => {
+const MapField = ({address, setLength, setWidth}) => {
     return (
         <>
-            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                <Grid item xs={12} md={6}>
-                    <Stack direction="row" spacing={2} sx={{alignItems: 'center'}}>
+            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'}>
+                <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}>
+                    <Stack direction="row" spacing={2} sx={{alignItems: 'center', mb: 'auto'}}>
                         <HighlightAltOutlinedIcon fontSize="large"
                                                   sx={{
                                                       width: '60px',
@@ -35,17 +36,37 @@ const MapField = ({address, setPerimeter}) => {
                                                       ml: 2,
                                                       my: 1
                                                   }}/>
-                        <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>
-                            Choose the surrounding area
-                        </Typography>
+                        <Box>
+                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Choose the surrounding
+                                area</Typography>
+                            <Typography variant={'subtitle1'}>Enter the dimensions of the building. If you cannot
+                                estimate them, use the box on the top-right of the map to draw a line. Fill in the fields
+                                with the last measurement that appears.</Typography>
+                        </Box>
                     </Stack>
+
+                    {address &&
+                        <Grid sx={{ml: 'auto'}}>
+                            <TextField id="outlined-basic" label="Length (m)" variant="outlined"
+                                       type={'number'} sx={{mx: 1}}
+                                       InputProps={{inputProps: {min: 0}}}
+                                       onChange={e => setLength(e.target.value)}
+                            />
+                            <TextField id="outlined-basic" label="Width (m)" variant="outlined"
+                                       type={'number'}
+                                       InputProps={{inputProps: {min: 0}}}
+                                       onChange={e => setWidth(e.target.value)}
+                            />
+                        </Grid>}
+
                 </Grid>
+
                 <Grid item xs={12} md={6}>
                     {address &&
                         <>
                             <MapContainer center={[address.latitude, address.longitude]} zoom={20}
                                           scrollWheelZoom={false}
-                                          style={{height: '350px', width: '100wh'}}
+                                          style={{height: '300px', width: '100wh'}}
                                           key={JSON.stringify([address.latitude, address.longitude])}>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -60,19 +81,13 @@ const MapField = ({address, setPerimeter}) => {
                                 <LeafletRuler/>
                             </MapContainer>
 
-                            <Grid container sx={{mt: 2}}>
-                                <Grid item xs={9}>
-                                    <Typography variant={'subtitle2'}>
-                                        Please enter the perimeter of the building. In case you need help,
-                                        please draw a line on the map and the enter the final measurement.
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={3}>
-                                    <TextField id="outlined-basic" label="Perimeter (m²)" variant="outlined" type={'number'}
-                                               InputProps={{inputProps: {min: 0}}} onChange={e => setPerimeter(e.target.value)}
-                                    />
-                                </Grid>
-                            </Grid>
+                            {/*<Grid container sx={{mt: 2}}>*/}
+                            {/*    <TextField id="outlined-basic" label="Perimeter (m²)" variant="outlined"*/}
+                            {/*               type={'number'}*/}
+                            {/*               InputProps={{inputProps: {min: 0}}}*/}
+                            {/*               onChange={e => setPerimeter(e.target.value)}*/}
+                            {/*    />*/}
+                            {/*</Grid>*/}
 
                         </>}
                     {!address && <Alert severity="warning">Please select an address first!</Alert>}

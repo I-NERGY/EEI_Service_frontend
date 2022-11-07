@@ -28,7 +28,8 @@ const breadcrumbs = [
 const ServicePage = () => {
     const [address, setAddress] = useState<AddressOptionType | null>(null);
     const [chosenImage, setChosenImage] = useState<number | null>(null)
-    const [perimeter, setPerimeter] = useState<number | null>(null)
+    const [length, setLength] = useState<number | null>(null)
+    const [width, setWidth] = useState<number | null>(null)
 
     const addresses = [
         {
@@ -48,7 +49,7 @@ const ServicePage = () => {
     ]
 
     const handleSubmit = () => {
-        console.log({address: address?.address, chosenImage, cadastre: address?.cadastre, perimeter})
+        console.log({address: address?.address, chosenImage, cadastre: address?.cadastre, length, width})
     }
 
     return (
@@ -58,7 +59,7 @@ const ServicePage = () => {
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
                 <AddressField address={address} setAddress={setAddress} addresses={addresses}/>
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
-                <MapField address={address} setPerimeter={setPerimeter}/>
+                <MapField address={address} setLength={setLength} setWidth={setWidth}/>
             </Container>
 
             <hr/>
@@ -72,7 +73,7 @@ const ServicePage = () => {
                                 sx={{ml: 'auto'}} fullWidth
                                 endIcon={<ChevronRight/>}
                                 onClick={handleSubmit}
-                                disabled={!address || !chosenImage || !perimeter}
+                                disabled={!address || !chosenImage || !length}
                         >
                             <Typography variant={'h6'} onClick={handleSubmit}>PLACEHOLDER</Typography>
                         </Button>

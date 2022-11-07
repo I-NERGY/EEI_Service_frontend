@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
+import Box from "@mui/material/Box";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
@@ -23,9 +24,12 @@ const AddressField = ({address, setAddress, addresses}: Props) => {
                 <Stack direction="row" spacing={2} sx={{alignItems: 'center'}}>
                     <LocationOnIcon fontSize="large"
                                     sx={{width: '60px', height: '60px', color: '#A1B927', ml: 2, my: 1}}/>
-                    <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>
-                        Select Building Address
-                    </Typography>
+                    <Box>
+                        <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Select Building
+                            Address</Typography>
+                        <Typography variant={'subtitle1'}>Fill in the dropdown menu with the proper address to open the
+                            map.</Typography>
+                    </Box>
                 </Stack>
             </Grid>
             <Grid item xs={12} md={6}>

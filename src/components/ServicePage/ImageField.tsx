@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
+
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import ImageList from '@mui/material/ImageList';
@@ -7,7 +9,6 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 import PhotoSizeSelectActualIcon from '@mui/icons-material/PhotoSizeSelectActual';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Box from "@mui/material/Box";
 
 interface Props {
     chosenImage: number | null,
@@ -31,9 +32,9 @@ const ImageField = ({chosenImage, setChosenImage}: Props) => {
 
     return (
         <>
-            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'} sx={{my: 3}}>
                 <Grid item xs={12} md={6}>
-                    <Stack direction="row" spacing={2} sx={{alignItems: 'center'}}>
+                    <Stack direction="row" spacing={2} sx={{alignItems: 'center', mt: 2}}>
                         <PhotoSizeSelectActualIcon fontSize="large"
                                                    sx={{
                                                        width: '60px',
@@ -42,22 +43,27 @@ const ImageField = ({chosenImage, setChosenImage}: Props) => {
                                                        ml: 2,
                                                        my: 1
                                                    }}/>
-                        <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>
-                            Choose a resembling photo
-                        </Typography>
+                        <Box>
+                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Choose a resembling
+                                photo</Typography>
+                            <Typography variant={'subtitle1'}>Select the image that looks like your building the most.
+                                In this way, the system will understand its characteristics.</Typography>
+                        </Box>
                     </Stack>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <ImageList sx={{height: 350}} cols={4} rowHeight={150}>
+                <Grid item xs={12} md={6} sx={{mb: "auto"}}>
+                    <ImageList sx={{height: 320}} cols={4} rowHeight={150}>
                         {building_type_images.map((item) => (
-                            <ImageListItem key={item.id} sx={{position: 'relative'}} onClick={() => setChosenImage(item.id)}>
+                            <ImageListItem key={item.id} sx={{position: 'relative'}}
+                                           onClick={() => setChosenImage(item.id)}>
                                 <Box height={'50px'} sx={{
                                     position: 'absolute',
                                     top: 'calc(50% - 40px)',
                                     left: 'calc(50% - 40px)',
                                     color: 'green', height: '80px', width: '80px'
                                 }}>
-                                    {chosenImage === item.id ? <CheckCircleIcon sx={{width: "100%", height: '100%', color: '#ADC05D'}}/> : null}
+                                    {chosenImage === item.id ? <CheckCircleIcon
+                                        sx={{width: "100%", height: '100%', color: '#ADC05D'}}/> : null}
                                 </Box>
                                 <img
                                     src={`${item.src}?w=164&h=164&fit=crop&auto=format`}
