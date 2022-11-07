@@ -7,12 +7,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import AddressOptionType from "../../interfaces/AddressOptionType";
 
-interface AddressOptionType {
-    address: string;
-    cadastre: number;
-    id: number;
-}
 
 interface Props {
     address: AddressOptionType | null,

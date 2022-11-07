@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
+import AddressOptionType from "../interfaces/AddressOptionType";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from '@mui/material/Link';
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+
+import ChevronRight from '@mui/icons-material/ChevronRight';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import AddressField from "../components/ServicePage/AddressField";
@@ -20,30 +25,59 @@ const breadcrumbs = [
         Load Forecasting
     </Typography>,];
 
-interface AddressOptionType {
-    address: string;
-    cadastre: number;
-    id: number;
-}
-
 const ServicePage = () => {
     const [address, setAddress] = useState<AddressOptionType | null>(null);
     const [chosenImage, setChosenImage] = useState<number | null>(null)
-
+    const [perimeter, setPerimeter] = useState<number | null>(null)
 
     const addresses = [
-        {address: 'The Shawshank Redemption', cadastre: 1994, id: 1},
-        {address: 'sassafras', cadastre: 1111, id: 2},
+        {
+            address: 'Sarantaporou 5, Ilioupoli',
+            cadastre: 1994,
+            latitude: 37.93995073670426,
+            longitude: 23.749203299724236,
+            id: 1
+        },
+        {
+            address: 'Kleisouras 41, Petroupoli',
+            cadastre: 1111,
+            latitude: 38.04565950449955,
+            longitude: 23.694367382543604,
+            id: 2
+        },
     ]
+
+    const handleSubmit = () => {
+        console.log({address: address?.address, chosenImage, cadastre: address?.cadastre, perimeter})
+    }
 
     return (
         <>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
-                <AddressField address={address} setAddress={setAddress} addresses={addresses} />
+                <AddressField address={address} setAddress={setAddress} addresses={addresses}/>
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
-                <MapField/>
+                <MapField address={address} setPerimeter={setPerimeter}/>
+            </Container>
+
+            <hr/>
+            <Container maxWidth={'xl'} sx={{my: 5}}>
+                <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                    <Grid item xs={12} md={6}>
+
+                    </Grid>
+                    <Grid item xs={12} md={6} display={'flex'}>
+                        <Button variant={'contained'} component={'span'} size={'large'} color={'warning'}
+                                sx={{ml: 'auto'}} fullWidth
+                                endIcon={<ChevronRight/>}
+                                onClick={handleSubmit}
+                                disabled={!address || !chosenImage || !perimeter}
+                        >
+                            <Typography variant={'h6'} onClick={handleSubmit}>PLACEHOLDER</Typography>
+                        </Button>
+                    </Grid>
+                </Grid>
             </Container>
         </>
     );
