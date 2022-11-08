@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import {styled, useTheme} from '@mui/material/styles';
-import {Link, useNavigate, useLocation} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -167,7 +167,7 @@ export default function Layout({children}: Props) {
                 </Drawer>
             </Box>
             <Main style={{overflow: 'auto', paddingBottom: 0, display: 'flex', flexDirection: 'column'}}>
-                <Toolbar/>
+                {location.pathname !== '/' ? <Toolbar/> : null}
                 {children}
                 <Footer sx={{position: 'sticky', mt: 'auto'}}><FooterContent/></Footer>
             </Main>

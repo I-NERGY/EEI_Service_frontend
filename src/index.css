@@ -16,3 +16,56 @@ code {
     /*width: 40vw;*/
     /*height: 30vh;*/
 }
+
+/* Homepage */
+.serviceCategoryDescriptionOdd {
+  background: linear-gradient(to right, #97A94D, #B2C561);
+}
+
+.serviceCategoryDescriptionEven {
+  background: linear-gradient(to right, #B2C561, #97A94D);
+}
+
+.linkAvatar {
+  background-color: rgba(244, 244, 244, 0.3) !important;
+  border: 2px solid white !important;
+  color: white;
+  width: 70px !important;
+  height: 70px !important;
+  position: absolute !important;
+  top: calc(50% - 35px) !important;
+  left: calc(50% - 35px) !important;
+  transform: rotateY(0deg) rotate(45deg) !important;
+  z-index: 3 !important;
+}
+
+.linkAvatar:hover {
+  background-color: rgba(244, 244, 244, 0.7) !important;
+  border: 3px solid white !important;
+  cursor: pointer;
+  width: 80px !important;
+  height: 80px !important;
+  transition: linear 200ms;
+  top: calc(50% - 40px) !important;
+  left: calc(50% - 40px) !important;
+}
+
+.linkAvatar:hover .serviceCategoryLinkIcon {
+  font-size: 50px !important;
+  transition: linear 200ms;
+}
+
+.serviceCategoryLinkIcon {
+  font-size: 40px !important;
+}
+
+.homepageServiceImage {
+  overflow: hidden !important;
+}
+
+.homepageServiceImage:hover {
+  opacity: 0.9 !important;
+  transform: scale(1.05) rotateY(0deg) rotate(1deg) !important;
+  overflow: hidden !important;
+  transition: linear 200ms;
+}
