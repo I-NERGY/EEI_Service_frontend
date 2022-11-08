@@ -1,4 +1,4 @@
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {useNavigate, useLocation} from "react-router-dom";
 import {styled, useTheme} from '@mui/material/styles';
 import useAuthContext from "../../hooks/useAuthContext";
@@ -111,12 +111,21 @@ export default function PersistentDrawerLeft({children}: Props) {
 
     const navItems = [
         {title: 'Homepage', icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>, path: '/'},
-        {
-            title: 'Service Title',
-            icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
-            path: '/servicePath'
-        }
+
     ];
+
+    useEffect(() => {
+        if (user) {
+            navItems.push(
+                {
+                    title: 'Service Title',
+                    icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
+                    path: '/servicePath'
+                }
+            )
+            setMenu(navItems)
+        }
+    }, [user])
 
     const [menu, setMenu] = useState<navItem[]>(navItems)
 
