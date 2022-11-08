@@ -8,6 +8,9 @@ import Homepage from "./pages/Homepage";
 import ServicePage from "./pages/ServicePage";
 import SignIn from "./pages/SignIn";
 
+import RequireAuth from "./RequireAuth";
+import RequireNotAuth from "./RequireNotAuth";
+
 // Set primary color here
 let primary = '#97A94D'
 
@@ -41,12 +44,16 @@ function App() {
             <Layout>
                 <Routes>
                     <Route path="/" element={<Homepage/>}/>
-                </Routes>
-                <Routes>
-                    <Route path="/servicePath" element={<ServicePage/>}/>
-                </Routes>
-                <Routes>
-                    <Route path="/signin" element={<SignIn/>}/>
+
+                    {/* Routes not accessible to logged-out users */}
+                    <Route element={<RequireAuth/>}>
+                        <Route path="/servicePath" element={<ServicePage/>}/>
+                    </Route>
+
+                    {/* Routes not accessible to logged-in users */}
+                    <Route element={<RequireNotAuth/>}>
+                        <Route path="/signin" element={<SignIn/>}/>
+                    </Route>
                 </Routes>
             </Layout>
         </ThemeProvider>
