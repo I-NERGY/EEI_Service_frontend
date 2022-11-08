@@ -1,6 +1,10 @@
 import React, {ReactNode} from 'react';
 import {useNavigate, useLocation} from "react-router-dom";
 import {styled, useTheme} from '@mui/material/styles';
+import useAuthContext from "../../hooks/useAuthContext";
+import {useLogout} from "../../hooks/useLogout";
+
+import {appbarMenuButtonItems} from "../../appbarMenuButtonItems";
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -21,6 +25,8 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+import MenuButton from "./MenuButton";
 
 const drawerWidth = 260;
 
@@ -81,10 +87,19 @@ export default function PersistentDrawerLeft({children}: Props) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
+    const {user, roles} = useAuthContext()
+    const {logout} = useLogout()
+
     const navigate = useNavigate()
     const location = useLocation()
 
     const handleDrawerToggle = () => setOpen(!open);
+
+    const handleSignOut = () => {
+        logout()
+        // setMenu(menuItems)
+        navigate('/signin')
+    }
 
     const navItems = [
         {title: 'Homepage', icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>, path: '/'},
@@ -143,6 +158,10 @@ export default function PersistentDrawerLeft({children}: Props) {
                     <Typography variant="h5" noWrap component="div" color={'white'} fontWeight={'bold'}>
                         I-NERGY UC13 Dashboard
                     </Typography>
+                    {user && <React.Fragment>
+                        <Typography style={{marginLeft: 'auto', color: 'white'}}>Welcome, {user.username}</Typography>
+                        <MenuButton subLinks={appbarMenuButtonItems} signout={handleSignOut}/>
+                    </React.Fragment>}
                 </Toolbar>
             </AppBar>
             <Drawer

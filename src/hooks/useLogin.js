@@ -13,7 +13,6 @@ export const useLogin = () => {
     const {dispatch} = useAuthContext()
 
     const login = (username, password) => {
-        console.log('hi')
         setError(false)
         setIsLoading(true)
 
