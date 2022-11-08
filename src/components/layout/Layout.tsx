@@ -1,75 +1,90 @@
 import React, {ReactNode} from 'react';
-import {styled, useTheme} from '@mui/material/styles';
 import {useNavigate, useLocation} from "react-router-dom";
+import {styled, useTheme} from '@mui/material/styles';
 
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import FooterContent from "./FooterContent";
-import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const drawerWidth = 260;
+
+const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})<{
+    open?: boolean;
+}>(({theme, open}) => ({
+    flexGrow: 1,
+    // padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+        transition: theme.transitions.create('margin', {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: 0,
+    }),
+}));
+
+interface AppBarProps extends MuiAppBarProps {
+    open?: boolean;
+}
+
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({theme, open}) => ({
+    transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: `${drawerWidth}px`,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}));
+
+const DrawerHeader = styled('div')(({theme}) => ({
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+}));
 
 interface Props {
     children?: ReactNode
 }
 
-export default function Layout({children}: Props) {
+export default function PersistentDrawerLeft({children}: Props) {
+    const theme = useTheme();
+    const [open, setOpen] = React.useState(false);
+
     const navigate = useNavigate()
     const location = useLocation()
-    const theme = useTheme();
-    const [mobileOpen, setMobileOpen] = React.useState(false);
 
-    const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(({theme}) => ({
-        flexGrow: 1, // padding: theme.spacing(3),
-        paddingTop: theme.spacing(3), paddingBottom: theme.spacing(3), transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp, duration: theme.transitions.duration.leavingScreen,
-        }), marginLeft: `0px`, ...(mobileOpen && {
-            transition: theme.transitions.create('margin', {
-                easing: theme.transitions.easing.easeOut, duration: theme.transitions.duration.enteringScreen,
-            }), marginLeft: drawerWidth,
-        }),
-    }),);
-    const DrawerHeader = styled('div')(({theme}) => ({
-        display: 'flex', alignItems: 'center', padding: theme.spacing(0, 1), // necessary for content to be below app bar
-        ...theme.mixins.toolbar, minHeight: '40px !important', justifyContent: 'flex-end',
-    }));
-
-    interface FooterProps extends MuiAppBarProps {
-        open?: boolean;
-    }
-
-    const Footer = styled(MuiAppBar, {
-        shouldForwardProp: (prop) => prop !== 'open',
-    })<FooterProps>(({theme, open}) => ({
-        transition: theme.transitions.create(['margin', 'width'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        ...(open && {
-            width: `calc(100% - ${drawerWidth}px)`,
-            marginLeft: `${drawerWidth}px`,
-            transition: theme.transitions.create(['margin', 'width'], {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        }),
-    }));
+    const handleDrawerToggle = () => setOpen(!open);
 
     const navItems = [
         {title: 'Homepage', icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>, path: '/'},
@@ -79,8 +94,6 @@ export default function Layout({children}: Props) {
             path: '/servicePath'
         }
     ];
-
-    const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
     const drawer = (
         <Box sx={{textAlign: 'center', minHeight: '100vh'}}>
@@ -95,7 +108,7 @@ export default function Layout({children}: Props) {
                 {navItems.map((item) => (
                     <ListItem key={item.path} disablePadding
                               sx={{
-                                  background: location.pathname === item.path ? 'linear-gradient(270deg, rgba(151,169,77,1) 60%, rgba(255,255,255,1) 100%)' : '',
+                                  background: location.pathname === item.path ? 'linear-gradient(270deg, rgba(151,169,77,1) 55%, rgba(255,255,255,1) 100%)' : '',
                                   border: location.pathname === item.path ? '1px solid rgba(151,169,77,1)' : '',
                                   borderRadius: '10px', margin: 1, width: '95%'
                               }}>
@@ -114,62 +127,42 @@ export default function Layout({children}: Props) {
     );
 
     return (
-        <Box sx={{display: 'flex', minHeight: '100vh'}}>
-            <AppBar component="nav" sx={{
-                background: theme.palette.background.default, ...(mobileOpen && {
-                    width: `calc(100% - ${drawerWidth}px)`,
-                    marginLeft: `${drawerWidth}px`,
-                    transition: theme.transitions.create(['margin', 'width'], {
-                        easing: theme.transitions.easing.easeOut, duration: theme.transitions.duration.enteringScreen,
-                    }),
-                }),
-            }}>
+        <Box sx={{display: 'flex'}}>
+            <CssBaseline/>
+            <AppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{mr: 2, display: mobileOpen ? 'none' : 'block'}}
+                        edge="start"
+                        sx={{mr: 2, color: 'white', ...(open && {display: 'none'})}}
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
-                    >
-                        UC13 Dashboard
+                    <Typography variant="h5" noWrap component="div" color={'white'} fontWeight={'bold'}>
+                        I-NERGY UC13 Dashboard
                     </Typography>
-                    {/*<Box sx={{ display: { xs: 'none', sm: 'block' } }}>*/}
-                    {/*    {navItems.map((item) => (*/}
-                    {/*        <Button key={item} sx={{ color: '#fff' }}>*/}
-                    {/*            {item}*/}
-                    {/*        </Button>*/}
-                    {/*    ))}*/}
-                    {/*</Box>*/}
                 </Toolbar>
             </AppBar>
-            <Box component="nav">
-                <Drawer
-                    variant="persistent"
-                    open={mobileOpen}
-                    hideBackdrop={true}
-                    onClose={handleDrawerToggle}
-                    ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
-                    }}
-                    sx={{
-                        '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
-                    }}
-                >
-                    {drawer}
-                </Drawer>
-            </Box>
-            <Main style={{overflow: 'auto', paddingBottom: 0, display: 'flex', flexDirection: 'column'}}>
-                {location.pathname !== '/' ? <Toolbar/> : null}
+            <Drawer
+                sx={{
+                    width: drawerWidth,
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: drawerWidth,
+                        boxSizing: 'border-box',
+                    },
+                }}
+                variant="persistent"
+                anchor="left"
+                open={open}
+            >
+                {drawer}
+            </Drawer>
+            <Main open={open}>
+                <DrawerHeader/>
                 {children}
-                <Footer sx={{position: 'sticky', mt: 'auto'}}><FooterContent/></Footer>
             </Main>
         </Box>
     );

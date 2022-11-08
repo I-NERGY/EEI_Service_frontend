@@ -20,7 +20,7 @@ const Breadcrumb = ({breadcrumbs, welcome_msg}: Props) => {
             pb: 2,
             // pt: {xs: 5, md: 1},
             backgroundColor: '#F5F8E9',
-            marginTop: '-18px',
+            // marginTop: '-18px',
             position: 'sticky'
         }}>
             <Stack spacing={2}>
