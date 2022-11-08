@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useState} from 'react';
 import {useNavigate, useLocation} from "react-router-dom";
 import {styled, useTheme} from '@mui/material/styles';
 import useAuthContext from "../../hooks/useAuthContext";
@@ -27,6 +27,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import MenuButton from "./MenuButton";
+import SignedOutLinks from "./SignedOutLinks";
+import SignedInLinks from "./SignedInLinks";
 
 const drawerWidth = 260;
 
@@ -97,8 +99,14 @@ export default function PersistentDrawerLeft({children}: Props) {
 
     const handleSignOut = () => {
         logout()
-        // setMenu(menuItems)
+        setMenu(navItems)
         navigate('/signin')
+    }
+
+    interface navItem {
+        title: string,
+        icon: ReactNode,
+        path: string
     }
 
     const navItems = [
@@ -110,6 +118,8 @@ export default function PersistentDrawerLeft({children}: Props) {
         }
     ];
 
+    const [menu, setMenu] = useState<navItem[]>(navItems)
+
     const drawer = (
         <Box sx={{textAlign: 'center', minHeight: '100vh'}}>
             <DrawerHeader>
@@ -120,7 +130,7 @@ export default function PersistentDrawerLeft({children}: Props) {
             </DrawerHeader>
             <Divider/>
             <List>
-                {navItems.map((item) => (
+                {menu.map((item) => (
                     <ListItem key={item.path} disablePadding
                               sx={{
                                   background: location.pathname === item.path ? 'linear-gradient(270deg, rgba(151,169,77,1) 55%, rgba(255,255,255,1) 100%)' : '',
@@ -137,6 +147,11 @@ export default function PersistentDrawerLeft({children}: Props) {
                         </ListItemButton>
                     </ListItem>
                 ))}
+            </List>
+            <Divider/>
+            <List>
+                {!user && <SignedOutLinks navigate={navigate} location={location}/>}
+                {user && <SignedInLinks navigate={navigate} location={location} handleSignOut={handleSignOut}/>}
             </List>
         </Box>
     );
