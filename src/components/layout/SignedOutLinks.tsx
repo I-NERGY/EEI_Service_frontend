@@ -26,7 +26,7 @@ const SignedOutLinks = ({navigate, location}: Props) => {
                 >
                     <ListItemIcon>{<LoginOutlinedIcon color="secondary"/>}</ListItemIcon>
                     <ListItemText primary={
-                        <Typography fontWeight={500} fontSize={17} align={'center'}>
+                        <Typography fontWeight={500} fontSize={17} align={'center'} color={location.pathname === '/signin' ? 'white' : 'normal'}>
                             {'Sign In'}
                         </Typography>}/>
                 </ListItemButton>

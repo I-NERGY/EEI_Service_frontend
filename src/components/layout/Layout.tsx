@@ -131,7 +131,6 @@ export default function PersistentDrawerLeft({children}: Props) {
 
     const navItems = [
         {title: 'Homepage', icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>, path: '/'},
-
     ];
 
     useEffect(() => {
