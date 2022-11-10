@@ -71,6 +71,7 @@ const AppBar = styled(MuiAppBar, {
             duration: theme.transitions.duration.enteringScreen,
         }),
     }),
+    background: theme.palette.background.default
 }));
 
 const DrawerHeader = styled('div')(({theme}) => ({
@@ -97,6 +98,7 @@ const Footer = styled(MuiAppBar, {
             duration: theme.transitions.duration.enteringScreen,
         }),
     }),
+    background: theme.palette.background.default
 }));
 
 interface Props {
