@@ -93,3 +93,16 @@ code {
     background: linear-gradient(270deg, rgba(151, 169, 77, 1) 55%, rgba(255, 255, 255, 1) 100%) !important;
     border: 1px solid rgba(151,169,77,1) !important;
 }
+
+/* Menu Button */
+.iconButtonMenuItemStack:hover {
+    background: #f3f3f3 !important;
+}
+
+.iconButtonMenuItem {
+    width: 100% !important;
+}
+
+.iconButtonMenuItem:hover {
+    background: none !important;
+}
