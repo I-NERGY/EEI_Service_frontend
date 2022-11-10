@@ -29,6 +29,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MenuButton from "./MenuButton";
 import SignedOutLinks from "./SignedOutLinks";
 import SignedInLinks from "./SignedInLinks";
+import FooterContent from "./FooterContent";
 
 const drawerWidth = 260;
 
@@ -79,6 +80,23 @@ const DrawerHeader = styled('div')(({theme}) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+}));
+
+const Footer = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({theme, open}) => ({
+    transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: `${drawerWidth}px`,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
 }));
 
 interface Props {
@@ -166,47 +184,51 @@ export default function PersistentDrawerLeft({children}: Props) {
     );
 
     return (
-        <Box sx={{display: 'flex'}}>
-            <CssBaseline/>
-            <AppBar position="fixed" open={open}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerToggle}
-                        edge="start"
-                        sx={{mr: 2, color: 'white', ...(open && {display: 'none'})}}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant="h5" noWrap component="div" color={'white'} fontWeight={'bold'}>
-                        I-NERGY UC13 Dashboard
-                    </Typography>
-                    {user && <React.Fragment>
-                        <Typography style={{marginLeft: 'auto', color: 'white'}}>Welcome, {user.username}</Typography>
-                        <MenuButton subLinks={appbarMenuButtonItems} signout={handleSignOut}/>
-                    </React.Fragment>}
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
+        <>
+            <Box sx={{display: 'flex', minHeight: `calc(100vh - 60px)`, border: "1px solid red"}}>
+                <CssBaseline/>
+                <AppBar position="fixed" open={open}>
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerToggle}
+                            edge="start"
+                            sx={{mr: 2, color: 'white', ...(open && {display: 'none'})}}
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        <Typography variant="h5" noWrap component="div" color={'white'} fontWeight={'bold'}>
+                            I-NERGY UC13 Dashboard
+                        </Typography>
+                        {user && <React.Fragment>
+                            <Typography
+                                style={{marginLeft: 'auto', color: 'white'}}>Welcome, {user.username}</Typography>
+                            <MenuButton subLinks={appbarMenuButtonItems} signout={handleSignOut}/>
+                        </React.Fragment>}
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    sx={{
                         width: drawerWidth,
-                        boxSizing: 'border-box',
-                    },
-                }}
-                variant="persistent"
-                anchor="left"
-                open={open}
-            >
-                {drawer}
-            </Drawer>
-            <Main open={open}>
-                <DrawerHeader/>
-                {children}
-            </Main>
-        </Box>
+                        flexShrink: 0,
+                        '& .MuiDrawer-paper': {
+                            width: drawerWidth,
+                            boxSizing: 'border-box',
+                        },
+                    }}
+                    variant="persistent"
+                    anchor="left"
+                    open={open}
+                >
+                    {drawer}
+                </Drawer>
+                <Main open={open}>
+                    <DrawerHeader/>
+                    {children}
+                </Main>
+            </Box>
+            <Footer open={open} sx={{position: 'sticky', mt: 'auto'}}><FooterContent/></Footer>
+        </>
     );
 }
