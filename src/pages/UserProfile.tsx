@@ -103,8 +103,8 @@ const UserProfile = () => {
         <React.Fragment>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={''}/>
 
-            <Box style={{display: 'flex'}} sx={{padding: 3, width: '100%'}}>
-                <Accordion expanded={userInfoExpanded} sx={{width: '100%'}}>
+            <Box sx={{padding: 3, maxWidth: "100vw"}}>
+                <Accordion expanded={userInfoExpanded} sx={{width: '100%', maxWidth: '100%', overflowX: 'auto'}}>
                     <AccordionSummary
                         onClick={() => setUserInfoExpanded(!userInfoExpanded)}
                         expandIcon={<ExpandMoreIcon/>}
@@ -121,7 +121,7 @@ const UserProfile = () => {
                             <Grid item md={3} xs={6} display={'flex'} justifyContent={'center'} alignContent={'center'}>
                                 <FiberManualRecordIcon sx={{marginRight: '5px', my: 'auto'}} color={'success'}/>
                                 <Typography variant={'h6'}
-                                            sx={{color: 'text.secondary', fontWeight: 'bold', marginTop: 'auto'}}>{user?.username}
+                                            sx={{color: 'text.secondary', fontWeight: 'bold', my: 'auto'}}>{user?.username}
                                 </Typography>
                             </Grid>
 
@@ -136,18 +136,11 @@ const UserProfile = () => {
                                 </Typography>
                             </Grid>
                         </Grid>
-
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails >
                         <Grid container spacing={0}>
-                            <Grid item sm={12} style={{
-                                overflow: 'scroll',
-                                overflowX: 'auto',
-                                overflowY: 'auto',
-                                paddingBottom: '10px'
-                            }}>
                                 <TableContainer component={Paper}>
-                                    <Table sx={{minWidth: 650}} size="small" aria-label="a dense table">
+                                    <Table size="small" aria-label="a dense table">
                                         <TableHead>
                                             <TableRow>
                                                 <StyledTableCell align="center">Username</StyledTableCell>
@@ -255,7 +248,6 @@ const UserProfile = () => {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
-                            </Grid>
                         </Grid>
                     </AccordionDetails>
                 </Accordion>
