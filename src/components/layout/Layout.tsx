@@ -187,7 +187,7 @@ export default function PersistentDrawerLeft({children}: Props) {
 
     return (
         <>
-            <Box sx={{display: 'flex', minHeight: `calc(100vh - 60px)`, border: "1px solid red"}}>
+            <Box sx={{display: 'flex', minHeight: `calc(100vh - 60px)`}}>
                 <CssBaseline/>
                 <AppBar position="fixed" open={open}>
                     <Toolbar>
