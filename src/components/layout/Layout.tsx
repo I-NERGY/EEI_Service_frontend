@@ -199,7 +199,7 @@ export default function PersistentDrawerLeft({children}: Props) {
                         >
                             <MenuIcon/>
                         </IconButton>
-                        <Typography variant="h5" noWrap component="div" color={'white'} fontWeight={'bold'}>
+                        <Typography variant="h6" noWrap component="div" color={'white'} fontWeight={'bold'}>
                             I-NERGY UC13 Dashboard
                         </Typography>
                         {user && <React.Fragment>
