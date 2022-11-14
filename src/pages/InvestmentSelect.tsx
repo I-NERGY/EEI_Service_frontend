@@ -59,7 +59,6 @@ const InvestmentSelect = () => {
         const result = measuresAvailable.filter(measure => {
             return measure.checked
         })
-
         setMeasuresChosen([...result])
 
         let cost = 0
@@ -86,7 +85,7 @@ const InvestmentSelect = () => {
 
                 <Grid container spacing={2}>
                     {measuresAvailable.length > 1 && measuresList.map(measure =>
-                        <Grid item xs={12} md={3} key={measure.id}>
+                        <Grid item xs={12} md={4} key={measure.id}>
                             <FormControl component="fieldset">
                                 <FormGroup aria-label="position" row>
                                     <FormControlLabel
