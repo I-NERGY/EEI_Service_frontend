@@ -47,7 +47,7 @@ const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyCon
                 <AccordionDetails sx={{mt: 2}}>
                     <Grid container display={'flex'} spacing={5}>
                         <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'}>Energy Class</Typography>
+                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Energy Class</Typography>
                             <div className="energy-class" style={{marginTop: '10px'}}>
                                 {energyClass === 'classAPlusPlus' &&
                                     <span className="classAPlusPlus">A<sup>++</sup></span>}
@@ -76,12 +76,12 @@ const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyCon
                             </div>
                         </Grid>
                         <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'}>Thermal Transmittance (U)</Typography>
+                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Thermal Transmittance (U)</Typography>
                             <Typography variant={'h3'} my={'auto'}
                                         color={() => handleColor(thermalTransmittance)}>{thermalTransmittance}</Typography>
                         </Grid>
                         <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'}>Total Energy Consumption:</Typography>
+                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Total Energy Consumption:</Typography>
                             <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>
                         </Grid>
                     </Grid>
