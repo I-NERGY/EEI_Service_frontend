@@ -1,7 +1,11 @@
 import React from 'react';
+
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 import Breadcrumb from "../components/layout/Breadcrumb";
+
+import InvestmentSelectQuickInfo from "../components/InvestmentSelect/InvestmentSelectQuickInfo";
 
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
@@ -21,6 +25,9 @@ const InvestmentSelect = () => {
     return (
         <>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
+            <Container maxWidth={'xl'} sx={{my: 5}}>
+                <InvestmentSelectQuickInfo energyClass={'classAPlusPlus'} thermalTransmittance={1.9} energyConsumption={500}/>
+            </Container>
         </>
     );
 }
