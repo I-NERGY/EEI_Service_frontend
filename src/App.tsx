@@ -11,6 +11,7 @@ import SignIn from "./pages/SignIn";
 import RequireAuth from "./RequireAuth";
 import RequireNotAuth from "./RequireNotAuth";
 import UserProfile from "./pages/UserProfile";
+import InvestmentSelect from "./pages/InvestmentSelect";
 
 // Set primary color here
 let primary = '#97A94D'
@@ -53,6 +54,10 @@ function App() {
 
                     <Route element={<RequireAuth/>}>
                         <Route path="/user/profile" element={<UserProfile/>}/>
+                    </Route>
+
+                    <Route element={<RequireAuth/>}>
+                        <Route path="/energy-measures/:id" element={<InvestmentSelect/>}/>
                     </Route>
 
                     {/* Routes not accessible to logged-in users */}
