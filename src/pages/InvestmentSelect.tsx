@@ -12,6 +12,9 @@ import Stack from "@mui/material/Stack";
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import InvestmentSelectQuickInfo from "../components/InvestmentSelect/InvestmentSelectQuickInfo";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import ChevronRight from "@mui/icons-material/ChevronRight";
 
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
@@ -44,7 +47,18 @@ const measuresList = [
     {id: 6, title: 'Construction of a two-pipe system', cost: 40000, checked: false},
     {id: 7, title: 'Entrance doors', cost: 300, checked: false},
     {id: 8, title: 'Facade insulation with polystyrene foam', cost: 1000, checked: false},
-    {id: 9, title: 'Facade insulation with stone wool', cost: 800, checked: false},
+    // {id: 9, title: 'Facade insulation insulationwith stone wool', cost: 800, checked: false},
+    // {id: 10, title: 'Gas condensing boiler for the preparation of hot water', cost: 1800, checked: false},
+    // {id: 11, title: 'Installation of allocators', cost: 9800, checked: false},
+    // {id: 12, title: 'Insulation of the basement cover with stone wool', cost: 500, checked: false},
+    // {id: 13, title: 'Insulation of the plinth with polystyrene foam', cost: 3500, checked: false},
+    // {id: 14, title: 'Insulation of the plinth with polyurethane', cost: 4000, checked: false},
+    // {id: 15, title: 'Pipeline insulation', cost: 5600, checked: false},
+    // {id: 16, title: 'Replacement of heating elements', cost: 21000, checked: false},
+    // {id: 17, title: 'Roof insulation with polystyrene foam', cost: 6000, checked: false},
+    // {id: 18, title: 'Roof insulation with stone wool', cost: 8900, checked: false},
+    // {id: 19, title: 'Solar collectors for hot water preparation', cost: 7000, checked: false},
+    // {id: 20, title: 'FSolar panels', cost: 8800, checked: false},
 ]
 
 const InvestmentSelect = () => {
@@ -68,6 +82,10 @@ const InvestmentSelect = () => {
         setTotalCost(cost)
     }
 
+    const handleSubmit = () => {
+        console.log(measuresChosen)
+    }
+
     return (
         <>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
@@ -76,7 +94,7 @@ const InvestmentSelect = () => {
                                            energyConsumption={500}/>
             </Container>
 
-            <Container maxWidth={'xl'}>
+            <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Stack direction={'row'}>
                     <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3, flexGrow: 1}}>Energy Efficiency
                         Measures</Typography>
@@ -109,6 +127,27 @@ const InvestmentSelect = () => {
                     )}
                 </Grid>
             </Container>
+
+            <Divider/>
+
+            <Container maxWidth={'xl'} sx={{my: 5}}>
+                <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                    <Grid item xs={12} md={6}>
+
+                    </Grid>
+                    <Grid item xs={12} md={6} display={'flex'}>
+                        <Button variant={'contained'} component={'span'} size={'large'} color={'warning'}
+                                sx={{ml: 'auto'}} fullWidth
+                                endIcon={<ChevronRight/>}
+                                onClick={handleSubmit}
+                                disabled={measuresChosen.length < 1}
+                        >
+                            <Typography variant={'h6'}>PLACEHOLDER</Typography>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Container>
+
         </>
     );
 }
