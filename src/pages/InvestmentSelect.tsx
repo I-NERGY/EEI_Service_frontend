@@ -124,8 +124,8 @@ const InvestmentSelect = () => {
             >
                 <Box sx={style}>
                     {loadingModal ? <Loading/> :
-                        <InvestmentExpectedResults energyClass={'classA'} thermalTransmittance={1.9}
-                                                   energyConsumption={500} totalCost={totalCost} handleClose={handleClose}/>}
+                        <InvestmentExpectedResults energyClass={'classA'} thermalTransmittance={0.8}
+                                                   energyConsumption={380} totalCost={totalCost} handleClose={handleClose}/>}
                 </Box>
             </Modal>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
