@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
@@ -118,7 +118,7 @@ const InvestmentSelect = () => {
                                                     },
                                                 }}
                                             />}
-                                        label={`${measure.title} (${measure.cost})€`}
+                                        label={<Typography>{measure.title} (<span style={{fontWeight: 'bold'}}>{measure.cost}€</span>)</Typography>}
                                         labelPlacement="end"
                                     />
                                 </FormGroup>
