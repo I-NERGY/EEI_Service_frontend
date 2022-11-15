@@ -15,7 +15,7 @@ interface Props {
 }
 
 const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyConsumption}: Props) => {
-    const [expanded, setExpanded] = React.useState<string | false>(false);
+    const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
     const handleChange =
         (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
