@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AddressOptionType from "../interfaces/AddressOptionType";
 
 import Typography from "@mui/material/Typography";
@@ -31,6 +31,8 @@ const ServicePage = () => {
     const [chosenImage, setChosenImage] = useState<number | null>(null)
     const [length, setLength] = useState<number | null>(null)
     const [width, setWidth] = useState<number | null>(null)
+
+    useEffect(() => window.scrollTo(0, 0), [])
 
     const addresses = [
         {

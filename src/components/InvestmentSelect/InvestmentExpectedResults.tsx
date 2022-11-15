@@ -5,7 +5,6 @@ import {handleEnergyClass, handleUColor} from "../../utils";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Button from '@mui/material/Button';
-
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 
