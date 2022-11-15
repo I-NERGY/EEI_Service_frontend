@@ -6,6 +6,7 @@ import Container from "@mui/material/Container";
 import Link from '@mui/material/Link';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 
 import ChevronRight from '@mui/icons-material/ChevronRight';
 
@@ -13,7 +14,6 @@ import Breadcrumb from "../components/layout/Breadcrumb";
 import AddressField from "../components/ServicePage/AddressField";
 import ImageField from "../components/ServicePage/ImageField";
 import MapField from "../components/ServicePage/MapField";
-import Divider from "@mui/material/Divider";
 
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">

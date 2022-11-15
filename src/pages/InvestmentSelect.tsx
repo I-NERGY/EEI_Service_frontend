@@ -9,12 +9,16 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Stack from "@mui/material/Stack";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import InvestmentSelectQuickInfo from "../components/InvestmentSelect/InvestmentSelectQuickInfo";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import ChevronRight from "@mui/icons-material/ChevronRight";
+import InvestmentExpectedResults from "../components/InvestmentSelect/InvestmentExpectedResults";
+import Loading from "../components/layout/Loading";
 
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
@@ -61,7 +65,23 @@ const measuresList = [
     // {id: 20, title: 'FSolar panels', cost: 8800, checked: false},
 ]
 
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '60%',
+    minWidth: '350px',
+    bgcolor: 'background.paper',
+    // border: '2px solid #000',
+    boxShadow: 24,
+    p: 2,
+};
+
 const InvestmentSelect = () => {
+    const [openModal, setOpenModal] = useState<boolean>(false)
+    const [loadingModal, setLoadingModal] = useState<boolean>(false)
+
     const [measuresAvailable, setMeasuresAvailable] = useState<Measure[] | []>(measuresList)
 
     const [measuresChosen, setMeasuresChosen] = useState<Measure[] | []>([])
@@ -76,18 +96,38 @@ const InvestmentSelect = () => {
         setMeasuresChosen([...result])
 
         let cost = 0
-        for (let i=0; i<result.length; i++) {
+        for (let i = 0; i < result.length; i++) {
             cost += result[i].cost
         }
         setTotalCost(cost)
     }
 
     const handleSubmit = () => {
+        setOpenModal(true)
+        setLoadingModal(true)
+
+        setTimeout(() => setLoadingModal(false), 2000)
         console.log(measuresChosen)
+    }
+
+    const handleClose = () => {
+        setOpenModal(false)
     }
 
     return (
         <>
+            <Modal
+                open={openModal}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    {loadingModal ? <Loading/> :
+                        <InvestmentExpectedResults energyClass={'classA'} thermalTransmittance={1.9}
+                                                   energyConsumption={500} totalCost={totalCost} handleClose={handleClose}/>}
+                </Box>
+            </Modal>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <InvestmentSelectQuickInfo energyClass={'classD'} thermalTransmittance={1.9}
@@ -118,7 +158,8 @@ const InvestmentSelect = () => {
                                                     },
                                                 }}
                                             />}
-                                        label={<Typography>{measure.title} (<span style={{fontWeight: 'bold'}}>{measure.cost}€</span>)</Typography>}
+                                        label={<Typography>{measure.title} (<span
+                                            style={{fontWeight: 'bold'}}>{measure.cost}€</span>)</Typography>}
                                         labelPlacement="end"
                                     />
                                 </FormGroup>

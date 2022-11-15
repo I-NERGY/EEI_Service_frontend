@@ -8,6 +8,8 @@ import Grid from "@mui/material/Grid";
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import {handleEnergyClass, handleUColor} from "../../utils";
+
 interface Props {
     energyClass: string,
     thermalTransmittance: number,
@@ -21,23 +23,6 @@ const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyCon
         (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
             setExpanded(isExpanded ? panel : false);
         };
-
-    const handleColor = (value: number) => {
-        if (value < 1.4) return '#63AA5A'
-        if (value >= 1.4 && value < 2) return '#FBB900'
-        if (value >= 2 && value < 2.2) return '#FB8800'
-        if (value >= 2.2) return '#E30613'
-    }
-
-    const handleClass = (className: string) => {
-        if (className === 'classAPlusPlus') return 'classAPlusPlusSelected'
-        if (className === 'classAPlus') return 'classAPlusSelected'
-        if (className === 'classA') return 'classASelected'
-        if (className === 'classB') return 'classBSelected'
-        if (className === 'classC') return 'classCSelected'
-        if (className === 'classD') return 'classDSelected'
-        if (className === 'classE') return 'classESelected'
-    }
 
     return (
         <>
@@ -67,14 +52,14 @@ const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyCon
                                 <span className="classC">C</span>
                                 <span className="classD">D</span>
                                 <span className="classE">E</span>
-                                <div style={{marginLeft: '15px'}} className={handleClass(energyClass)}></div>
+                                <div style={{marginLeft: '15px'}} className={handleEnergyClass(energyClass)}></div>
                             </div>
                         </Grid>
                         <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
                             <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Thermal
                                 Transmittance (U)</Typography>
                             <Typography variant={'h3'} my={'auto'}
-                                        color={() => handleColor(thermalTransmittance)}>{thermalTransmittance}</Typography>
+                                        color={() => handleUColor(thermalTransmittance)}>{thermalTransmittance}</Typography>
                         </Grid>
                         <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
                             <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Total
