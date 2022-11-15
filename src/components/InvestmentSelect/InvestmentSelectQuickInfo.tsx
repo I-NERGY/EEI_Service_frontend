@@ -29,6 +29,16 @@ const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyCon
         if (value >= 2.2) return '#E30613'
     }
 
+    const handleClass = (className: string) => {
+        if (className === 'classAPlusPlus') return 'classAPlusPlusSelected'
+        if (className === 'classAPlus') return 'classAPlusSelected'
+        if (className === 'classA') return 'classASelected'
+        if (className === 'classB') return 'classBSelected'
+        if (className === 'classC') return 'classCSelected'
+        if (className === 'classD') return 'classDSelected'
+        if (className === 'classE') return 'classESelected'
+    }
+
     return (
         <>
             <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
@@ -47,46 +57,31 @@ const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyCon
                 <AccordionDetails sx={{mt: 2}}>
                     <Grid container display={'flex'} spacing={5}>
                         <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Energy Class</Typography>
+                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Energy
+                                Class</Typography>
                             <div className="energy-class" style={{marginTop: '10px'}}>
-                                {energyClass === 'classAPlusPlus' &&
-                                    <span className="classAPlusPlus">A<sup>++</sup></span>}
+                                <span className="classAPlusPlus">A<sup>++</sup></span>
                                 <span className="classAPlus">A<sup>+</sup></span>
                                 <span className="classA">A</span>
                                 <span className="classB">B</span>
                                 <span className="classC">C</span>
                                 <span className="classD">D</span>
                                 <span className="classE">E</span>
-                                {energyClass === 'classAPlusPlus' ?
-                                    <div style={{marginLeft: '15px'}} className="classAPlusPlusSelected"></div>
-                                    : energyClass === 'classAPlus' ?
-                                        <div style={{marginLeft: '15px'}} className="classAPlusSelected"></div>
-                                        : energyClass === 'classA' ?
-                                            <div style={{marginLeft: '15px'}} className="classASelected"></div>
-                                            : energyClass === 'classB' ?
-                                                <div style={{marginLeft: '15px'}} className="classBSelected"></div>
-                                                : energyClass === 'classC' ?
-                                                    <div style={{marginLeft: '15px'}} className="classCSelected"></div>
-                                                    : energyClass === 'classD' ?
-                                                        <div style={{marginLeft: '15px'}}
-                                                             className="classDSelected"></div>
-                                                        : energyClass === 'classE' ?
-                                                            <div style={{marginLeft: '15px'}}
-                                                                 className="classESelected"></div> : ''}
+                                <div style={{marginLeft: '15px'}} className={handleClass(energyClass)}></div>
                             </div>
                         </Grid>
                         <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Thermal Transmittance (U)</Typography>
+                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Thermal
+                                Transmittance (U)</Typography>
                             <Typography variant={'h3'} my={'auto'}
                                         color={() => handleColor(thermalTransmittance)}>{thermalTransmittance}</Typography>
                         </Grid>
                         <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Total Energy Consumption:</Typography>
+                            <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Total
+                                Energy Consumption:</Typography>
                             <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>
                         </Grid>
                     </Grid>
-
-
                 </AccordionDetails>
             </Accordion>
         </>

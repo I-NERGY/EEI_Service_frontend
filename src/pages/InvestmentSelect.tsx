@@ -90,7 +90,7 @@ const InvestmentSelect = () => {
         <>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
-                <InvestmentSelectQuickInfo energyClass={'classAPlusPlus'} thermalTransmittance={1.9}
+                <InvestmentSelectQuickInfo energyClass={'classD'} thermalTransmittance={1.9}
                                            energyConsumption={500}/>
             </Container>
 
@@ -132,9 +132,7 @@ const InvestmentSelect = () => {
 
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                    <Grid item xs={12} md={6}>
-
-                    </Grid>
+                    <Grid item xs={12} md={6}></Grid>
                     <Grid item xs={12} md={6} display={'flex'}>
                         <Button variant={'contained'} component={'span'} size={'large'} color={'warning'}
                                 sx={{ml: 'auto'}} fullWidth
@@ -147,7 +145,6 @@ const InvestmentSelect = () => {
                     </Grid>
                 </Grid>
             </Container>
-
         </>
     );
 }
