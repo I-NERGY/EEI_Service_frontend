@@ -23,7 +23,7 @@ const breadcrumbs = [
         color="secondary"
         fontSize={'20px'}
         fontWeight={600}>
-        Load Forecasting
+        Service Title
     </Typography>,];
 
 const ServicePage = () => {
