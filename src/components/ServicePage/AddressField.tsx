@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -9,15 +9,32 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddressOptionType from "../../interfaces/AddressOptionType";
+import axios from "axios";
 
 
 interface Props {
     address: AddressOptionType | null,
     setAddress: React.Dispatch<React.SetStateAction<AddressOptionType | null>>,
-    addresses: AddressOptionType[]
+    setPerimeter: React.Dispatch<React.SetStateAction<number | null>>,
 }
 
-const AddressField = ({address, setAddress, addresses}: Props) => {
+const AddressField = ({address, setAddress, setPerimeter}: Props) => {
+    const [addresses, setAddresses] = useState<AddressOptionType[] | []>([]);
+
+    useEffect(() => {
+        axios.get('http://inergy.epu.ntua.gr:8000/buildings/')
+            .then(response => {
+                setAddresses(response.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [])
+
+    useEffect(() => {
+        address !== null && setPerimeter(address.perimeter)
+    }, [address])
+
     return (
         <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
             <Grid item xs={12} md={6}>
@@ -34,7 +51,7 @@ const AddressField = ({address, setAddress, addresses}: Props) => {
             </Grid>
             <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
-                    <Autocomplete
+                    {addresses.length > 0 && <Autocomplete
                         options={addresses}
                         value={address}
                         disablePortal
@@ -42,9 +59,9 @@ const AddressField = ({address, setAddress, addresses}: Props) => {
                         onChange={(event, newValue) => {
                             setAddress(newValue);
                         }}
-                        getOptionLabel={(option) => option.address}
+                        getOptionLabel={(option) => option.address + ', Cadastre: ' + option.cadastre_number}
                         isOptionEqualToValue={(option, value) => option.address === value.address}
-                        renderInput={(params) => <TextField {...params} label="Address"/>}/>
+                        renderInput={(params) => <TextField {...params} label="Address"/>}/>}
                 </FormControl>
             </Grid>
         </Grid>

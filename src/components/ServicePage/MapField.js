@@ -22,7 +22,7 @@ let DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const MapField = ({address, setPerimeter}) => {
+const MapField = ({address, perimeter}) => {
     return (
         <>
             <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'}>
@@ -45,9 +45,8 @@ const MapField = ({address, setPerimeter}) => {
                     {address &&
                         <Grid sx={{ml: 'auto'}}>
                             <TextField id="outlined-basic" label="Perimeter (m)" variant="outlined"
-                                       type={'number'} sx={{mx: 1}} disabled
+                                       sx={{mx: 1}} value={perimeter}
                                        InputProps={{inputProps: {min: 0}}}
-                                       onChange={e => setPerimeter(e.target.value)}
                             />
                         </Grid>}
 
@@ -56,7 +55,7 @@ const MapField = ({address, setPerimeter}) => {
                 <Grid item xs={12} md={6}>
                     {address &&
                         <>
-                            <MapContainer center={[parseFloat(address.latitude_centroid), parseFloat(address.longitude_centroid)]} zoom={20}
+                            <MapContainer center={[512610, 307661]} zoom={20}
                                           scrollWheelZoom={false}
                                           style={{height: '300px', width: '100wh'}}
                                           key={JSON.stringify([address.latitude_centroid, address.latitude_centroid])}>

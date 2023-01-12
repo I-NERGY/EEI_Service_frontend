@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import AddressOptionType from "../interfaces/AddressOptionType";
 
 import Typography from "@mui/material/Typography";
@@ -33,23 +34,24 @@ const ServicePage = () => {
 
     useEffect(() => window.scrollTo(0, 0), [])
 
-    const addresses = [
-        {
-            address: 'string',
-            cadastre_number: '12',
-            latitude_centroid: '35',
-            longitude_centroid: '35',
-            perimeter: 12,
-            building_id: 1
-        },
-        // {
-        //     address: 'Kleisouras 41, Petroupoli',
-        //     cadastre: 1111,
-        //     latitude: 38.04565950449955,
-        //     longitude: 23.694367382543604,
-        //     id: 2
-        // },
-    ]
+
+    // const addresses = [
+    //     {
+    //         address: 'string',
+    //         cadastre_number: '12',
+    //         latitude_centroid: '35',
+    //         longitude_centroid: '35',
+    //         perimeter: 12,
+    //         building_id: 1
+    //     },
+    //     // {
+    //     //     address: 'Kleisouras 41, Petroupoli',
+    //     //     cadastre: 1111,
+    //     //     latitude: 38.04565950449955,
+    //     //     longitude: 23.694367382543604,
+    //     //     id: 2
+    //     // },
+    // ]
 
     const handleSubmit = () => {
         console.log({address: address?.address, chosenImage, cadastre: address?.cadastre_number, perimeter})
@@ -60,9 +62,9 @@ const ServicePage = () => {
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
-                <AddressField address={address} setAddress={setAddress} addresses={addresses}/>
+                <AddressField address={address} setAddress={setAddress} setPerimeter={setPerimeter} />
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
-                <MapField address={address} setPerimeter={setPerimeter}/>
+                <MapField address={address} perimeter={perimeter} />
             </Container>
 
             <Divider/>
