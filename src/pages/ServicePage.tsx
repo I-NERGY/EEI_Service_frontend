@@ -36,23 +36,24 @@ const ServicePage = () => {
 
     const addresses = [
         {
-            address: 'Sarantaporou 5, Ilioupoli',
-            cadastre: 1994,
-            latitude: 37.93995073670426,
-            longitude: 23.749203299724236,
-            id: 1
+            address: 'string',
+            cadastre_number: '12',
+            latitude_centroid: '35',
+            longitude_centroid: '35',
+            perimeter: 12,
+            building_id: 1
         },
-        {
-            address: 'Kleisouras 41, Petroupoli',
-            cadastre: 1111,
-            latitude: 38.04565950449955,
-            longitude: 23.694367382543604,
-            id: 2
-        },
+        // {
+        //     address: 'Kleisouras 41, Petroupoli',
+        //     cadastre: 1111,
+        //     latitude: 38.04565950449955,
+        //     longitude: 23.694367382543604,
+        //     id: 2
+        // },
     ]
 
     const handleSubmit = () => {
-        console.log({address: address?.address, chosenImage, cadastre: address?.cadastre, length, width})
+        console.log({address: address?.address, chosenImage, cadastre: address?.cadastre_number, length, width})
     }
 
     return (

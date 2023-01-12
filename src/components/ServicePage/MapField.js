@@ -37,11 +37,8 @@ const MapField = ({address, setLength, setWidth}) => {
                                                       my: 1
                                                   }}/>
                         <Box>
-                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Choose the surrounding
-                                area</Typography>
-                            <Typography variant={'subtitle1'}>Enter the dimensions of the building. If you cannot
-                                estimate them, use the box on the top-right of the map to draw a line. Fill in the fields
-                                with the last measurement that appears.</Typography>
+                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Building Location & Surroundings</Typography>
+                            <Typography variant={'subtitle1'}>A map displaying the chosen building's location.</Typography>
                         </Box>
                     </Stack>
 
@@ -64,15 +61,15 @@ const MapField = ({address, setLength, setWidth}) => {
                 <Grid item xs={12} md={6}>
                     {address &&
                         <>
-                            <MapContainer center={[address.latitude, address.longitude]} zoom={20}
+                            <MapContainer center={[parseFloat(address.latitude_centroid), parseFloat(address.longitude_centroid)]} zoom={20}
                                           scrollWheelZoom={false}
                                           style={{height: '300px', width: '100wh'}}
-                                          key={JSON.stringify([address.latitude, address.longitude])}>
+                                          key={JSON.stringify([address.latitude_centroid, address.latitude_centroid])}>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
-                                <Marker position={[address.latitude, address.longitude]}>
+                                <Marker position={[address.latitude_centroid, address.latitude_centroid]}>
                                     <Popup>
                                         A pretty CSS3 popup. <br/> Easily customizable.
                                     </Popup>
