@@ -29,8 +29,7 @@ const breadcrumbs = [
 const ServicePage = () => {
     const [address, setAddress] = useState<AddressOptionType | null>(null);
     const [chosenImage, setChosenImage] = useState<number | null>(null)
-    const [length, setLength] = useState<number | null>(null)
-    const [width, setWidth] = useState<number | null>(null)
+    const [perimeter, setPerimeter] = useState<number | null>(null)
 
     useEffect(() => window.scrollTo(0, 0), [])
 
@@ -53,7 +52,7 @@ const ServicePage = () => {
     ]
 
     const handleSubmit = () => {
-        console.log({address: address?.address, chosenImage, cadastre: address?.cadastre_number, length, width})
+        console.log({address: address?.address, chosenImage, cadastre: address?.cadastre_number, perimeter})
     }
 
     return (
@@ -63,7 +62,7 @@ const ServicePage = () => {
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
                 <AddressField address={address} setAddress={setAddress} addresses={addresses}/>
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
-                <MapField address={address} setLength={setLength} setWidth={setWidth}/>
+                <MapField address={address} setPerimeter={setPerimeter}/>
             </Container>
 
             <Divider/>
@@ -78,7 +77,7 @@ const ServicePage = () => {
                                 sx={{ml: 'auto'}} fullWidth
                                 endIcon={<ChevronRight/>}
                                 onClick={handleSubmit}
-                                disabled={!address || !chosenImage || !length}
+                                disabled={!address || !chosenImage}
                         >
                             <Typography variant={'h6'}>PLACEHOLDER</Typography>
                         </Button>

@@ -22,7 +22,7 @@ let DefaultIcon = L.icon({
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const MapField = ({address, setLength, setWidth}) => {
+const MapField = ({address, setPerimeter}) => {
     return (
         <>
             <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'}>
@@ -44,15 +44,10 @@ const MapField = ({address, setLength, setWidth}) => {
 
                     {address &&
                         <Grid sx={{ml: 'auto'}}>
-                            <TextField id="outlined-basic" label="Length (m)" variant="outlined"
-                                       type={'number'} sx={{mx: 1}}
+                            <TextField id="outlined-basic" label="Perimeter (m)" variant="outlined"
+                                       type={'number'} sx={{mx: 1}} disabled
                                        InputProps={{inputProps: {min: 0}}}
-                                       onChange={e => setLength(e.target.value)}
-                            />
-                            <TextField id="outlined-basic" label="Width (m)" variant="outlined"
-                                       type={'number'}
-                                       InputProps={{inputProps: {min: 0}}}
-                                       onChange={e => setWidth(e.target.value)}
+                                       onChange={e => setPerimeter(e.target.value)}
                             />
                         </Grid>}
 
