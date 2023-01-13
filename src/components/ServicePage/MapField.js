@@ -55,15 +55,15 @@ const MapField = ({address, perimeter}) => {
                 <Grid item xs={12} md={6}>
                     {address &&
                         <>
-                            <MapContainer center={[address.latitude_centroid, address.latitude_centroid]} zoom={20}
+                            <MapContainer center={[address.latitude_centroid, address.longitude_centroid]} zoom={20}
                                           scrollWheelZoom={false}
                                           style={{height: '300px', width: '100wh'}}
-                                          key={JSON.stringify([address.latitude_centroid, address.latitude_centroid])}>
+                                          key={JSON.stringify([address.latitude_centroid, address.longitude_centroid])}>
                                 <TileLayer
                                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
-                                <Marker position={[address.latitude_centroid, address.latitude_centroid]}>
+                                <Marker position={[address.latitude_centroid, address.longitude_centroid]}>
                                     <Popup>
                                         A pretty CSS3 popup. <br/> Easily customizable.
                                     </Popup>
