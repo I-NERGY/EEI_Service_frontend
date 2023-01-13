@@ -55,7 +55,7 @@ const MapField = ({address, perimeter}) => {
                 <Grid item xs={12} md={6}>
                     {address &&
                         <>
-                            <MapContainer center={[512610, 307661]} zoom={20}
+                            <MapContainer center={[address.latitude_centroid, address.latitude_centroid]} zoom={20}
                                           scrollWheelZoom={false}
                                           style={{height: '300px', width: '100wh'}}
                                           key={JSON.stringify([address.latitude_centroid, address.latitude_centroid])}>
