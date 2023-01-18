@@ -25,7 +25,7 @@ const AddressField = ({address, setAddress, setPerimeter}: Props) => {
     const [addresses, setAddresses] = useState<AddressOptionType[] | []>([]);
 
     useEffect(() => {
-        axios.get('http://inergy.epu.ntua.gr:8000/buildings/')
+        axios.get('/buildings')
             .then(response => {
                 setAddresses(response.data)
             })
