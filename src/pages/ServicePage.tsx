@@ -34,27 +34,19 @@ const ServicePage = () => {
 
     useEffect(() => window.scrollTo(0, 0), [])
 
-
-    // const addresses = [
-    //     {
-    //         address: 'string',
-    //         cadastre_number: '12',
-    //         latitude_centroid: '35',
-    //         longitude_centroid: '35',
-    //         perimeter: 12,
-    //         building_id: 1
-    //     },
-    //     // {
-    //     //     address: 'Kleisouras 41, Petroupoli',
-    //     //     cadastre: 1111,
-    //     //     latitude: 38.04565950449955,
-    //     //     longitude: 23.694367382543604,
-    //     //     id: 2
-    //     // },
-    // ]
-
-    const handleSubmit = () => {
-        console.log({address: address?.address, chosenImage, cadastre: address?.cadastre_number, perimeter})
+    const handleButton = () => {
+        let payload = {
+            serie: chosenImage,
+            cadastre_number: address?.cadastre_number
+        }
+        console.log(payload)
+        axios.post('/series/', payload)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     return (
@@ -78,7 +70,7 @@ const ServicePage = () => {
                         <Button variant={'contained'} component={'span'} size={'large'} color={'warning'}
                                 sx={{ml: 'auto'}} fullWidth
                                 endIcon={<ChevronRight/>}
-                                onClick={handleSubmit}
+                                onClick={handleButton}
                                 disabled={!address || !chosenImage}
                         >
                             <Typography variant={'h6'}>Virtual EPC</Typography>

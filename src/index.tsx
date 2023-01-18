@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import {AuthContextProvider} from "./context/AuthContext";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
-axios.defaults.baseURL = 'http://inergy.epu.ntua.gr:8000';
+axios.defaults.baseURL = 'http://147.102.6.184:8000';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
