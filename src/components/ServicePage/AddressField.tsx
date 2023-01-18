@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import axios from "axios";
+
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -9,7 +11,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddressOptionType from "../../interfaces/AddressOptionType";
-import axios from "axios";
+
+import Loading from "../layout/Loading";
 
 
 interface Props {
@@ -51,7 +54,7 @@ const AddressField = ({address, setAddress, setPerimeter}: Props) => {
             </Grid>
             <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
-                    {addresses.length > 0 && <Autocomplete
+                    {addresses.length > 0 ? <Autocomplete
                         options={addresses}
                         value={address}
                         disablePortal
@@ -61,7 +64,8 @@ const AddressField = ({address, setAddress, setPerimeter}: Props) => {
                         }}
                         getOptionLabel={(option) => option.address + ', Cadastre: ' + option.cadastre_number}
                         isOptionEqualToValue={(option, value) => option.address === value.address}
-                        renderInput={(params) => <TextField {...params} label="Address"/>}/>}
+                        renderInput={(params) => <TextField {...params} label="Address"/>}/>
+                    : <Loading/>}
                 </FormControl>
             </Grid>
         </Grid>
