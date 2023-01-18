@@ -81,7 +81,7 @@ const ServicePage = () => {
                                 onClick={handleSubmit}
                                 disabled={!address || !chosenImage}
                         >
-                            <Typography variant={'h6'}>PLACEHOLDER</Typography>
+                            <Typography variant={'h6'}>Virtual EPC</Typography>
                         </Button>
                     </Grid>
                 </Grid>
