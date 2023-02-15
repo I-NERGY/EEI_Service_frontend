@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 
 import Link from "@mui/material/Link";
@@ -16,6 +16,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 
@@ -66,13 +67,20 @@ const EnergyMeasuresEdit = () => {
         {id: 10, title: 'Gas condensing boiler for the preparation of hot water', cost: 1800, checked: false},
     ]
 
+    const [measuresListTemp, setMeasuresListTemp] = useState([...measuresList])
+
     const handleCostChange = (id: number, e: React.ChangeEvent<any>) => {
-        let measuresListTemp = measuresList.map(obj => {
+        let arrayTemp = measuresList.map(obj => {
             if (obj.id === id) {
                 return {...obj, cost: e.target.value}
             }
             return obj
         })
+        setMeasuresListTemp(arrayTemp)
+    }
+
+    const handleReset = () => {
+        setMeasuresListTemp(measuresList)
     }
 
     return (
@@ -83,21 +91,31 @@ const EnergyMeasuresEdit = () => {
                     <Table sx={{minWidth: 700}} aria-label="customized table">
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell>Energy Measure title</StyledTableCell>
-                                <StyledTableCell align="left">Cost</StyledTableCell>
+                                <StyledTableCell>
+                                    <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                        Energy Measure title
+                                    </Typography>
+                                </StyledTableCell>
+                                <StyledTableCell align="left">
+                                    <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                        Cost
+                                    </Typography>
+                                </StyledTableCell>
+                                <StyledTableCell align="right"></StyledTableCell>
                                 <StyledTableCell align="right"></StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {measuresList.map(measure => (
+                            {measuresListTemp.map(measure => (
                                 <StyledTableRow key={measure.id}>
                                     <StyledTableCell component="th" scope="row">
-                                        {measure.title}
+                                        <Typography variant={'body1'}>{measure.title}</Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <TextField
                                             onChange={e => handleCostChange(measure.id, e)}
                                             required
+                                            fullWidth
                                             id="outlined-required"
                                             label="Change cost"
                                             type={'number'}
@@ -105,12 +123,19 @@ const EnergyMeasuresEdit = () => {
                                                 inputProps: {min: 0},
                                                 startAdornment: <InputAdornment position="start">€</InputAdornment>
                                             }}
-                                            defaultValue={measure.cost}
+                                            value={measure.cost}
                                         />
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
-                                        <Button variant="contained" color={'warning'} startIcon={<EditAttributesIcon/>}>
+                                        <Button size={'large'} variant="contained" color={'warning'}
+                                                startIcon={<EditAttributesIcon/>} disabled={!measure.cost}>
                                             EDIT
+                                        </Button>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="right">
+                                        <Button size={'large'} variant="contained" color={'success'}
+                                                startIcon={<RestartAltIcon/>} onClick={handleReset}>
+                                            RESET
                                         </Button>
                                     </StyledTableCell>
                                 </StyledTableRow>
