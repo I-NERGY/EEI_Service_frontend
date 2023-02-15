@@ -14,6 +14,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -40,6 +42,13 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
     },
 }));
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
         Dashboard
@@ -52,6 +61,13 @@ const breadcrumbs = [
     </Typography>,];
 
 const EnergyMeasuresEdit = () => {
+    const [editSuccess, setEditSuccess] = useState(false)
+    const [editFailure, setEditFailure] = useState(false)
+
+    const handleCloseSnackbar = () => {
+        setEditSuccess(false)
+        setEditFailure(false)
+    }
 
     const measuresList = [
         {id: 0, title: 'Gas condensing boiler', cost: 14000, checked: false},
@@ -80,6 +96,7 @@ const EnergyMeasuresEdit = () => {
     }
 
     const handleReset = () => {
+        setEditSuccess(true)
         setMeasuresListTemp(measuresList)
     }
 
@@ -144,6 +161,18 @@ const EnergyMeasuresEdit = () => {
                     </Table>
                 </TableContainer>
             </Container>
+
+            <Snackbar open={editSuccess} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    Energy Measure cost has been successfully changed!
+                </Alert>
+
+            </Snackbar>
+            <Snackbar open={editFailure} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+                <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                    Something went wrong! Please try again.
+                </Alert>
+            </Snackbar>
         </>
     );
 }
