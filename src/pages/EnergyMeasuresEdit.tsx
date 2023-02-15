@@ -129,7 +129,7 @@ const EnergyMeasuresEdit = () => {
                                     <StyledTableCell align="right">
                                         <Button size={'large'} variant="contained" color={'warning'}
                                                 startIcon={<EditAttributesIcon/>} disabled={!measure.cost}>
-                                            EDIT
+                                            SAVE
                                         </Button>
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
