@@ -5,6 +5,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from '@mui/material/Button';
+import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -65,6 +66,15 @@ const EnergyMeasuresEdit = () => {
         {id: 10, title: 'Gas condensing boiler for the preparation of hot water', cost: 1800, checked: false},
     ]
 
+    const handleCostChange = (id: number, e: React.ChangeEvent<any>) => {
+        let measuresListTemp = measuresList.map(obj => {
+            if (obj.id === id) {
+                return {...obj, cost: e.target.value}
+            }
+            return obj
+        })
+    }
+
     return (
         <>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
@@ -79,17 +89,23 @@ const EnergyMeasuresEdit = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {measuresList.map(measuresList => (
-                                <StyledTableRow key={measuresList.id}>
+                            {measuresList.map(measure => (
+                                <StyledTableRow key={measure.id}>
                                     <StyledTableCell component="th" scope="row">
-                                        {measuresList.title}
+                                        {measure.title}
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <TextField
+                                            onChange={e => handleCostChange(measure.id, e)}
                                             required
                                             id="outlined-required"
                                             label="Change cost"
-                                            defaultValue={measuresList.cost}
+                                            type={'number'}
+                                            InputProps={{
+                                                inputProps: {min: 0},
+                                                startAdornment: <InputAdornment position="start">€</InputAdornment>
+                                            }}
+                                            defaultValue={measure.cost}
                                         />
                                     </StyledTableCell>
                                     <StyledTableCell align="right">
