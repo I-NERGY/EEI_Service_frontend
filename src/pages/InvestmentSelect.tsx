@@ -65,7 +65,7 @@ const InvestmentSelect = () => {
         {id: 6, title: 'Construction of a two-pipe system', cost: 40000, checked: false},
         {id: 7, title: 'Entrance doors', cost: 300, checked: false},
         {id: 8, title: 'Facade insulation with polystyrene foam', cost: 1000, checked: false},
-        // {id: 9, title: 'Facade insulation insulation with stone wool', cost: 800, checked: false},
+        // {id: 9, title: 'Facade insulation with stone wool', cost: 800, checked: false},
         // {id: 10, title: 'Gas condensing boiler for the preparation of hot water', cost: 1800, checked: false},
         // {id: 11, title: 'Installation of allocators', cost: 9800, checked: false},
         // {id: 12, title: 'Insulation of the basement cover with stone wool', cost: 500, checked: false},
