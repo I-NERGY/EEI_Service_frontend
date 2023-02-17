@@ -17,7 +17,6 @@ import Breadcrumb from "../components/layout/Breadcrumb";
 import AddressField from "../components/ServicePage/AddressField";
 import ImageField from "../components/ServicePage/ImageField";
 import MapField from "../components/ServicePage/MapField";
-import Loading from "../components/layout/Loading";
 
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
