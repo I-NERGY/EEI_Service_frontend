@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import AddressOptionType from "../interfaces/AddressOptionType";
 
 import Typography from "@mui/material/Typography";
@@ -15,6 +17,7 @@ import Breadcrumb from "../components/layout/Breadcrumb";
 import AddressField from "../components/ServicePage/AddressField";
 import ImageField from "../components/ServicePage/ImageField";
 import MapField from "../components/ServicePage/MapField";
+import Loading from "../components/layout/Loading";
 
 const breadcrumbs = [
     <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
@@ -28,6 +31,7 @@ const breadcrumbs = [
     </Typography>,];
 
 const ServicePage = () => {
+    const navigate = useNavigate()
     const [address, setAddress] = useState<AddressOptionType | null>(null);
     const [chosenImage, setChosenImage] = useState<number | null>(null)
     const [perimeter, setPerimeter] = useState<number | null>(null)
@@ -39,9 +43,9 @@ const ServicePage = () => {
             serie: chosenImage,
             cadastre_number: address?.cadastre_number
         }
-        console.log(payload)
         axios.post('/series/', payload)
             .then(response => {
+                navigate(`/energy-measures/id/${address?.cadastre_number}`)
                 console.log(response.data)
             })
             .catch(error => {
@@ -54,9 +58,9 @@ const ServicePage = () => {
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
-                <AddressField address={address} setAddress={setAddress} setPerimeter={setPerimeter} />
+                <AddressField address={address} setAddress={setAddress} setPerimeter={setPerimeter}/>
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
-                <MapField address={address} perimeter={perimeter} />
+                <MapField address={address} perimeter={perimeter}/>
             </Container>
 
             <Divider/>
@@ -73,7 +77,9 @@ const ServicePage = () => {
                                 onClick={handleButton}
                                 disabled={!address || !chosenImage}
                         >
-                            <Typography variant={'h6'}>Virtual EPC</Typography>
+                            <Typography variant={'h6'}>
+                                Virtual EPC
+                            </Typography>
                         </Button>
                     </Grid>
                 </Grid>
