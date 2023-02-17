@@ -30,7 +30,7 @@ const SignedInLinks = ({navigate, location, handleSignOut}: Props) => {
                 <ListItemButton onClick={() => navigate('/user/profile')}>
                     <ListItemIcon>{<AccountCircleIcon color="secondary"/>}</ListItemIcon>
                     <ListItemText primary={
-                        <Typography fontWeight={500} fontSize={17} align={'center'}
+                        <Typography fontWeight={500} fontSize={17} align={'left'}
                                     color={location.pathname === '/user/profile' ? 'white' : 'normal'}>
                             {'My Profile'}
                         </Typography>}/>
@@ -44,7 +44,7 @@ const SignedInLinks = ({navigate, location, handleSignOut}: Props) => {
                 <ListItemButton onClick={handleSignOut}>
                     <ListItemIcon>{<LogoutOutlinedIcon color="secondary"/>}</ListItemIcon>
                     <ListItemText primary={
-                        <Typography fontWeight={500} fontSize={17} align={'center'}>
+                        <Typography fontWeight={500} fontSize={17} align={'left'}>
                             {'Sign Out'}
                         </Typography>}/>
                 </ListItemButton>

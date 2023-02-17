@@ -29,7 +29,7 @@ const breadcrumbs = [
         Service Title
     </Typography>,];
 
-const ServicePage = () => {
+const BuildingInfo = () => {
     const navigate = useNavigate()
     const [address, setAddress] = useState<AddressOptionType | null>(null);
     const [chosenImage, setChosenImage] = useState<number | null>(null)
@@ -87,4 +87,4 @@ const ServicePage = () => {
     );
 }
 
-export default ServicePage;
+export default BuildingInfo;

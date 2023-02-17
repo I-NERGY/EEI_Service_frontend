@@ -5,7 +5,7 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 
 import Layout from "./components/layout/Layout";
 import Homepage from "./pages/Homepage";
-import ServicePage from "./pages/ServicePage";
+import BuildingInfo from "./pages/BuildingInfo";
 import SignIn from "./pages/SignIn";
 
 import RequireAuth from "./RequireAuth";
@@ -50,7 +50,7 @@ function App() {
 
                     {/* Routes not accessible to logged-out users */}
                     <Route element={<RequireAuth/>}>
-                        <Route path="/servicePath" element={<ServicePage/>}/>
+                        <Route path="/building-info" element={<BuildingInfo/>}/>
                     </Route>
 
                     <Route element={<RequireAuth/>}>

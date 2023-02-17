@@ -137,9 +137,9 @@ export default function PersistentDrawerLeft({children}: Props) {
         if (user) {
             navItems.push(
                 {
-                    title: 'Service Title',
+                    title: 'Plan Investment',
                     icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
-                    path: '/servicePath'
+                    path: '/building-info'
                 }
             )
             setMenu(navItems)
@@ -168,7 +168,7 @@ export default function PersistentDrawerLeft({children}: Props) {
                         <ListItemButton onClick={() => navigate(item.path)}>
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             <ListItemText primary={
-                                <Typography fontWeight={500} fontSize={17} align={'center'}
+                                <Typography fontWeight={500} fontSize={17} align={'left'}
                                             color={location.pathname === item.path ? 'white' : 'normal'}>
                                     {item.title}
                                 </Typography>}/>
