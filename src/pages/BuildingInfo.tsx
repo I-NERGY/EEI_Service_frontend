@@ -26,7 +26,7 @@ const breadcrumbs = [
         color="secondary"
         fontSize={'20px'}
         fontWeight={600}>
-        Service Title
+        Plan Investment
     </Typography>,];
 
 const BuildingInfo = () => {

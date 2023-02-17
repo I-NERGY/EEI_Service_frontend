@@ -65,15 +65,15 @@ const InvestmentSelect = () => {
         {id: 6, title: 'Construction of a two-pipe system', cost: 40000, checked: false},
         {id: 7, title: 'Entrance doors', cost: 300, checked: false},
         {id: 8, title: 'Facade insulation with polystyrene foam', cost: 1000, checked: false},
-        {id: 9, title: 'Facade insulation with stone wool', cost: 800, checked: false},
-        {id: 10, title: 'Gas condensing boiler for the preparation of hot water', cost: 1800, checked: false},
-        {id: 11, title: 'Installation of allocators', cost: 9800, checked: false},
-        {id: 12, title: 'Insulation of the basement cover with stone wool', cost: 500, checked: false},
-        {id: 13, title: 'Insulation of the plinth with polystyrene foam', cost: 3500, checked: false},
-        {id: 14, title: 'Insulation of the plinth with polyurethane', cost: 4000, checked: false},
-        {id: 15, title: 'Pipeline insulation', cost: 5600, checked: false},
-        {id: 16, title: 'Replacement of heating elements', cost: 21000, checked: false},
-        {id: 17, title: 'Roof insulation with polystyrene foam', cost: 6000, checked: false},
+        // {id: 9, title: 'Facade insulation with stone wool', cost: 800, checked: false},
+        // {id: 10, title: 'Gas condensing boiler for the preparation of hot water', cost: 1800, checked: false},
+        // {id: 11, title: 'Installation of allocators', cost: 9800, checked: false},
+        // {id: 12, title: 'Insulation of the basement cover with stone wool', cost: 500, checked: false},
+        // {id: 13, title: 'Insulation of the plinth with polystyrene foam', cost: 3500, checked: false},
+        // {id: 14, title: 'Insulation of the plinth with polyurethane', cost: 4000, checked: false},
+        // {id: 15, title: 'Pipeline insulation', cost: 5600, checked: false},
+        // {id: 16, title: 'Replacement of heating elements', cost: 21000, checked: false},
+        // {id: 17, title: 'Roof insulation with polystyrene foam', cost: 6000, checked: false},
         // {id: 18, title: 'Roof insulation with stone wool', cost: 8900, checked: false},
         // {id: 19, title: 'Solar collectors for hot water preparation', cost: 7000, checked: false},
         // {id: 20, title: 'FSolar panels', cost: 8800, checked: false},
@@ -181,7 +181,7 @@ const InvestmentSelect = () => {
                                 onClick={handleSubmit}
                                 disabled={measuresChosen.length < 1}
                         >
-                            <Typography variant={'h6'}>PLACEHOLDER</Typography>
+                            <Typography variant={'h6'}>CALCULATE</Typography>
                         </Button>
                     </Grid>
                 </Grid>

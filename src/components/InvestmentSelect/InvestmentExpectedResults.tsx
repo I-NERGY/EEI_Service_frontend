@@ -61,7 +61,7 @@ const InvestmentExpectedResults = ({energyClass, thermalTransmittance, energyCon
                 <Button variant="contained" color="success" sx={{mx: 1}} onClick={() => handleClose()}>
                     Yes, try other measures.
                 </Button>
-                <Button variant="outlined" color="error" onClick={() => navigate('/servicePath')}>
+                <Button variant="outlined" color="error" onClick={() => navigate('/building-info')}>
                     No, back to service page.
                 </Button>
             </Stack>
