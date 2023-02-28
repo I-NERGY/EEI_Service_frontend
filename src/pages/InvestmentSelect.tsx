@@ -31,7 +31,7 @@ const breadcrumbs = [
         color="secondary"
         fontSize={'20px'}
         fontWeight={600}>
-        Energy Measures Investment Choices
+        Virtual EPC & Innovation Measures
     </Typography>,];
 
 interface Measure {
