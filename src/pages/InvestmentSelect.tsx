@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import { useParams } from 'react-router-dom'
+import axios from 'axios';
 
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
@@ -55,6 +57,8 @@ const style = {
 };
 
 const InvestmentSelect = () => {
+    const {id} = useParams()
+
     const measuresList = [
         {id: 0, title: 'Gas condensing boiler', cost: 14000, checked: false},
         {id: 1, title: '2-Pane window', cost: 220, checked: false},
@@ -81,6 +85,11 @@ const InvestmentSelect = () => {
 
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [loadingModal, setLoadingModal] = useState<boolean>(false)
+
+    const [generalInfoLoading, setGeneralInfoLoading] = useState(false)
+    const [energyClass, setEnergyClass] = useState('')
+    const [thermalTransmittance, setThermalTransmittance] = useState(null)
+    const [energyConsumption, setEnergyConsumption] = useState(null)
 
     const [measuresCurrent, setMeasuresCurrent] = useState<Measure[] | []>([...measuresList])
 
@@ -114,6 +123,15 @@ const InvestmentSelect = () => {
         setOpenModal(false)
     }
 
+    useEffect(() => {
+        axios.get(`building/info/${id}`)
+            .then(response => {
+                setEnergyClass(`class${response.data.energy_class}`)
+                setThermalTransmittance(response.data.thermal_transmittance)
+                setEnergyConsumption(response.data.total_energy_consumption)
+            })
+    }, [])
+
     return (
         <>
             <Modal
@@ -130,8 +148,8 @@ const InvestmentSelect = () => {
             </Modal>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
-                <InvestmentSelectQuickInfo energyClass={'classD'} thermalTransmittance={1.9}
-                                           energyConsumption={500}/>
+                <InvestmentSelectQuickInfo energyClass={energyClass} thermalTransmittance={thermalTransmittance}
+                                           energyConsumption={energyConsumption}/>
             </Container>
 
             <Container maxWidth={'xl'} sx={{my: 5}}>
