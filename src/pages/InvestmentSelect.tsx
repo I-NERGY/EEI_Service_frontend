@@ -59,39 +59,16 @@ const style = {
 const InvestmentSelect = () => {
     const {id} = useParams()
 
-    const measuresList = [
-        {id: 0, title: 'Gas condensing boiler', cost: 14000, checked: false},
-        {id: 1, title: '2-Pane window', cost: 220, checked: false},
-        {id: 2, title: 'Assembly of internal wall vacuum insulation panels', cost: 148, checked: false},
-        {id: 3, title: 'Attic insulation with bulk stone wool', cost: 50, checked: false},
-        {id: 4, title: 'Attic insulation with ECO wool', cost: 60, checked: false},
-        {id: 5, title: 'Building connection to local heat network', cost: 18000, checked: false},
-        {id: 6, title: 'Construction of a two-pipe system', cost: 40000, checked: false},
-        {id: 7, title: 'Entrance doors', cost: 300, checked: false},
-        {id: 8, title: 'Facade insulation with polystyrene foam', cost: 1000, checked: false},
-        // {id: 9, title: 'Facade insulation with stone wool', cost: 800, checked: false},
-        // {id: 10, title: 'Gas condensing boiler for the preparation of hot water', cost: 1800, checked: false},
-        // {id: 11, title: 'Installation of allocators', cost: 9800, checked: false},
-        // {id: 12, title: 'Insulation of the basement cover with stone wool', cost: 500, checked: false},
-        // {id: 13, title: 'Insulation of the plinth with polystyrene foam', cost: 3500, checked: false},
-        // {id: 14, title: 'Insulation of the plinth with polyurethane', cost: 4000, checked: false},
-        // {id: 15, title: 'Pipeline insulation', cost: 5600, checked: false},
-        // {id: 16, title: 'Replacement of heating elements', cost: 21000, checked: false},
-        // {id: 17, title: 'Roof insulation with polystyrene foam', cost: 6000, checked: false},
-        // {id: 18, title: 'Roof insulation with stone wool', cost: 8900, checked: false},
-        // {id: 19, title: 'Solar collectors for hot water preparation', cost: 7000, checked: false},
-        // {id: 20, title: 'FSolar panels', cost: 8800, checked: false},
-    ]
+    const [measuresList, setMeasuresList] = useState<Measure[] | []>([])
+    const [measuresCurrent, setMeasuresCurrent] = useState<Measure[] | []>([...measuresList])
 
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [loadingModal, setLoadingModal] = useState<boolean>(false)
 
-    const [generalInfoLoading, setGeneralInfoLoading] = useState(false)
     const [energyClass, setEnergyClass] = useState('')
     const [thermalTransmittance, setThermalTransmittance] = useState(null)
     const [energyConsumption, setEnergyConsumption] = useState(null)
 
-    const [measuresCurrent, setMeasuresCurrent] = useState<Measure[] | []>([...measuresList])
 
     const [measuresChosen, setMeasuresChosen] = useState<Measure[] | []>([])
     const [totalCost, setTotalCost] = useState<number | 0>(0)
@@ -116,7 +93,6 @@ const InvestmentSelect = () => {
         setLoadingModal(true)
 
         setTimeout(() => setLoadingModal(false), 2000)
-        console.log(measuresChosen)
     }
 
     const handleClose = () => {
@@ -130,6 +106,12 @@ const InvestmentSelect = () => {
                 setThermalTransmittance(response.data.thermal_transmittance)
                 setEnergyConsumption(response.data.total_energy_consumption)
             })
+
+        axios.get(`energy_measures/${id}`)
+            .then(response => {
+                setMeasuresList(response.data)
+                setMeasuresCurrent(response.data)
+            })
     }, [])
 
     return (
@@ -142,7 +124,7 @@ const InvestmentSelect = () => {
             >
                 <Box sx={style}>
                     {loadingModal ? <Loading/> :
-                        <InvestmentExpectedResults energyClass={'classA'} thermalTransmittance={0.8}
+                        <InvestmentExpectedResults energyClass={'classAPlus'} thermalTransmittance={0.8}
                                                    energyConsumption={380} totalCost={totalCost} handleClose={handleClose}/>}
                 </Box>
             </Modal>
