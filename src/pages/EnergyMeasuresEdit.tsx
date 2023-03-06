@@ -74,12 +74,15 @@ const EnergyMeasuresEdit = () => {
 
     const [measuresList, setMeasuresList] = useState<any[]>([])
     const [measuresListTemp, setMeasuresListTemp] = useState([...measuresList])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         axios.get('energy_measures')
             .then(response => {
                 setMeasuresList(response.data)
                 setMeasuresListTemp(response.data)
+                setLoading(false)
             })
     }, [])
 
@@ -102,12 +105,18 @@ const EnergyMeasuresEdit = () => {
 
     // TODO Finalize
     const handleSave = (id: number) => {
-        let payload = {
-
-        }
-        axios.put(`energy_measures/${id}`, payload)
+        setLoading(true)
+        // TODO Implement functionality in the back end
+        axios.put(`energy_measures/${id}`, measuresListTemp[id])
             .then(response => {
-
+                setLoading(false)
+                setEditSuccess(true)
+                setMeasuresList(response.data)
+            })
+            .catch(error => {
+                // TODO Check if this works properly
+                setMeasuresListTemp([...measuresList])
+                setEditFailure(true)
             })
     }
 
@@ -182,7 +191,7 @@ const EnergyMeasuresEdit = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                {measuresListTemp.length < 1 &&
+                {loading &&
                     <Box justifyContent={'center'} alignItems={'center'} p={5}>
                         <Loading/>
                     </Box>}
