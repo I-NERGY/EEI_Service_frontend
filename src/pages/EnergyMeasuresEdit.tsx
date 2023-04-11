@@ -85,7 +85,7 @@ const EnergyMeasuresEdit = () => {
     useEffect(() => {
         if (initialized) {
             let roles = keycloak?.realmAccess?.roles
-            if (roles?.includes('energy_engineer')) {
+            if (roles?.includes('inergy_admin')) {
                 setAllowed(true)
                 setLoading(true)
                 axios.get('energy_measures')
@@ -149,7 +149,7 @@ const EnergyMeasuresEdit = () => {
         <>
             {allowed && <>
                 <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
-                <Container maxWidth={'xl'} sx={{my: 5}}>
+                {<Container maxWidth={'xl'} sx={{my: 5}}>
                     <TablePagination
                         rowsPerPageOptions={[10, 25, 100]}
                         component="div"
@@ -243,7 +243,7 @@ const EnergyMeasuresEdit = () => {
                         <Box justifyContent={'center'} alignItems={'center'} p={5}>
                             <Loading/>
                         </Box>}
-                </Container>
+                </Container>}
 
                 <Snackbar open={editSuccess} autoHideDuration={3000} onClose={handleCloseSnackbar}>
                     <Alert onClose={handleCloseSnackbar} severity="success" sx={{width: '100%'}}>
