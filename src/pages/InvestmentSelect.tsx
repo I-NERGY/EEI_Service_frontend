@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 import axios from 'axios';
 
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Checkbox from '@mui/material/Checkbox';
@@ -23,10 +22,10 @@ import InvestmentExpectedResults from "../components/InvestmentSelect/Investment
 import Loading from "../components/layout/Loading";
 
 const breadcrumbs = [
-    <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
-        Dashboard
+    <Link className={'breadcrumbLink'} key="1" to="/">
+        Homepage
     </Link>,
-    <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/servicePath">
+    <Link key={1} className={'breadcrumbLink'} to="/building-info">
         Building Information
     </Link>, <Typography
         key={2}

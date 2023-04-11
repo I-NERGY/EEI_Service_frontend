@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 import AddressOptionType from "../interfaces/AddressOptionType";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Link from '@mui/material/Link';
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -19,8 +18,8 @@ import ImageField from "../components/ServicePage/ImageField";
 import MapField from "../components/ServicePage/MapField";
 
 const breadcrumbs = [
-    <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
-        Dashboard
+    <Link className={'breadcrumbLink'} key="1" to="/">
+        Homepage
     </Link>, <Typography
         key={2}
         color="secondary"

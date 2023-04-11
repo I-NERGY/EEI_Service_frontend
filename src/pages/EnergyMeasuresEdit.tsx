@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {styled} from '@mui/material/styles';
 
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from '@mui/material/Button';
@@ -25,6 +24,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import Loading from "../components/layout/Loading";
+import {Link} from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -54,8 +54,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const breadcrumbs = [
-    <Link key={1} fontSize={'20px'} underline="hover" color="inherit" href="/">
-        Dashboard
+    <Link className={'breadcrumbLink'} key="1" to="/">
+        Homepage
     </Link>, <Typography
         key={2}
         color="secondary"

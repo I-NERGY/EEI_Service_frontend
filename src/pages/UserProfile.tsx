@@ -10,7 +10,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -25,6 +24,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import ArrowRightRoundedIcon from '@mui/icons-material/ArrowRightRounded';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
+import {Link} from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -91,7 +91,7 @@ const UserProfile = () => {
     // }, [])
 
     const breadcrumbs = [
-        <Link fontSize={'20px'} underline="hover" key="1" color="inherit" href="/">
+        <Link className={'breadcrumbLink'} key="1" to="/">
             Homepage
         </Link>,
         <Typography key="2" color="secondary" fontWeight={'bold'} fontSize={'20px'}>

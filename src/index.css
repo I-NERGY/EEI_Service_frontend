@@ -289,3 +289,13 @@ code {
 .classE::after {
     border-left-color: #e30613;
 }
+
+.breadcrumbLink {
+    text-decoration: none;
+    font-size: 20px;
+    color: inherit;
+}
+
+.breadcrumbLink:hover {
+    text-decoration: underline !important;
+}
