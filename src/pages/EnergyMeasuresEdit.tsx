@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {styled} from '@mui/material/styles';
+import {Link, useNavigate} from "react-router-dom";
+import {useKeycloak} from "@react-keycloak/web";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -24,7 +26,6 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import Loading from "../components/layout/Loading";
-import {Link} from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -65,6 +66,10 @@ const breadcrumbs = [
     </Typography>,];
 
 const EnergyMeasuresEdit = () => {
+    const {keycloak, initialized} = useKeycloak();
+    const navigate = useNavigate();
+    const [allowed, setAllowed] = useState(false)
+
     const [editSuccess, setEditSuccess] = useState(false)
     const [editFailure, setEditFailure] = useState(false)
 
@@ -78,14 +83,20 @@ const EnergyMeasuresEdit = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setLoading(true)
-        axios.get('energy_measures')
-            .then(response => {
-                setMeasuresList(response.data)
-                setMeasuresListTemp(response.data)
-                setLoading(false)
-            })
-    }, [])
+        if (initialized) {
+            let roles = keycloak?.realmAccess?.roles
+            if (roles?.includes('energy_engineer')) {
+                setAllowed(true)
+                setLoading(true)
+                axios.get('energy_measures')
+                    .then(response => {
+                        setMeasuresList(response.data)
+                        setMeasuresListTemp(response.data)
+                        setLoading(false)
+                    })
+            } else navigate('/')
+        }
+    }, [initialized])
 
     const handleCostChange = (id: number, e: React.ChangeEvent<any>) => {
         let arrayTemp = measuresList.map(obj => {
@@ -136,112 +147,116 @@ const EnergyMeasuresEdit = () => {
 
     return (
         <>
-            <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
-            <Container maxWidth={'xl'} sx={{my: 5}}>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={measuresListTemp.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-                <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 700}} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>
-                                    <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                        Code
-                                    </Typography>
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                    <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                        Place
-                                    </Typography>
-                                </StyledTableCell>
-                                <StyledTableCell align="left">
-                                    <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                        Total cost per unit
-                                    </Typography>
-                                </StyledTableCell>
-                                <StyledTableCell align="right">{void (0)}</StyledTableCell>
-                                <StyledTableCell align="right">{void (0)}</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-                            {measuresListTemp.length > 0 && measuresListTemp
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map(measure => (
-                                <StyledTableRow key={measure.energy_measure_id}>
-                                    <StyledTableCell component="th" scope="row">
-                                        <Typography variant={'body1'}>{measure.code}</Typography>
-                                    </StyledTableCell>
-                                    <StyledTableCell component="th" scope="row">
-                                        <Typography variant={'body1'}>{measure.place}</Typography>
+            {allowed && <>
+                <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
+                <Container maxWidth={'xl'} sx={{my: 5}}>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={measuresListTemp.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                    <TableContainer component={Paper}>
+                        <Table sx={{minWidth: 700}} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Code
+                                        </Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
-                                        <TextField
-                                            onChange={e => handleCostChange(measure.energy_measure_id, e)}
-                                            required
-                                            fullWidth
-                                            id="outlined-required"
-                                            label="Change cost"
-                                            type={'number'}
-                                            InputProps={{
-                                                inputProps: {min: 0},
-                                                startAdornment: <InputAdornment position="start">€</InputAdornment>
-                                            }}
-                                            value={measure.total_per_unit}
-                                        />
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Place
+                                        </Typography>
                                     </StyledTableCell>
-                                    <StyledTableCell align="right">
-                                        <Button size={'large'} variant="contained" color={'warning'}
-                                                onClick={() => handleSave(measure.energy_measure_id)}
-                                                startIcon={<EditAttributesIcon/>} disabled={!measure.total_per_unit}>
-                                            SAVE
-                                        </Button>
+                                    <StyledTableCell align="left">
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Total cost per unit
+                                        </Typography>
                                     </StyledTableCell>
-                                    <StyledTableCell align="right">
-                                        <Button size={'large'} variant="contained" color={'success'}
-                                                startIcon={<RestartAltIcon/>}
-                                                onClick={() => handleReset(measure.energy_measure_id)}>
-                                            RESET
-                                        </Button>
-                                    </StyledTableCell>
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={measuresListTemp.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-                {loading &&
-                    <Box justifyContent={'center'} alignItems={'center'} p={5}>
-                        <Loading/>
-                    </Box>}
-            </Container>
+                                    <StyledTableCell align="right">{void (0)}</StyledTableCell>
+                                    <StyledTableCell align="right">{void (0)}</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
 
-            <Snackbar open={editSuccess} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-                <Alert onClose={handleCloseSnackbar} severity="success" sx={{width: '100%'}}>
-                    Energy Measure cost has been successfully changed!
-                </Alert>
+                            <TableBody>
+                                {measuresListTemp.length > 0 && measuresListTemp
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map(measure => (
+                                        <StyledTableRow key={measure.energy_measure_id}>
+                                            <StyledTableCell component="th" scope="row">
+                                                <Typography variant={'body1'}>{measure.code}</Typography>
+                                            </StyledTableCell>
+                                            <StyledTableCell component="th" scope="row">
+                                                <Typography variant={'body1'}>{measure.place}</Typography>
+                                            </StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <TextField
+                                                    onChange={e => handleCostChange(measure.energy_measure_id, e)}
+                                                    required
+                                                    fullWidth
+                                                    id="outlined-required"
+                                                    label="Change cost"
+                                                    type={'number'}
+                                                    InputProps={{
+                                                        inputProps: {min: 0},
+                                                        startAdornment: <InputAdornment
+                                                            position="start">€</InputAdornment>
+                                                    }}
+                                                    value={measure.total_per_unit}
+                                                />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="right">
+                                                <Button size={'large'} variant="contained" color={'warning'}
+                                                        onClick={() => handleSave(measure.energy_measure_id)}
+                                                        startIcon={<EditAttributesIcon/>}
+                                                        disabled={!measure.total_per_unit}>
+                                                    SAVE
+                                                </Button>
+                                            </StyledTableCell>
+                                            <StyledTableCell align="right">
+                                                <Button size={'large'} variant="contained" color={'success'}
+                                                        startIcon={<RestartAltIcon/>}
+                                                        onClick={() => handleReset(measure.energy_measure_id)}>
+                                                    RESET
+                                                </Button>
+                                            </StyledTableCell>
+                                        </StyledTableRow>
+                                    ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={measuresListTemp.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                    {loading &&
+                        <Box justifyContent={'center'} alignItems={'center'} p={5}>
+                            <Loading/>
+                        </Box>}
+                </Container>
 
-            </Snackbar>
-            <Snackbar open={editFailure} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-                <Alert onClose={handleCloseSnackbar} severity="error" sx={{width: '100%'}}>
-                    Something went wrong! Please try again.
-                </Alert>
-            </Snackbar>
+                <Snackbar open={editSuccess} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+                    <Alert onClose={handleCloseSnackbar} severity="success" sx={{width: '100%'}}>
+                        Energy Measure cost has been successfully changed!
+                    </Alert>
+
+                </Snackbar>
+                <Snackbar open={editFailure} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+                    <Alert onClose={handleCloseSnackbar} severity="error" sx={{width: '100%'}}>
+                        Something went wrong! Please try again.
+                    </Alert>
+                </Snackbar>
+            </>}
         </>
     );
 }

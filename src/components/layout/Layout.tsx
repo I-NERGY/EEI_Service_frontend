@@ -1,8 +1,8 @@
 import React, {ReactNode, useEffect, useState} from 'react';
 import {useNavigate, useLocation} from "react-router-dom";
 import {styled, useTheme} from '@mui/material/styles';
-import useAuthContext from "../../hooks/useAuthContext";
 import {useLogout} from "../../hooks/useLogout";
+import {useKeycloak} from "@react-keycloak/web";
 
 import {appbarMenuButtonItems} from "../../appbarMenuButtonItems";
 
@@ -25,6 +25,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import EngineeringOutlinedIcon from '@mui/icons-material/EngineeringOutlined';
 
 import MenuButton from "./MenuButton";
 import SignedOutLinks from "./SignedOutLinks";
@@ -106,10 +107,10 @@ interface Props {
 }
 
 export default function PersistentDrawerLeft({children}: Props) {
+    const {keycloak, initialized} = useKeycloak();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
-    const {user, roles} = useAuthContext()
     const {logout} = useLogout()
 
     const navigate = useNavigate()
@@ -119,8 +120,9 @@ export default function PersistentDrawerLeft({children}: Props) {
 
     const handleSignOut = () => {
         logout()
+        keycloak.logout()
         setMenu(navItems)
-        navigate('/signin')
+        // navigate('/signin')
     }
 
     interface navItem {
@@ -134,17 +136,31 @@ export default function PersistentDrawerLeft({children}: Props) {
     ];
 
     useEffect(() => {
-        if (user) {
+        let roles = keycloak.realmAccess?.roles
+
+        if (roles && roles?.length > 0) {
             navItems.push(
                 {
                     title: 'Plan Investment',
-                    icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
+                    icon: <EngineeringOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
                     path: '/building-info'
                 }
             )
             setMenu(navItems)
         }
-    }, [user])
+
+        if (roles && roles?.includes('inergy_admin')) {
+            navItems.push(
+                {
+                    title: 'Energy Measures Admin page',
+                    icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
+                    path: '/energy-measures/edit'
+                }
+            )
+            setMenu(navItems)
+        }
+
+    }, [initialized])
 
     const [menu, setMenu] = useState<navItem[]>(navItems)
 
@@ -178,8 +194,9 @@ export default function PersistentDrawerLeft({children}: Props) {
             </List>
             <Divider/>
             <List>
-                {!user && <SignedOutLinks navigate={navigate} location={location}/>}
-                {user && <SignedInLinks navigate={navigate} location={location} handleSignOut={handleSignOut}/>}
+                {!keycloak.authenticated && <SignedOutLinks navigate={navigate} location={location}/>}
+                {keycloak.authenticated &&
+                    <SignedInLinks navigate={navigate} location={location} handleSignOut={handleSignOut}/>}
             </List>
         </Box>
     );
@@ -202,9 +219,12 @@ export default function PersistentDrawerLeft({children}: Props) {
                         <Typography variant="h6" noWrap component="div" color={'white'} fontWeight={'bold'}>
                             I-NERGY UC13 Dashboard
                         </Typography>
-                        {user && <React.Fragment>
+                        {keycloak.authenticated === true && <React.Fragment>
                             <Typography
-                                style={{marginLeft: 'auto', color: 'white'}}>Welcome, {user.username}</Typography>
+                                style={{
+                                    marginLeft: 'auto',
+                                    color: 'white'
+                                }}>Welcome, {keycloak?.tokenParsed?.given_name}</Typography>
                             <MenuButton subLinks={appbarMenuButtonItems} signout={handleSignOut}/>
                         </React.Fragment>}
                     </Toolbar>
