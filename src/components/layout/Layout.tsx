@@ -224,7 +224,7 @@ export default function PersistentDrawerLeft({children}: Props) {
                                 style={{
                                     marginLeft: 'auto',
                                     color: 'white'
-                                }}>Welcome, {keycloak?.tokenParsed?.given_name}</Typography>
+                                }}>Welcome, {keycloak?.tokenParsed?.preferred_username}</Typography>
                             <MenuButton subLinks={appbarMenuButtonItems} signout={handleSignOut}/>
                         </React.Fragment>}
                     </Toolbar>
