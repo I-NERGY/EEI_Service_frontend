@@ -7,7 +7,7 @@ import {useKeycloak} from "@react-keycloak/web";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from '@mui/material/Button';
-import InputAdornment from "@mui/material/InputAdornment";
+// import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -90,7 +90,6 @@ const EnergyMeasuresEdit = () => {
                 setLoading(true)
                 axios.get('energy_measures')
                     .then(response => {
-                        console.log(response.data[0])
                         setMeasuresList(response.data)
                         setMeasuresListTemp(response.data)
                         setLoading(false)
@@ -116,20 +115,17 @@ const EnergyMeasuresEdit = () => {
         setMeasuresListTemp(arrayTemp)
     }
 
-
     // TODO Finalize
-    const handleSave = (id: number) => {
+    const handleSave = (id: number, code: string) => {
         setLoading(true)
         // TODO Implement functionality in the back end
-        axios.put(`energy_measures/${id}`, measuresListTemp[id])
+        axios.put(`energy_measures/${code}`, measuresListTemp[id])
             .then(response => {
-                console.log(response.data)
                 setLoading(false)
                 setEditSuccess(true)
                 let arrayTemp = [...measuresList]
                 arrayTemp[id] = response.data
                 setMeasuresList([...arrayTemp])
-                // setMeasuresList(response.data)
             })
             .catch(error => {
                 // TODO Check if this works properly
@@ -227,7 +223,7 @@ const EnergyMeasuresEdit = () => {
                             <TableBody>
                                 {measuresListTemp.length > 0 && measuresListTemp
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map(measure => (
+                                    .map((measure, index) => (
                                         <StyledTableRow key={measure.code}>
                                             <StyledTableCell component="th" scope="row">
                                                 <Typography variant={'body1'}>{measure.code}</Typography>
@@ -365,7 +361,7 @@ const EnergyMeasuresEdit = () => {
                                             </StyledTableCell>
                                             <StyledTableCell align="right">
                                                 <Button size={'small'} variant="contained" color={'warning'}
-                                                        onClick={() => handleSave(measure.energy_measure_id)}
+                                                        onClick={() => handleSave(index, measure.code)}
                                                         startIcon={<EditAttributesIcon/>}
                                                         disabled={!measure.total_per_unit}>
                                                     SAVE
