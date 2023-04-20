@@ -111,9 +111,11 @@ const EnergyMeasuresEdit = () => {
 
     const handleReset = (id: number) => {
         setEditSuccess(true)
-        let arrayTemp = [...measuresList]
+        let arrayTemp = measuresListTemp
+        arrayTemp[id] = measuresList[id]
         setMeasuresListTemp(arrayTemp)
     }
+
 
     // TODO Finalize
     const handleSave = (id: number) => {
@@ -267,7 +269,7 @@ const EnergyMeasuresEdit = () => {
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
-                                                    label="Change cost"
+                                                    label="Change rate"
                                                     type={'number'}
                                                     // InputProps={{
                                                     //     inputProps: {min: 0},
@@ -283,7 +285,7 @@ const EnergyMeasuresEdit = () => {
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
-                                                    label="Change cost"
+                                                    label="Change salary"
                                                     type={'number'}
                                                     // InputProps={{
                                                     //     inputProps: {min: 0},
@@ -299,7 +301,7 @@ const EnergyMeasuresEdit = () => {
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
-                                                    label="Change cost"
+                                                    label="Change materials"
                                                     type={'number'}
                                                     // InputProps={{
                                                     //     inputProps: {min: 0},
@@ -315,7 +317,7 @@ const EnergyMeasuresEdit = () => {
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
-                                                    label="Change cost"
+                                                    label="Change transport mechanisms"
                                                     type={'number'}
                                                     // InputProps={{
                                                     //     inputProps: {min: 0},
@@ -331,7 +333,7 @@ const EnergyMeasuresEdit = () => {
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
-                                                    label="Change cost"
+                                                    label="Change total per unit"
                                                     type={'number'}
                                                     // InputProps={{
                                                     //     inputProps: {min: 0},
@@ -347,7 +349,7 @@ const EnergyMeasuresEdit = () => {
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
-                                                    label="Change cost"
+                                                    label="Change total per unit with profit"
                                                     type={'number'}
                                                     // InputProps={{
                                                     //     inputProps: {min: 0},
