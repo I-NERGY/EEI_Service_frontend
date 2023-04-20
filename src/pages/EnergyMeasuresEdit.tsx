@@ -120,12 +120,13 @@ const EnergyMeasuresEdit = () => {
     // TODO Finalize
     const handleSave = (id: number) => {
         setLoading(true)
-        // TODO Implement functionality in the back end
         axios.put(`energy_measures/${id}`, measuresListTemp[id])
             .then(response => {
                 setLoading(false)
                 setEditSuccess(true)
-                setMeasuresList(response.data)
+                let arrayTemp = [...measuresList]
+                arrayTemp[id] = response.data
+                setMeasuresList([...arrayTemp])
             })
             .catch(error => {
                 // TODO Check if this works properly
