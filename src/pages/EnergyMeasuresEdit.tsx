@@ -90,6 +90,7 @@ const EnergyMeasuresEdit = () => {
                 setLoading(true)
                 axios.get('energy_measures')
                     .then(response => {
+                        console.log(response.data)
                         setMeasuresList(response.data)
                         setMeasuresListTemp(response.data)
                         setLoading(false)
@@ -170,7 +171,7 @@ const EnergyMeasuresEdit = () => {
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                            Place
+                                            Unit
                                         </Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
@@ -192,7 +193,7 @@ const EnergyMeasuresEdit = () => {
                                                 <Typography variant={'body1'}>{measure.code}</Typography>
                                             </StyledTableCell>
                                             <StyledTableCell component="th" scope="row">
-                                                <Typography variant={'body1'}>{measure.place}</Typography>
+                                                <Typography variant={'body1'}>{measure.unit}</Typography>
                                             </StyledTableCell>
                                             <StyledTableCell align="left">
                                                 <TextField
