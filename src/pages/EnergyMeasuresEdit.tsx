@@ -100,9 +100,19 @@ const EnergyMeasuresEdit = () => {
     }, [initialized])
 
     const handleCostChange = (id: number, e: React.ChangeEvent<any>) => {
-        let arrayTemp = measuresList.map(obj => {
-            if (obj.energy_measure_id === id) {
+        let arrayTemp = measuresListTemp.map(obj => {
+            if (obj.code === id) {
                 return {...obj, total_per_unit: e.target.value}
+            }
+            return obj
+        })
+        setMeasuresListTemp(arrayTemp)
+    }
+
+    const handleLambdaChange = (id: number, e: React.ChangeEvent<any>) => {
+        let arrayTemp = measuresListTemp.map(obj => {
+            if (obj.code === id) {
+                return {...obj, labda: e.target.value}
             }
             return obj
         })
@@ -111,8 +121,7 @@ const EnergyMeasuresEdit = () => {
 
     const handleReset = (id: number) => {
         setEditSuccess(true)
-        let arrayTemp = measuresListTemp
-        arrayTemp[id].total_per_unit = measuresList[id].total_per_unit
+        let arrayTemp = [...measuresList]
         setMeasuresListTemp(arrayTemp)
     }
 
@@ -176,6 +185,11 @@ const EnergyMeasuresEdit = () => {
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Lambda (λ)
+                                        </Typography>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
                                             Total cost per unit
                                         </Typography>
                                     </StyledTableCell>
@@ -188,7 +202,7 @@ const EnergyMeasuresEdit = () => {
                                 {measuresListTemp.length > 0 && measuresListTemp
                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     .map(measure => (
-                                        <StyledTableRow key={measure.energy_measure_id}>
+                                        <StyledTableRow key={measure.code}>
                                             <StyledTableCell component="th" scope="row">
                                                 <Typography variant={'body1'}>{measure.code}</Typography>
                                             </StyledTableCell>
@@ -197,7 +211,23 @@ const EnergyMeasuresEdit = () => {
                                             </StyledTableCell>
                                             <StyledTableCell align="left">
                                                 <TextField
-                                                    onChange={e => handleCostChange(measure.energy_measure_id, e)}
+                                                    onChange={e => handleLambdaChange(measure.code, e)}
+                                                    required
+                                                    fullWidth
+                                                    id="outlined-required"
+                                                    label="Change lambda"
+                                                    type={'number'}
+                                                    InputProps={{
+                                                        inputProps: {min: 0},
+                                                        startAdornment: <InputAdornment
+                                                            position="start">(W/m/K)</InputAdornment>
+                                                    }}
+                                                    value={measure.labda || 0}
+                                                />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <TextField
+                                                    onChange={e => handleCostChange(measure.code, e)}
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
