@@ -90,7 +90,7 @@ const EnergyMeasuresEdit = () => {
                 setLoading(true)
                 axios.get('energy_measures')
                     .then(response => {
-                        console.log(response.data)
+                        console.log(response.data[0])
                         setMeasuresList(response.data)
                         setMeasuresListTemp(response.data)
                         setLoading(false)
@@ -99,20 +99,10 @@ const EnergyMeasuresEdit = () => {
         }
     }, [initialized])
 
-    const handleCostChange = (id: number, e: React.ChangeEvent<any>) => {
+    const handleFieldChange = (id: number, field: string, e: React.ChangeEvent<any>) => {
         let arrayTemp = measuresListTemp.map(obj => {
             if (obj.code === id) {
-                return {...obj, total_per_unit: e.target.value}
-            }
-            return obj
-        })
-        setMeasuresListTemp(arrayTemp)
-    }
-
-    const handleLambdaChange = (id: number, e: React.ChangeEvent<any>) => {
-        let arrayTemp = measuresListTemp.map(obj => {
-            if (obj.code === id) {
-                return {...obj, labda: e.target.value}
+                return {...obj, [field]: e.target.value}
             }
             return obj
         })
@@ -159,7 +149,7 @@ const EnergyMeasuresEdit = () => {
         <>
             {allowed && <>
                 <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
-                {<Container maxWidth={'xl'} sx={{my: 5}}>
+                {<Container maxWidth={false} sx={{my: 5}}>
                     <TablePagination
                         rowsPerPageOptions={[10, 25, 100]}
                         component="div"
@@ -185,12 +175,42 @@ const EnergyMeasuresEdit = () => {
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                            Lambda (λ)
+                                            Lambda (λ) (W/m/K)
                                         </Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                            Total cost per unit
+                                            Time Norm (c*h)
+                                        </Typography>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Rate (€/h)
+                                        </Typography>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Salary (€)
+                                        </Typography>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Materials (€)
+                                        </Typography>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Transport Mechanisms (€)
+                                        </Typography>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Total cost per unit (€)
+                                        </Typography>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="left">
+                                        <Typography fontWeight={'bold'} variant={'subtitle1'}>
+                                            Total per unit with profit (€)
                                         </Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="right">{void (0)}</StyledTableCell>
@@ -211,38 +231,134 @@ const EnergyMeasuresEdit = () => {
                                             </StyledTableCell>
                                             <StyledTableCell align="left">
                                                 <TextField
-                                                    onChange={e => handleLambdaChange(measure.code, e)}
+                                                    onChange={e => handleFieldChange(measure.code, 'labda', e)}
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
                                                     label="Change lambda"
                                                     type={'number'}
-                                                    InputProps={{
-                                                        inputProps: {min: 0},
-                                                        startAdornment: <InputAdornment
-                                                            position="start">(W/m/K)</InputAdornment>
-                                                    }}
+                                                    // InputProps={{
+                                                    //     inputProps: {min: 0},
+                                                    //     startAdornment: <InputAdornment
+                                                    //         position="start">(W/m/K)</InputAdornment>
+                                                    // }}
                                                     value={measure.labda || 0}
                                                 />
                                             </StyledTableCell>
                                             <StyledTableCell align="left">
                                                 <TextField
-                                                    onChange={e => handleCostChange(measure.code, e)}
+                                                    onChange={e => handleFieldChange(measure.code, 'time_norm', e)}
+                                                    required
+                                                    fullWidth
+                                                    id="outlined-required"
+                                                    label="Change Time Norm"
+                                                    type={'number'}
+                                                    // InputProps={{
+                                                    //     inputProps: {min: 0},
+                                                    //     startAdornment: <InputAdornment
+                                                    //         position="start">(c*h)</InputAdornment>
+                                                    // }}
+                                                    value={measure.time_norm}
+                                                />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <TextField
+                                                    onChange={e => handleFieldChange(measure.code, 'rate', e)}
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
                                                     label="Change cost"
                                                     type={'number'}
-                                                    InputProps={{
-                                                        inputProps: {min: 0},
-                                                        startAdornment: <InputAdornment
-                                                            position="start">€</InputAdornment>
-                                                    }}
+                                                    // InputProps={{
+                                                    //     inputProps: {min: 0},
+                                                    //     startAdornment: <InputAdornment
+                                                    //         position="start">(€/h)</InputAdornment>
+                                                    // }}
+                                                    value={measure.rate}
+                                                />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <TextField
+                                                    onChange={e => handleFieldChange(measure.code, 'salary', e)}
+                                                    required
+                                                    fullWidth
+                                                    id="outlined-required"
+                                                    label="Change cost"
+                                                    type={'number'}
+                                                    // InputProps={{
+                                                    //     inputProps: {min: 0},
+                                                    //     startAdornment: <InputAdornment
+                                                    //         position="start">(€)</InputAdornment>
+                                                    // }}
+                                                    value={measure.salary}
+                                                />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <TextField
+                                                    onChange={e => handleFieldChange(measure.code, 'materials', e)}
+                                                    required
+                                                    fullWidth
+                                                    id="outlined-required"
+                                                    label="Change cost"
+                                                    type={'number'}
+                                                    // InputProps={{
+                                                    //     inputProps: {min: 0},
+                                                    //     startAdornment: <InputAdornment
+                                                    //         position="start">(€)</InputAdornment>
+                                                    // }}
+                                                    value={measure.materials}
+                                                />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <TextField
+                                                    onChange={e => handleFieldChange(measure.code, 'transport_mechanisms', e)}
+                                                    required
+                                                    fullWidth
+                                                    id="outlined-required"
+                                                    label="Change cost"
+                                                    type={'number'}
+                                                    // InputProps={{
+                                                    //     inputProps: {min: 0},
+                                                    //     startAdornment: <InputAdornment
+                                                    //         position="start">(€)</InputAdornment>
+                                                    // }}
+                                                    value={measure.transport_mechanisms}
+                                                />
+                                            </StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <TextField
+                                                    onChange={e => handleFieldChange(measure.code, 'total_per_unit', e)}
+                                                    required
+                                                    fullWidth
+                                                    id="outlined-required"
+                                                    label="Change cost"
+                                                    type={'number'}
+                                                    // InputProps={{
+                                                    //     inputProps: {min: 0},
+                                                    //     startAdornment: <InputAdornment
+                                                    //         position="start">(€)</InputAdornment>
+                                                    // }}
                                                     value={measure.total_per_unit}
                                                 />
                                             </StyledTableCell>
+                                            <StyledTableCell align="left">
+                                                <TextField
+                                                    onChange={e => handleFieldChange(measure.code, 'total_per_unit_with_profit', e)}
+                                                    required
+                                                    fullWidth
+                                                    id="outlined-required"
+                                                    label="Change cost"
+                                                    type={'number'}
+                                                    // InputProps={{
+                                                    //     inputProps: {min: 0},
+                                                    //     startAdornment: <InputAdornment
+                                                    //         position="start">(€)</InputAdornment>
+                                                    // }}
+                                                    value={measure.total_per_unit_with_profit}
+                                                />
+                                            </StyledTableCell>
                                             <StyledTableCell align="right">
-                                                <Button size={'large'} variant="contained" color={'warning'}
+                                                <Button size={'small'} variant="contained" color={'warning'}
                                                         onClick={() => handleSave(measure.energy_measure_id)}
                                                         startIcon={<EditAttributesIcon/>}
                                                         disabled={!measure.total_per_unit}>
@@ -250,7 +366,7 @@ const EnergyMeasuresEdit = () => {
                                                 </Button>
                                             </StyledTableCell>
                                             <StyledTableCell align="right">
-                                                <Button size={'large'} variant="contained" color={'success'}
+                                                <Button size={'small'} variant="contained" color={'success'}
                                                         startIcon={<RestartAltIcon/>}
                                                         onClick={() => handleReset(measure.energy_measure_id)}>
                                                     RESET
