@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 import './index.css';
 import App from './App';
@@ -12,7 +12,8 @@ import my_keycloak from "./Keycloak"
 
 axios.defaults.baseURL = 'http://inergy.epu.ntua.gr:8000';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+root.render(
     <ReactKeycloakProvider authClient={my_keycloak} initOptions={{ onLoad: 'login-required' }}>
         <React.StrictMode>
             <BrowserRouter>
@@ -23,6 +24,6 @@ ReactDOM.render(
                 </AuthContextProvider>
             </BrowserRouter>
         </React.StrictMode>
-    </ReactKeycloakProvider>, document.getElementById('root'));
+    </ReactKeycloakProvider>);
 
 reportWebVitals();
