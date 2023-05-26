@@ -9,16 +9,17 @@ import Grid from "@mui/material/Grid";
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import {handleEnergyClass, handleUColor} from "../../utils";
+// import {handleEnergyClass, handleUColor} from "../../utils";
+
+import {handleEnergyClass} from "../../utils";
 import Loading from "../layout/Loading";
 
 interface Props {
     energyClass: string,
-    thermalTransmittance: number | null,
     energyConsumption: number | null
 }
 
-const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyConsumption}: Props) => {
+const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
     const {id} = useParams()
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
@@ -43,9 +44,9 @@ const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyCon
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{mt: 2}}>
-                    {(energyClass && thermalTransmittance && energyConsumption) ?
+                    {(energyClass && energyConsumption) ?
                         <Grid container display={'flex'} spacing={5}>
-                            <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+                            <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
                                 <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Energy
                                     Class</Typography>
                                 <div className="energy-class" style={{marginTop: '10px'}}>
@@ -59,13 +60,13 @@ const InvestmentSelectQuickInfo = ({energyClass, thermalTransmittance, energyCon
                                     <div style={{marginLeft: '15px'}} className={handleEnergyClass(energyClass)}></div>
                                 </div>
                             </Grid>
-                            <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                                <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Thermal
-                                    Transmittance (U)</Typography>
-                                <Typography variant={'h3'} my={'auto'}
-                                            color={() => handleUColor(thermalTransmittance)}>{thermalTransmittance}</Typography>
-                            </Grid>
-                            <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+                            {/*<Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>*/}
+                            {/*    <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Thermal*/}
+                            {/*        Transmittance (U)</Typography>*/}
+                            {/*    <Typography variant={'h3'} my={'auto'}*/}
+                            {/*                color={() => handleUColor(thermalTransmittance)}>{thermalTransmittance}</Typography>*/}
+                            {/*</Grid>*/}
+                            <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
                                 <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Total
                                     Energy Consumption:</Typography>
                                 <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>

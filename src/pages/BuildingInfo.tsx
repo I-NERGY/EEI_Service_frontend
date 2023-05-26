@@ -44,7 +44,6 @@ const BuildingInfo = () => {
         axios.post('/series/', payload)
             .then(response => {
                 navigate(`/energy-measures/id/${address?.cadastre_number}`)
-                console.log(response.data)
             })
             .catch(error => {
                 console.log(error)

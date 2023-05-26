@@ -10,13 +10,12 @@ import Stack from "@mui/material/Stack";
 
 interface Props {
     energyClass: string,
-    thermalTransmittance: number,
     energyConsumption: number,
     totalCost: number,
     handleClose: Function
 }
 
-const InvestmentExpectedResults = ({energyClass, thermalTransmittance, energyConsumption, totalCost, handleClose}: Props) => {
+const InvestmentExpectedResults = ({energyClass, energyConsumption, totalCost, handleClose}: Props) => {
     let navigate = useNavigate();
 
     return (
@@ -29,7 +28,7 @@ const InvestmentExpectedResults = ({energyClass, thermalTransmittance, energyCon
             <Divider/>
 
             <Grid container display={'flex'} spacing={5} sx={{py: 3}}>
-                <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+                <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
                     <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Energy
                         Class</Typography>
                     <div className="energy-class" style={{marginTop: '10px'}}>
@@ -43,13 +42,13 @@ const InvestmentExpectedResults = ({energyClass, thermalTransmittance, energyCon
                         <div style={{marginLeft: '15px'}} className={handleEnergyClass(energyClass)}></div>
                     </div>
                 </Grid>
-                <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                    <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Thermal
-                        Transmittance (U)</Typography>
-                    <Typography variant={'h3'} my={'auto'}
-                                color={() => handleUColor(thermalTransmittance)}>{thermalTransmittance}</Typography>
-                </Grid>
-                <Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+                {/*<Grid item xs={12} md={4} display={'flex'} flexDirection={'column'} alignItems={'center'}>*/}
+                {/*    <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Thermal*/}
+                {/*        Transmittance (U)</Typography>*/}
+                {/*    <Typography variant={'h3'} my={'auto'}*/}
+                {/*                color={() => handleUColor(thermalTransmittance)}>{thermalTransmittance}</Typography>*/}
+                {/*</Grid>*/}
+                <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
                     <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Total
                         Energy Consumption:</Typography>
                     <Typography variant={'h3'} my={'auto'} align={'center'}>{energyConsumption} kWh</Typography>

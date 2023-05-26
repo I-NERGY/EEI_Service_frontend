@@ -102,7 +102,7 @@ const InvestmentSelect = () => {
         axios.get(`building/info/${id}`)
             .then(response => {
                 setEnergyClass(`class${response.data.energy_class}`)
-                setThermalTransmittance(response.data.thermal_transmittance)
+                // setThermalTransmittance(response.data.thermal_transmittance)
                 setEnergyConsumption(response.data.total_energy_consumption)
             })
 
@@ -123,14 +123,13 @@ const InvestmentSelect = () => {
             >
                 <Box sx={style}>
                     {loadingModal ? <Loading/> :
-                        <InvestmentExpectedResults energyClass={'classAPlus'} thermalTransmittance={0.8}
+                        <InvestmentExpectedResults energyClass={'classAPlus'}
                                                    energyConsumption={380} totalCost={totalCost} handleClose={handleClose}/>}
                 </Box>
             </Modal>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
-                <InvestmentSelectQuickInfo energyClass={energyClass} thermalTransmittance={thermalTransmittance}
-                                           energyConsumption={energyConsumption}/>
+                <InvestmentSelectQuickInfo energyClass={energyClass} energyConsumption={energyConsumption}/>
             </Container>
 
             <Container maxWidth={'xl'} sx={{my: 5}}>
