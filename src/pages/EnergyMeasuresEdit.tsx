@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from '@mui/material/Button';
 // import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from '@mui/material/IconButton';
 import TextField from "@mui/material/TextField";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,6 +24,7 @@ import Box from "@mui/material/Box";
 
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import Loading from "../components/layout/Loading";
@@ -217,6 +219,7 @@ const EnergyMeasuresEdit = () => {
                                     </StyledTableCell>
                                     <StyledTableCell align="right">{void (0)}</StyledTableCell>
                                     <StyledTableCell align="right">{void (0)}</StyledTableCell>
+                                    <StyledTableCell align="right">{void (0)}</StyledTableCell>
                                 </TableRow>
                             </TableHead>
 
@@ -373,6 +376,11 @@ const EnergyMeasuresEdit = () => {
                                                         onClick={() => handleReset(measure.energy_measure_id)}>
                                                     RESET
                                                 </Button>
+                                            </StyledTableCell>
+                                            <StyledTableCell align="right">
+                                                <IconButton aria-label="delete" color={'error'}>
+                                                    <DeleteIcon />
+                                                </IconButton>
                                             </StyledTableCell>
                                         </StyledTableRow>
                                     ))}
