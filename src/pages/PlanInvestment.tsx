@@ -28,7 +28,7 @@ const breadcrumbs = [
         Plan Investment
     </Typography>,];
 
-const BuildingInfo = () => {
+const PlanInvestment = () => {
     const navigate = useNavigate()
     const [address, setAddress] = useState<AddressOptionType | null>(null);
     const [chosenImage, setChosenImage] = useState<number | null>(null)
@@ -85,4 +85,4 @@ const BuildingInfo = () => {
     );
 }
 
-export default BuildingInfo;
+export default PlanInvestment;
