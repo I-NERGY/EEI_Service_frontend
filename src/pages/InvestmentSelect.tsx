@@ -26,7 +26,7 @@ const breadcrumbs = [
         Homepage
     </Link>,
     <Link key={1} className={'breadcrumbLink'} to="/building-info">
-        Building Information
+        Plan Investment
     </Link>, <Typography
         key={2}
         color="secondary"

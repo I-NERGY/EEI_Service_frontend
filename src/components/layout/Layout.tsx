@@ -4,8 +4,12 @@ import {styled, useTheme} from '@mui/material/styles';
 import {useLogout} from "../../hooks/useLogout";
 import {useKeycloak} from "@react-keycloak/web";
 import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
-import {appbarMenuButtonItems} from "../../appbarMenuButtonItems";
+import {
+    appbarMenuButtonItemsEnglish,
+    appbarMenuButtonItemsEnglishLatvian
+} from "../../appbarMenuButtonItems";
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -23,7 +27,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, {SelectChangeEvent} from '@mui/material/Select';
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -36,6 +40,8 @@ import MenuButton from "./MenuButton";
 import SignedOutLinks from "./SignedOutLinks";
 import SignedInLinks from "./SignedInLinks";
 import FooterContent from "./FooterContent";
+
+import DictionaryType from "../../interfaces/DictionaryType";
 
 const drawerWidth = 260;
 
@@ -115,7 +121,17 @@ export default function PersistentDrawerLeft({children}: Props) {
     const {keycloak, initialized} = useKeycloak();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const { language, changeLanguage } = useContext(LanguageContext);
+    const {language, changeLanguage} = useContext(LanguageContext);
+    const [dictionary, setDictionary] = useState<any>(multilingual.english)
+
+    useEffect(() => {
+        if (language === 'en') {
+            setDictionary(multilingual.english)
+        }
+        if (language === 'lat') {
+            setDictionary(multilingual.latvian)
+        }
+    }, [language])
 
     const handleChange = (event: SelectChangeEvent) => {
         changeLanguage(event.target.value);
@@ -141,17 +157,24 @@ export default function PersistentDrawerLeft({children}: Props) {
         path: string
     }
 
+    // useEffect(() => {
+    // const dictionary = language === 'en' ? multilingual.english : multilingual.latvian
+    // }, [language])
+
     const navItems = [
-        {title: 'Homepage', icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>, path: '/'},
+        {
+            title: dictionary?.layout?.menuItem1,
+            icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
+            path: '/'
+        },
     ];
 
     useEffect(() => {
         let roles = keycloak.realmAccess?.roles
-
         if (roles && roles?.length > 0) {
             navItems.push(
                 {
-                    title: 'Plan Investment',
+                    title: dictionary?.layout?.menuItem2,
                     icon: <EngineeringOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
                     path: '/building-info'
                 }
@@ -162,7 +185,7 @@ export default function PersistentDrawerLeft({children}: Props) {
         if (roles && roles?.includes('inergy_admin')) {
             navItems.push(
                 {
-                    title: 'Energy Measures Admin page',
+                    title: dictionary?.layout?.menuItem3,
                     icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
                     path: '/energy-measures/edit'
                 }
@@ -170,7 +193,7 @@ export default function PersistentDrawerLeft({children}: Props) {
             setMenu(navItems)
         }
 
-    }, [initialized])
+    }, [initialized, dictionary])
 
     const [menu, setMenu] = useState<navItem[]>(navItems)
 
@@ -230,7 +253,7 @@ export default function PersistentDrawerLeft({children}: Props) {
                             I-NERGY UC13 Dashboard
                         </Typography>
                         {keycloak.authenticated === true && <React.Fragment>
-                            <FormControl sx={{ ml: 'auto', minWidth: 120}} size="small" className={'language'}>
+                            <FormControl sx={{ml: 'auto', minWidth: 120}} size="small" className={'language'}>
                                 <InputLabel id="demo-select-small-label">Language</InputLabel>
                                 <Select
                                     sx={{
@@ -254,9 +277,6 @@ export default function PersistentDrawerLeft({children}: Props) {
                                     label="Language"
                                     onChange={handleChange}
                                 >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
                                     <MenuItem value={'en'}>English</MenuItem>
                                     <MenuItem value={'lat'}>Latvian</MenuItem>
                                 </Select>
@@ -265,8 +285,8 @@ export default function PersistentDrawerLeft({children}: Props) {
                                 style={{
                                     marginLeft: '20px',
                                     color: 'white'
-                                }}>Welcome, {keycloak?.tokenParsed?.preferred_username}</Typography>
-                            <MenuButton subLinks={appbarMenuButtonItems} signout={handleSignOut}/>
+                                }}>{dictionary.layout.welcome}, {keycloak?.tokenParsed?.preferred_username}</Typography>
+                            <MenuButton subLinks={language === 'en' ? appbarMenuButtonItemsEnglish : appbarMenuButtonItemsEnglishLatvian} signout={handleSignOut}/>
                         </React.Fragment>}
                     </Toolbar>
                 </AppBar>
