@@ -1,8 +1,9 @@
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, {ReactNode, useEffect, useState, useContext} from 'react';
 import {useNavigate, useLocation} from "react-router-dom";
 import {styled, useTheme} from '@mui/material/styles';
 import {useLogout} from "../../hooks/useLogout";
 import {useKeycloak} from "@react-keycloak/web";
+import {LanguageContext} from "../../context/LanguageContext";
 
 import {appbarMenuButtonItems} from "../../appbarMenuButtonItems";
 
@@ -19,6 +20,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
@@ -110,6 +115,11 @@ export default function PersistentDrawerLeft({children}: Props) {
     const {keycloak, initialized} = useKeycloak();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const { language, changeLanguage } = useContext(LanguageContext);
+
+    const handleChange = (event: SelectChangeEvent) => {
+        changeLanguage(event.target.value);
+    };
 
     const {logout} = useLogout()
 
@@ -220,9 +230,40 @@ export default function PersistentDrawerLeft({children}: Props) {
                             I-NERGY UC13 Dashboard
                         </Typography>
                         {keycloak.authenticated === true && <React.Fragment>
+                            <FormControl sx={{ ml: 'auto', minWidth: 120}} size="small" className={'language'}>
+                                <InputLabel id="demo-select-small-label">Language</InputLabel>
+                                <Select
+                                    sx={{
+                                        color: "white",
+                                        '.MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgba(255, 255, 255, 1)',
+                                        },
+                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgba(255, 255, 255, 1)',
+                                        },
+                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgba(255, 255, 255, 1)',
+                                        },
+                                        '.MuiSvgIcon-root ': {
+                                            fill: "white !important",
+                                        }
+                                    }}
+                                    labelId="demo-select-small-label"
+                                    id="demo-select-small"
+                                    value={language}
+                                    label="Language"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={'en'}>English</MenuItem>
+                                    <MenuItem value={'lat'}>Latvian</MenuItem>
+                                </Select>
+                            </FormControl>
                             <Typography
                                 style={{
-                                    marginLeft: 'auto',
+                                    marginLeft: '20px',
                                     color: 'white'
                                 }}>Welcome, {keycloak?.tokenParsed?.preferred_username}</Typography>
                             <MenuButton subLinks={appbarMenuButtonItems} signout={handleSignOut}/>

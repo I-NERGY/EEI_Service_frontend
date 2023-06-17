@@ -299,3 +299,7 @@ code {
 .breadcrumbLink:hover {
     text-decoration: underline !important;
 }
+
+.MuiFormControl-root.language .MuiInputLabel-root {
+    color: white !important;
+}
