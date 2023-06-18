@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -16,6 +18,9 @@ interface Props {
 }
 
 const ImageField = ({chosenImage, setChosenImage}: Props) => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.planInvestment : multilingual.latvian.planInvestment
+
     const building_type_images = [
         {src: 'images/building_types/101.png', id: 101},
         {src: 'images/building_types/102.png', id: 102},
@@ -44,10 +49,12 @@ const ImageField = ({chosenImage, setChosenImage}: Props) => {
                                                        my: 1
                                                    }}/>
                         <Box>
-                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Choose a resembling
-                                photo</Typography>
-                            <Typography variant={'subtitle1'}>Select the image that looks like your building the most.
-                                In this way, the system will understand its characteristics.</Typography>
+                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>
+                                {dictionary.sectionTitle2}
+                            </Typography>
+                            <Typography variant={'subtitle1'}>
+                                {dictionary.sectionDesc2}
+                            </Typography>
                         </Box>
                     </Stack>
                 </Grid>

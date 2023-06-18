@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import axios from 'axios';
 import {Link, useNavigate} from 'react-router-dom';
+import {LanguageContext} from "../context/LanguageContext";
+import {multilingual} from "../multilingual";
 
 import AddressOptionType from "../interfaces/AddressOptionType";
 
@@ -17,18 +19,21 @@ import AddressField from "../components/ServicePage/AddressField";
 import ImageField from "../components/ServicePage/ImageField";
 import MapField from "../components/ServicePage/MapField";
 
-const breadcrumbs = [
-    <Link className={'breadcrumbLink'} key="1" to="/">
-        Homepage
-    </Link>, <Typography
-        key={2}
-        color="secondary"
-        fontSize={'20px'}
-        fontWeight={600}>
-        Plan Investment
-    </Typography>,];
-
 const PlanInvestment = () => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.planInvestment : multilingual.latvian.planInvestment
+
+    const breadcrumbs = [
+        <Link className={'breadcrumbLink'} key="1" to="/">
+            {dictionary.breadcrumb1}
+        </Link>, <Typography
+            key={2}
+            color="secondary"
+            fontSize={'20px'}
+            fontWeight={600}>
+            {dictionary.breadcrumb2}
+        </Typography>,];
+
     const navigate = useNavigate()
     const [address, setAddress] = useState<AddressOptionType | null>(null);
     const [chosenImage, setChosenImage] = useState<number | null>(null)
@@ -52,9 +57,9 @@ const PlanInvestment = () => {
 
     return (
         <>
-            <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
+            <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={dictionary.pageTitle}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
-                <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>Configuration</Typography>
+                <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>{dictionary.configuration}</Typography>
                 <AddressField address={address} setAddress={setAddress} setPerimeter={setPerimeter}/>
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
                 <MapField address={address} perimeter={perimeter}/>
@@ -75,7 +80,7 @@ const PlanInvestment = () => {
                                 disabled={!address || !chosenImage}
                         >
                             <Typography variant={'h6'}>
-                                Virtual EPC
+                                {dictionary.button}
                             </Typography>
                         </Button>
                     </Grid>
