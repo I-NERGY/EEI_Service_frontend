@@ -69,7 +69,7 @@ const UserProfile = () => {
     ];
 
     return (
-        <React.Fragment>
+        <>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={''}/>
 
             <Box sx={{padding: 3, maxWidth: "100vw"}}>
@@ -184,7 +184,7 @@ const UserProfile = () => {
                     </AccordionDetails>
                 </Accordion>
             </Box>
-        </React.Fragment>
+        </>
     );
 };
 
