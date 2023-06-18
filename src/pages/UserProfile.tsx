@@ -1,6 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import {styled} from '@mui/material/styles';
 import {useKeycloak} from "@react-keycloak/web";
+import {LanguageContext} from "../context/LanguageContext";
+import {multilingual} from "../multilingual";
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -50,6 +52,8 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
 }));
 
 const UserProfile = () => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.myProfile : multilingual.latvian.myProfile
     const {keycloak} = useKeycloak()
 
     const [userInfoExpanded, setUserInfoExpanded] = useState<boolean>(true)
@@ -57,10 +61,10 @@ const UserProfile = () => {
 
     const breadcrumbs = [
         <Link className={'breadcrumbLink'} key="1" to="/">
-            Homepage
+            {dictionary.breadcrumb1}
         </Link>,
         <Typography key="2" color="secondary" fontWeight={'bold'} fontSize={'20px'}>
-            {'User Profile'}
+            {dictionary.breadcrumb2}
         </Typography>,
     ];
 
@@ -79,7 +83,7 @@ const UserProfile = () => {
                         <Grid container>
                             <Grid item md={3} xs={6}>
                                 <Typography sx={{flexShrink: 2}} variant={'h6'}>
-                                    Currently logged in user:
+                                    {dictionary.current_user}:
                                 </Typography>
                             </Grid>
 
@@ -101,7 +105,7 @@ const UserProfile = () => {
                                                 marginLeft: 'auto',
                                                 display: {xs: 'none', md: 'block'}
                                             }}>
-                                    {!userInfoExpanded && 'Click for details'}
+                                    {!userInfoExpanded && dictionary.clickDetails}
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -112,10 +116,10 @@ const UserProfile = () => {
                                 <Table size="small" aria-label="a dense table">
                                     <TableHead>
                                         <TableRow>
-                                            <StyledTableCell align="center">Username</StyledTableCell>
-                                            <StyledTableCell align="center">Roles</StyledTableCell>
-                                            <StyledTableCell align="center">First Name</StyledTableCell>
-                                            <StyledTableCell align="center">Last Name</StyledTableCell>
+                                            <StyledTableCell align="center">{dictionary.username}</StyledTableCell>
+                                            <StyledTableCell align="center">{dictionary.roles}</StyledTableCell>
+                                            <StyledTableCell align="center">{dictionary.first_name}</StyledTableCell>
+                                            <StyledTableCell align="center">{dictionary.last_name}</StyledTableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -137,12 +141,15 @@ const UserProfile = () => {
                                                             <Container>
                                                                 <Typography fontSize={'large'} align={'center'}
                                                                             fontWeight={'bold'}>
-                                                                    {keycloak?.realmAccess?.roles?.length} role{keycloak?.realmAccess?.roles?.length > 1 && 's'}.
+                                                                    {keycloak?.realmAccess?.roles?.length < 2 ?
+                                                                        keycloak?.realmAccess?.roles?.length + ' ' + dictionary.role_singular :
+                                                                        keycloak?.realmAccess?.roles?.length + ' ' + dictionary.role_plural
+                                                                    }.
                                                                 </Typography>
                                                                 {!rolesExpanded &&
                                                                     <Typography fontSize={'large'}
                                                                                 overflow={'hidden'}
-                                                                                align={'center'}>{'Click to expand.'}
+                                                                                align={'center'}>{dictionary.expand}
                                                                     </Typography>}
                                                             </Container>
                                                         </AccordionSummary>
@@ -158,7 +165,7 @@ const UserProfile = () => {
                                                         </AccordionDetails>
                                                     </Accordion>}
                                                 {(keycloak?.realmAccess?.roles?.length === 0) &&
-                                                    <Typography fontSize={'large'}>No roles assigned.</Typography>}
+                                                    <Typography fontSize={'large'}>{dictionary.noRoles}.</Typography>}
                                             </TableCell>
 
                                             <TableCell sx={{fontSize: '18px', padding: '10px'}} align="center">

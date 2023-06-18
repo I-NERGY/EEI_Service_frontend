@@ -58,7 +58,6 @@ const MapField = ({address, perimeter}) => {
                                        InputProps={{inputProps: {min: 0}}}
                             />
                         </Grid>}
-
                 </Grid>
 
                 <Grid item xs={12} md={6}>

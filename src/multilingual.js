@@ -62,11 +62,13 @@ export const multilingual = {
             breadcrumb1: 'Homepage',
             breadcrumb2: 'User Profile',
             current_user: 'Currently logged in user',
+            clickDetails: 'Click for details',
             username: 'Username',
             roles: 'Roles',
             first_name: 'First Name',
             last_name: 'Last Name',
             expand: 'Click to expand',
+            noRoles: 'No roles assigned',
             role_singular: 'role',
             role_plural: 'roles'
         },
@@ -131,16 +133,18 @@ export const multilingual = {
             delete: ''
         },
         myProfile: {
-            breadcrumb1: '',
-            breadcrumb2: '',
-            current_user: '',
-            username: '',
-            roles: '',
-            first_name: '',
-            last_name: '',
-            expand: '',
-            role_singular: '',
-            role_plural: ''
+            breadcrumb1: 'LAT Homepage',
+            breadcrumb2: 'LAT User Profile',
+            current_user: 'LAT Currently logged in user',
+            clickDetails: 'LAT Click for details',
+            username: 'LAT Username',
+            roles: 'LAT Roles',
+            first_name: 'LAT First Name',
+            last_name: 'LAT Last Name',
+            expand: 'LAT Click to expand',
+            noRoles: 'LAT No roles assigned',
+            role_singular: 'LAT role',
+            role_plural: 'LAT roles'
         },
     }
 }
