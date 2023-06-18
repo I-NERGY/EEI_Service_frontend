@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useParams} from 'react-router-dom'
+import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -8,8 +10,6 @@ import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid";
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-// import {handleEnergyClass, handleUColor} from "../../utils";
 
 import {handleEnergyClass} from "../../utils";
 import Loading from "../layout/Loading";
@@ -20,6 +20,9 @@ interface Props {
 }
 
 const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.selectInvestment : multilingual.latvian.selectInvestment
+
     const {id} = useParams()
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
@@ -37,18 +40,19 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                   id="panel1bh-header"
                 >
                     <Typography sx={{flexShrink: 0, my: 'auto'}} variant={'h4'} color={'white'}>
-                        General information
+                        {dictionary.general}
                     </Typography>
                     <Typography color={'white'} sx={{display: {xs: 'none', md: 'block'}, ml: 'auto', my: 'auto'}}>
-                        {expanded === 'panel1' ? '' : 'Click for details'}
+                        {expanded === 'panel1' ? '' : dictionary.clickDetails}
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{mt: 2}}>
                     {(energyClass && energyConsumption) ?
                         <Grid container display={'flex'} spacing={5}>
                             <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                                <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Energy
-                                    Class</Typography>
+                                <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
+                                    {dictionary.energyClass}
+                                </Typography>
                                 <div className="energy-class" style={{marginTop: '10px'}}>
                                     <span className="classAPlusPlus">A<sup>++</sup></span>
                                     <span className="classAPlus">A<sup>+</sup></span>
@@ -67,8 +71,9 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                             {/*                color={() => handleUColor(thermalTransmittance)}>{thermalTransmittance}</Typography>*/}
                             {/*</Grid>*/}
                             <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                                <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>Total
-                                    Energy Consumption:</Typography>
+                                <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
+                                    {dictionary.totalConsumption}
+                                </Typography>
                                 <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>
                             </Grid>
                         </Grid> :

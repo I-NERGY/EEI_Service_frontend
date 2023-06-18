@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Link, useParams} from 'react-router-dom'
 import axios from 'axios';
+import {LanguageContext} from "../context/LanguageContext";
+import {multilingual} from "../multilingual";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -20,20 +22,6 @@ import Button from "@mui/material/Button";
 import ChevronRight from "@mui/icons-material/ChevronRight";
 import InvestmentExpectedResults from "../components/InvestmentSelect/InvestmentExpectedResults";
 import Loading from "../components/layout/Loading";
-
-const breadcrumbs = [
-    <Link className={'breadcrumbLink'} key="1" to="/">
-        Homepage
-    </Link>,
-    <Link key={1} className={'breadcrumbLink'} to="/building-info">
-        Plan Investment
-    </Link>, <Typography
-        key={2}
-        color="secondary"
-        fontSize={'20px'}
-        fontWeight={600}>
-        Virtual EPC & Innovation Measures
-    </Typography>,];
 
 interface Measure {
     id: number,
@@ -56,6 +44,23 @@ const style = {
 };
 
 const InvestmentSelect = () => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.selectInvestment : multilingual.latvian.selectInvestment
+
+    const breadcrumbs = [
+        <Link className={'breadcrumbLink'} key="1" to="/">
+            {dictionary.breadcrumb1}
+        </Link>,
+        <Link key={1} className={'breadcrumbLink'} to="/building-info">
+            {dictionary.breadcrumb2}
+        </Link>, <Typography
+            key={2}
+            color="secondary"
+            fontSize={'20px'}
+            fontWeight={600}>
+            {dictionary.breadcrumb3}
+        </Typography>,];
+
     const {id} = useParams()
 
     const [measuresList, setMeasuresList] = useState<Measure[] | []>([])
@@ -73,7 +78,7 @@ const InvestmentSelect = () => {
     const [totalCost, setTotalCost] = useState<number | 0>(0)
 
     const handleChange = (measure: Measure) => {
-        measuresCurrent[measure.id].checked = ! measuresCurrent[measure.id].checked
+        measuresCurrent[measure.id].checked = !measuresCurrent[measure.id].checked
 
         const result = measuresCurrent.filter(measure => {
             return measure.checked
@@ -124,19 +129,21 @@ const InvestmentSelect = () => {
                 <Box sx={style}>
                     {loadingModal ? <Loading/> :
                         <InvestmentExpectedResults energyClass={'classAPlus'}
-                                                   energyConsumption={380} totalCost={totalCost} handleClose={handleClose}/>}
+                                                   energyConsumption={380} totalCost={totalCost}
+                                                   handleClose={handleClose}/>}
                 </Box>
             </Modal>
-            <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
+            <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={dictionary.pageTitle}/>
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <InvestmentSelectQuickInfo energyClass={energyClass} energyConsumption={energyConsumption}/>
             </Container>
 
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Stack direction={'row'}>
-                    <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3, flexGrow: 1}}>Energy Efficiency
-                        Measures</Typography>
-                    <Typography variant={'h5'} fontWeight={'bold'} sx={{mb: 3}}>Total Cost: {totalCost}€</Typography>
+                    <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3, flexGrow: 1}}>
+                        {dictionary.measures}
+                    </Typography>
+                    <Typography variant={'h5'} fontWeight={'bold'} sx={{mb: 3}}>{dictionary.totalCost}: {totalCost}€</Typography>
                 </Stack>
 
                 <Grid container spacing={2}>
