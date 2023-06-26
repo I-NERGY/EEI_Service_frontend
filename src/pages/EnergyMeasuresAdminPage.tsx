@@ -22,6 +22,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
 import Box from "@mui/material/Box";
 import Modal from '@mui/material/Modal';
+import Stack from "@mui/material/Stack";
 
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -30,7 +31,6 @@ import AddIcon from '@mui/icons-material/Add';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import Loading from "../components/layout/Loading";
-import Stack from "@mui/material/Stack";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
