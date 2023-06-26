@@ -100,17 +100,35 @@ const EnergyMeasuresAdminPage = () => {
     const handleOpenModal = (code: string) => {
         setModalOpen(true)
         setMeasureChosen(code)
-        console.log(code)
     };
     const handleCloseModal = () => setModalOpen(false);
 
     const handleDeleteMeasure = (code: string) => {
-
+        axios.delete(`energy_measures_delete/${code}`)
+            .then(response => {
+                setDeleteSuccess(true)
+                axios.get('energy_measures')
+                    .then(response => {
+                        setModalOpen(false)
+                        setMeasuresList(response.data)
+                        setMeasuresListTemp(response.data)
+                        setLoading(false)
+                    })
+            })
+            .catch(error => {
+                setDeleteFailure(true)
+                console.log(error)
+            })
     }
 
-    const handleCloseSnackbar = () => {
+    const handleCloseSnackbarEdit = () => {
         setEditSuccess(false)
         setEditFailure(false)
+    }
+
+    const handleCloseSnackbarDelete = () => {
+        setDeleteSuccess(false)
+        setDeleteFailure(false)
     }
 
     const [measuresList, setMeasuresList] = useState<any[]>([])
@@ -464,14 +482,26 @@ const EnergyMeasuresAdminPage = () => {
                         </Box>}
                 </Container>
 
-                <Snackbar open={editSuccess} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-                    <Alert onClose={handleCloseSnackbar} severity="success" sx={{width: '100%'}}>
+                <Snackbar open={editSuccess} autoHideDuration={3000} onClose={handleCloseSnackbarEdit}>
+                    <Alert onClose={handleCloseSnackbarEdit} severity="success" sx={{width: '100%'}}>
                         Energy Measure cost has been successfully changed!
                     </Alert>
 
                 </Snackbar>
-                <Snackbar open={editFailure} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-                    <Alert onClose={handleCloseSnackbar} severity="error" sx={{width: '100%'}}>
+                <Snackbar open={editFailure} autoHideDuration={3000} onClose={handleCloseSnackbarEdit}>
+                    <Alert onClose={handleCloseSnackbarEdit} severity="error" sx={{width: '100%'}}>
+                        Something went wrong! Please try again.
+                    </Alert>
+                </Snackbar>
+
+                <Snackbar open={deleteSuccess} autoHideDuration={3000} onClose={handleCloseSnackbarDelete}>
+                    <Alert onClose={handleCloseSnackbarDelete} severity="success" sx={{width: '100%'}}>
+                        Energy Measure cost has been successfully deleted!
+                    </Alert>
+
+                </Snackbar>
+                <Snackbar open={deleteFailure} autoHideDuration={3000} onClose={handleCloseSnackbarDelete}>
+                    <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{width: '100%'}}>
                         Something went wrong! Please try again.
                     </Alert>
                 </Snackbar>
