@@ -26,6 +26,7 @@ import Modal from '@mui/material/Modal';
 import EditAttributesIcon from '@mui/icons-material/EditAttributes';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import Loading from "../components/layout/Loading";
@@ -83,7 +84,7 @@ const style = {
 
 const EnergyMeasuresAdminPage = () => {
     const {keycloak, initialized} = useKeycloak();
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const [allowed, setAllowed] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
     const [measureChosen, setMeasureChosen] = useState('')
@@ -205,7 +206,14 @@ const EnergyMeasuresAdminPage = () => {
 
             {allowed && <>
                 <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
-                {<Container maxWidth={false} sx={{my: 5}}>
+
+                <Container maxWidth={false} sx={{my: 5, display: 'flex'}}>
+                    <Button onClick={() => navigate('/energy-measures/add')} sx={{ml: 'auto', color: 'white'}} variant="contained" endIcon={<AddIcon />}>
+                        <Typography variant={'body2'} color={'white'}>Add New Measure</Typography>
+                    </Button>
+                </Container>
+
+                <Container maxWidth={false} sx={{my: 2}}>
                     <TablePagination
                         rowsPerPageOptions={[10, 25, 100]}
                         component="div"
@@ -453,7 +461,7 @@ const EnergyMeasuresAdminPage = () => {
                         <Box justifyContent={'center'} alignItems={'center'} p={5}>
                             <Loading/>
                         </Box>}
-                </Container>}
+                </Container>
 
                 <Snackbar open={editSuccess} autoHideDuration={3000} onClose={handleCloseSnackbar}>
                     <Alert onClose={handleCloseSnackbar} severity="success" sx={{width: '100%'}}>
