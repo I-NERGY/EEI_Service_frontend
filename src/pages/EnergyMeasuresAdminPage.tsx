@@ -208,7 +208,8 @@ const EnergyMeasuresAdminPage = () => {
                 <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
 
                 <Container maxWidth={false} sx={{mt: 5, display: 'flex'}}>
-                    <Button onClick={() => navigate('/energy-measures/add')} sx={{ml: 'auto', color: 'white'}} variant="contained" endIcon={<AddIcon />}>
+                    <Button onClick={() => navigate('/energy-measures/add')} sx={{ml: 'auto', color: 'white'}}
+                            variant="contained" endIcon={<AddIcon/>}>
                         <Typography variant={'body2'} color={'white'}>Add New Measure</Typography>
                     </Button>
                 </Container>
@@ -426,8 +427,7 @@ const EnergyMeasuresAdminPage = () => {
                                                 <Button size={'small'} variant="contained" color={'warning'}
                                                         onClick={() => handleSave(index, measure.code)}
                                                         startIcon={<EditAttributesIcon/>}
-                                                        // TODO Check this
-                                                        disabled={!measure.total_per_unit}>
+                                                        disabled={!measure.code || !measure.unit || !measure.labda || !measure.total_per_unit_with_profit}>
                                                     SAVE
                                                 </Button>
                                             </StyledTableCell>
