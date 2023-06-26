@@ -22,7 +22,7 @@ const EnergyMeasuresAdd = () => {
     const [codeError, setCodeError] = useState<boolean>(false)
     const [unit, setUnit] = useState<String>('')
     const [unitError, setUnitError] = useState<boolean>(false)
-    const [lambda, setLambda] = useState<String>('')
+    const [lambda, setLambda] = useState<Number | ''>('')
     const [lambdaError, setLambdaError] = useState<boolean>(false)
     const [totalCost, setTotalCost] = useState<Number | ''>('')
     const [totalCostError, setTotalCostError] = useState<boolean>(false)
@@ -32,7 +32,7 @@ const EnergyMeasuresAdd = () => {
     const handleFieldChange = (field: String, value: String) => {
         field === 'code' ? setCode(value) :
             field === 'unit' ? setUnit(value) :
-                field === 'lambda' ? setLambda(value) :
+                field === 'lambda' ? setLambda(Number(value)) :
                     field === 'totalCost' ? setTotalCost(Number(value)) :
                         setDescription(value)
     }
@@ -45,7 +45,27 @@ const EnergyMeasuresAdd = () => {
         description === '' ? setDescriptionError(true) : void (0)
 
         if (code !== '' && unit !== '' && lambda !== '' && totalCost !== '' && description !== '') {
-            alert('GO GO GO')
+            const payload = {
+                unit,
+                code,
+                measure: description,
+                energy_measure_id: 0,
+                thickness: 0,
+                labda: lambda,
+                time_norm: 0,
+                rate: 0,
+                salary: 0,
+                materials: 0,
+                transport_mechanisms: 0,
+                total_per_unit: 0,
+                total_per_unit_with_profit: totalCost
+            }
+
+            axios.put('energy_measures_add', payload)
+                .then(response => {
+                    console.log(response.data)
+                })
+                .catch(error => console.log(error))
         }
     }
 
@@ -108,6 +128,8 @@ const EnergyMeasuresAdd = () => {
                             <TextField
                                 onChange={e => handleFieldChange('lambda', e.target.value)}
                                 error={lambda === '' && lambdaError}
+                                type={'number'}
+                                inputProps={{min: 0}}
                                 fullWidth
                                 required
                                 id="outlined-required"
