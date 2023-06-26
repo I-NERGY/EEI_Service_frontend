@@ -426,6 +426,7 @@ const EnergyMeasuresAdminPage = () => {
                                                 <Button size={'small'} variant="contained" color={'warning'}
                                                         onClick={() => handleSave(index, measure.code)}
                                                         startIcon={<EditAttributesIcon/>}
+                                                        // TODO Check this
                                                         disabled={!measure.total_per_unit}>
                                                     SAVE
                                                 </Button>
