@@ -207,7 +207,7 @@ const EnergyMeasuresAdminPage = () => {
             {allowed && <>
                 <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
 
-                <Container maxWidth={false} sx={{my: 5, display: 'flex'}}>
+                <Container maxWidth={false} sx={{mt: 5, display: 'flex'}}>
                     <Button onClick={() => navigate('/energy-measures/add')} sx={{ml: 'auto', color: 'white'}} variant="contained" endIcon={<AddIcon />}>
                         <Typography variant={'body2'} color={'white'}>Add New Measure</Typography>
                     </Button>
