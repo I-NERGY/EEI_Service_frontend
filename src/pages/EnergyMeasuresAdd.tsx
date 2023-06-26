@@ -7,10 +7,19 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-
 import Breadcrumb from "../components/layout/Breadcrumb";
 import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert, {AlertProps} from "@mui/material/Alert";
+
 import ChevronRight from "@mui/icons-material/ChevronRight";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const EnergyMeasuresAdd = () => {
     const {keycloak, initialized} = useKeycloak();
@@ -28,6 +37,15 @@ const EnergyMeasuresAdd = () => {
     const [totalCostError, setTotalCostError] = useState<boolean>(false)
     const [description, setDescription] = useState<String>('')
     const [descriptionError, setDescriptionError] = useState<boolean>(false)
+
+    // Values for snackbar
+    const [additionSuccess, setAdditionSuccess] = useState<boolean>(false)
+    const [additionFailure, setAdditionFailure] = useState<boolean>(false)
+
+    const handleCloseSnackbar = () => {
+        setAdditionSuccess(false)
+        setAdditionFailure(false)
+    }
 
     const handleFieldChange = (field: String, value: String) => {
         field === 'code' ? setCode(value) :
@@ -63,9 +81,18 @@ const EnergyMeasuresAdd = () => {
 
             axios.put('energy_measures_add', payload)
                 .then(response => {
-                    console.log(response.data)
+                    setCode('')
+                    setUnit('')
+                    setLambda('')
+                    setTotalCost('')
+                    setDescription('')
+
+                    setAdditionSuccess(true)
                 })
-                .catch(error => console.log(error))
+                .catch(error => {
+                    setAdditionFailure(true)
+                    console.log(error)
+                })
         }
     }
 
@@ -110,6 +137,7 @@ const EnergyMeasuresAdd = () => {
                                 required
                                 id="outlined-required"
                                 label="Code"
+                                value={code}
                                 placeholder="Provide the code for the new measure"
                             />
                         </Grid>
@@ -121,6 +149,7 @@ const EnergyMeasuresAdd = () => {
                                 required
                                 id="outlined-required"
                                 label="Unit"
+                                value={unit}
                                 placeholder="Provide the unit for the new measure"
                             />
                         </Grid>
@@ -134,6 +163,7 @@ const EnergyMeasuresAdd = () => {
                                 required
                                 id="outlined-required"
                                 label="Lambda (λ)"
+                                value={lambda}
                                 placeholder="Provide the lambda (λ) (W/m/K) for the new measure"
                             />
                         </Grid>
@@ -147,6 +177,7 @@ const EnergyMeasuresAdd = () => {
                                 required
                                 id="outlined-required"
                                 label="Total cost"
+                                value={totalCost}
                                 placeholder="Provide the total cost per unit with profit for the new measure"
                             />
                         </Grid>
@@ -158,6 +189,7 @@ const EnergyMeasuresAdd = () => {
                                 required
                                 id="outlined-required"
                                 label="Description"
+                                value={description}
                                 placeholder="Provide a description for the new measure"
                             />
                         </Grid>
@@ -166,7 +198,6 @@ const EnergyMeasuresAdd = () => {
                                     sx={{ml: 'auto'}}
                                     endIcon={<ChevronRight/>}
                                     onClick={checkForm}
-                                // disabled={!address || !chosenImage}
                             >
                                 <Typography variant={'h6'}>
                                     SUBMIT
@@ -174,9 +205,19 @@ const EnergyMeasuresAdd = () => {
                             </Button>
                         </Grid>
                     </Grid>
-
                 </Container>
 
+                <Snackbar open={additionSuccess} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+                    <Alert onClose={handleCloseSnackbar} severity="success" sx={{width: '100%'}}>
+                        The Energy Measure has been successfully added!
+                    </Alert>
+
+                </Snackbar>
+                <Snackbar open={additionFailure} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+                    <Alert onClose={handleCloseSnackbar} severity="error" sx={{width: '100%'}}>
+                        Something went wrong! Please try again.
+                    </Alert>
+                </Snackbar>
             </>
             }
         </>
