@@ -19,22 +19,34 @@ const EnergyMeasuresAdd = () => {
 
     // Form values and errors
     const [code, setCode] = useState<String>('')
-    const [codeError, setCodeError] = useState(false)
+    const [codeError, setCodeError] = useState<boolean>(false)
     const [unit, setUnit] = useState<String>('')
-    const [unitError, setUnitError] = useState(false)
+    const [unitError, setUnitError] = useState<boolean>(false)
     const [lambda, setLambda] = useState<String>('')
-    const [lambdaError, setLambdaError] = useState(false)
-    const [totalCost, setTotalCost] = useState<String>('')
-    const [totalCostError, setTotalCostError] = useState(false)
+    const [lambdaError, setLambdaError] = useState<boolean>(false)
+    const [totalCost, setTotalCost] = useState<Number | ''>('')
+    const [totalCostError, setTotalCostError] = useState<boolean>(false)
     const [description, setDescription] = useState<String>('')
-    const [descriptionError, setDescriptionError] = useState(false)
+    const [descriptionError, setDescriptionError] = useState<boolean>(false)
 
     const handleFieldChange = (field: String, value: String) => {
         field === 'code' ? setCode(value) :
             field === 'unit' ? setUnit(value) :
                 field === 'lambda' ? setLambda(value) :
-                    field === 'totalCost' ? setTotalCost(value) :
+                    field === 'totalCost' ? setTotalCost(Number(value)) :
                         setDescription(value)
+    }
+
+    const checkForm = () => {
+        code === '' ? setCodeError(true) : void (0)
+        unit === '' ? setUnitError(true) : void (0)
+        lambda === '' ? setLambdaError(true) : void (0)
+        totalCost === '' ? setTotalCostError(true) : void (0)
+        description === '' ? setDescriptionError(true) : void (0)
+
+        if (code !== '' && unit !== '' && lambda !== '' && totalCost !== '' && description !== '') {
+            alert('GO GO GO')
+        }
     }
 
     const breadcrumbs = [
@@ -73,6 +85,7 @@ const EnergyMeasuresAdd = () => {
                         <Grid item xs={12} md={3}>
                             <TextField
                                 onChange={e => handleFieldChange('code', e.target.value)}
+                                error={code === '' && codeError}
                                 fullWidth
                                 required
                                 id="outlined-required"
@@ -83,6 +96,7 @@ const EnergyMeasuresAdd = () => {
                         <Grid item xs={12} md={3}>
                             <TextField
                                 onChange={e => handleFieldChange('unit', e.target.value)}
+                                error={unit === '' && unitError}
                                 fullWidth
                                 required
                                 id="outlined-required"
@@ -93,6 +107,7 @@ const EnergyMeasuresAdd = () => {
                         <Grid item xs={12} md={3}>
                             <TextField
                                 onChange={e => handleFieldChange('lambda', e.target.value)}
+                                error={lambda === '' && lambdaError}
                                 fullWidth
                                 required
                                 id="outlined-required"
@@ -103,6 +118,9 @@ const EnergyMeasuresAdd = () => {
                         <Grid item xs={12} md={3}>
                             <TextField
                                 onChange={e => handleFieldChange('totalCost', e.target.value)}
+                                error={totalCost === '' && totalCostError}
+                                type={'number'}
+                                inputProps={{min: 0}}
                                 fullWidth
                                 required
                                 id="outlined-required"
@@ -113,6 +131,7 @@ const EnergyMeasuresAdd = () => {
                         <Grid item xs={12}>
                             <TextField
                                 onChange={e => handleFieldChange('description', e.target.value)}
+                                error={description === '' && descriptionError}
                                 fullWidth
                                 required
                                 id="outlined-required"
@@ -124,7 +143,7 @@ const EnergyMeasuresAdd = () => {
                             <Button variant={'contained'} component={'span'} size={'medium'} color={'success'}
                                     sx={{ml: 'auto'}}
                                     endIcon={<ChevronRight/>}
-                                // onClick={handleButton}
+                                    onClick={checkForm}
                                 // disabled={!address || !chosenImage}
                             >
                                 <Typography variant={'h6'}>
