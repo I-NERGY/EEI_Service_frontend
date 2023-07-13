@@ -372,8 +372,8 @@ const EnergyMeasuresAdminPage = () => {
                     <Alert onClose={handleCloseSnackbarEdit} severity="success" sx={{width: '100%'}}>
                         {dictionary.editSuccess}
                     </Alert>
-
                 </Snackbar>
+
                 <Snackbar open={editFailure} autoHideDuration={3000} onClose={handleCloseSnackbarEdit}>
                     <Alert onClose={handleCloseSnackbarEdit} severity="error" sx={{width: '100%'}}>
                         {dictionary.editFailure}
@@ -384,8 +384,8 @@ const EnergyMeasuresAdminPage = () => {
                     <Alert onClose={handleCloseSnackbarDelete} severity="success" sx={{width: '100%'}}>
                         {dictionary.deleteSuccess}
                     </Alert>
-
                 </Snackbar>
+
                 <Snackbar open={deleteFailure} autoHideDuration={3000} onClose={handleCloseSnackbarDelete}>
                     <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{width: '100%'}}>
                         {dictionary.deleteFailure}

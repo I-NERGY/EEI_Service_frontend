@@ -61,7 +61,7 @@ export const multilingual = {
             unit: 'Unit',
             lambda: 'Lambda (λ)',
             totalCost: 'Total cost',
-            editSuccess: ' Energy Measure has been successfully changed!',
+            editSuccess: 'Energy Measure has been successfully changed!',
             editFailure: 'Something went wrong! Please try again.',
             deleteSuccess: 'Energy Measure has been successfully deleted!',
             deleteFailure: 'Something went wrong! Please try again.'
