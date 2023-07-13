@@ -56,7 +56,15 @@ export const multilingual = {
             rows: 'Rows per page',
             save: 'SAVE',
             reset: 'RESET',
-            delete: 'DELETE'
+            delete: 'DELETE',
+            code: 'Code',
+            unit: 'Unit',
+            lambda: 'Lambda (λ)',
+            totalCost: 'Total cost',
+            editSuccess: ' Energy Measure has been successfully changed!',
+            editFailure: 'Something went wrong! Please try again.',
+            deleteSuccess: 'Energy Measure has been successfully deleted!',
+            deleteFailure: 'Something went wrong! Please try again.'
         },
         myProfile: {
             breadcrumb1: 'Homepage',
@@ -130,7 +138,15 @@ export const multilingual = {
             rows: 'Rindas vienā lapā',
             save: 'Saglabāt',
             reset: 'Atjaunot',
-            delete: 'Dzēst'
+            delete: 'Dzēst',
+            code: 'LAT Code',
+            unit: 'LAT Unit',
+            lambda: 'LAT Lambda (λ)',
+            totalCost: 'LAT Total cost',
+            editSuccess: 'LAT Energy Measure has been successfully changed!',
+            editFailure: 'LAT Something went wrong! Please try again.',
+            deleteSuccess: 'LAT Energy Measure has been successfully deleted!',
+            deleteFailure: 'LAT Something went wrong! Please try again.'
         },
         myProfile: {
             breadcrumb1: 'Mājas lapa',

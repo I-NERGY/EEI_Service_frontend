@@ -259,22 +259,22 @@ const EnergyMeasuresAdminPage = () => {
                                 <TableRow>
                                     <StyledTableCell>
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                            Code
+                                            {dictionary.code}
                                         </Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                            Unit
+                                            {dictionary.unit}
                                         </Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                            Lambda (λ)
+                                            {dictionary.lambda}
                                         </Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="left">
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
-                                            Total cost
+                                            {dictionary.totalCost}
                                         </Typography>
                                     </StyledTableCell>
                                     <StyledTableCell align="right">{void (0)}</StyledTableCell>
@@ -370,25 +370,25 @@ const EnergyMeasuresAdminPage = () => {
 
                 <Snackbar open={editSuccess} autoHideDuration={3000} onClose={handleCloseSnackbarEdit}>
                     <Alert onClose={handleCloseSnackbarEdit} severity="success" sx={{width: '100%'}}>
-                        Energy Measure cost has been successfully changed!
+                        {dictionary.editSuccess}
                     </Alert>
 
                 </Snackbar>
                 <Snackbar open={editFailure} autoHideDuration={3000} onClose={handleCloseSnackbarEdit}>
                     <Alert onClose={handleCloseSnackbarEdit} severity="error" sx={{width: '100%'}}>
-                        Something went wrong! Please try again.
+                        {dictionary.editFailure}
                     </Alert>
                 </Snackbar>
 
                 <Snackbar open={deleteSuccess} autoHideDuration={3000} onClose={handleCloseSnackbarDelete}>
                     <Alert onClose={handleCloseSnackbarDelete} severity="success" sx={{width: '100%'}}>
-                        Energy Measure cost has been successfully deleted!
+                        {dictionary.deleteSuccess}
                     </Alert>
 
                 </Snackbar>
                 <Snackbar open={deleteFailure} autoHideDuration={3000} onClose={handleCloseSnackbarDelete}>
                     <Alert onClose={handleCloseSnackbarDelete} severity="error" sx={{width: '100%'}}>
-                        Something went wrong! Please try again.
+                        {dictionary.deleteFailure}
                     </Alert>
                 </Snackbar>
             </>}
