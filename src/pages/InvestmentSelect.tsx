@@ -106,7 +106,7 @@ const InvestmentSelect = () => {
         axios.get(`energy_measures/${id}`).then((response) => {
             setMeasures([
                 {
-                    categoryName: 'category1',
+                    categoryName: 'Replacement of windows',
                     categoryItems: [
                         {
                             id: 1,
@@ -123,7 +123,75 @@ const InvestmentSelect = () => {
                     ],
                 },
                 {
-                    categoryName: 'category12',
+                    categoryName: 'Replacement of doors',
+                    categoryItems: [
+                        {
+                            id: 3,
+                            measureName: 'measure3',
+                            cost: 200,
+                            checked: false,
+                        },
+                        {
+                            id: 4,
+                            measureName: 'measure4',
+                            cost: 345,
+                            checked: false,
+                        },
+                    ],
+                },
+                {
+                    categoryName: 'Floor slab insulation',
+                    categoryItems: [
+                        {
+                            id: 3,
+                            measureName: 'measure3',
+                            cost: 200,
+                            checked: false,
+                        },
+                        {
+                            id: 4,
+                            measureName: 'measure4',
+                            cost: 345,
+                            checked: false,
+                        },
+                    ],
+                },
+                {
+                    categoryName: 'Ventilation unit',
+                    categoryItems: [
+                        {
+                            id: 3,
+                            measureName: 'measure3',
+                            cost: 200,
+                            checked: false,
+                        },
+                        {
+                            id: 4,
+                            measureName: 'measure4',
+                            cost: 345,
+                            checked: false,
+                        },
+                    ],
+                },
+                {
+                    categoryName: 'Insulation of the roof/attic slab',
+                    categoryItems: [
+                        {
+                            id: 3,
+                            measureName: 'measure3',
+                            cost: 200,
+                            checked: false,
+                        },
+                        {
+                            id: 4,
+                            measureName: 'measure4',
+                            cost: 345,
+                            checked: false,
+                        },
+                    ],
+                },
+                {
+                    categoryName: 'Facade insulation',
                     categoryItems: [
                         {
                             id: 3,
