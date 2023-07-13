@@ -89,7 +89,7 @@ const MapField = ({address, perimeter}) => {
                             {/*</Grid>*/}
 
                         </>}
-                    {!address && <Alert severity="warning">Please select an address first!</Alert>}
+                    {!address && <Alert severity="warning">{dictionary.sectionWarn3}</Alert>}
                 </Grid>
             </Grid>
         </>

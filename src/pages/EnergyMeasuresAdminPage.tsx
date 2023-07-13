@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import axios from 'axios';
 import {styled} from '@mui/material/styles';
 import {Link, useNavigate} from "react-router-dom";
 import {useKeycloak} from "@react-keycloak/web";
+import {multilingual} from "../multilingual";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -32,6 +33,8 @@ import AddIcon from '@mui/icons-material/Add';
 import Breadcrumb from "../components/layout/Breadcrumb";
 import Loading from "../components/layout/Loading";
 
+import {LanguageContext} from "../context/LanguageContext";
+
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -59,17 +62,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const breadcrumbs = [
-    <Link className={'breadcrumbLink'} key="1" to="/">
-        Homepage
-    </Link>, <Typography
-        key={2}
-        color="secondary"
-        fontSize={'20px'}
-        fontWeight={600}>
-        Energy Measures Admin page
-    </Typography>,];
-
 const style = {
     position: 'absolute' as 'absolute',
     top: '30%',
@@ -83,6 +75,9 @@ const style = {
 };
 
 const EnergyMeasuresAdminPage = () => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.adminPage : multilingual.latvian.adminPage
+
     const {keycloak, initialized} = useKeycloak();
     const navigate = useNavigate()
     const [allowed, setAllowed] = useState(false)
@@ -96,6 +91,17 @@ const EnergyMeasuresAdminPage = () => {
     // Variables for snackbars (delete functionality)
     const [deleteSuccess, setDeleteSuccess] = useState(false)
     const [deleteFailure, setDeleteFailure] = useState(false)
+
+    const breadcrumbs = [
+        <Link className={'breadcrumbLink'} key="1" to="/">
+            {dictionary.breadcrumb1}
+        </Link>, <Typography
+            key={2}
+            color="secondary"
+            fontSize={'20px'}
+            fontWeight={600}>
+            {dictionary.breadcrumb2}
+        </Typography>,];
 
     const handleOpenModal = (code: string) => {
         setModalOpen(true)
@@ -200,6 +206,10 @@ const EnergyMeasuresAdminPage = () => {
         setPage(0);
     };
 
+    const localization = {
+        labelDisplayedRows: dictionary.rows // Replace with your custom label
+    };
+
     return (
         <>
             <Modal
@@ -223,7 +233,7 @@ const EnergyMeasuresAdminPage = () => {
             </Modal>
 
             {allowed && <>
-                <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={'Energy Efficiency Investment De-Risking'}/>
+                <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={dictionary.pageTitle}/>
 
                 <Container maxWidth={false} sx={{mt: 5, display: 'flex'}}>
                     <Button onClick={() => navigate('/energy-measures/add')} sx={{ml: 'auto', color: 'white'}}
@@ -241,6 +251,7 @@ const EnergyMeasuresAdminPage = () => {
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
+                        labelRowsPerPage={localization.labelDisplayedRows}
                     />
                     <TableContainer component={Paper}>
                         <Table sx={{minWidth: 700}} aria-label="customized table">
@@ -261,36 +272,6 @@ const EnergyMeasuresAdminPage = () => {
                                             Lambda (λ)
                                         </Typography>
                                     </StyledTableCell>
-                                    {/*<StyledTableCell align="left">*/}
-                                    {/*    <Typography fontWeight={'bold'} variant={'subtitle1'}>*/}
-                                    {/*        Time Norm (c*h)*/}
-                                    {/*    </Typography>*/}
-                                    {/*</StyledTableCell>*/}
-                                    {/*<StyledTableCell align="left">*/}
-                                    {/*    <Typography fontWeight={'bold'} variant={'subtitle1'}>*/}
-                                    {/*        Rate (€/h)*/}
-                                    {/*    </Typography>*/}
-                                    {/*</StyledTableCell>*/}
-                                    {/*<StyledTableCell align="left">*/}
-                                    {/*    <Typography fontWeight={'bold'} variant={'subtitle1'}>*/}
-                                    {/*        Salary (€)*/}
-                                    {/*    </Typography>*/}
-                                    {/*</StyledTableCell>*/}
-                                    {/*<StyledTableCell align="left">*/}
-                                    {/*    <Typography fontWeight={'bold'} variant={'subtitle1'}>*/}
-                                    {/*        Materials (€)*/}
-                                    {/*    </Typography>*/}
-                                    {/*</StyledTableCell>*/}
-                                    {/*<StyledTableCell align="left">*/}
-                                    {/*    <Typography fontWeight={'bold'} variant={'subtitle1'}>*/}
-                                    {/*        Transport Mechanisms (€)*/}
-                                    {/*    </Typography>*/}
-                                    {/*</StyledTableCell>*/}
-                                    {/*<StyledTableCell align="left">*/}
-                                    {/*    <Typography fontWeight={'bold'} variant={'subtitle1'}>*/}
-                                    {/*        Total cost per unit (€)*/}
-                                    {/*    </Typography>*/}
-                                    {/*</StyledTableCell>*/}
                                     <StyledTableCell align="left">
                                         <Typography fontWeight={'bold'} variant={'subtitle1'}>
                                             Total cost
@@ -329,102 +310,6 @@ const EnergyMeasuresAdminPage = () => {
                                                     value={measure.labda || 0}
                                                 />
                                             </StyledTableCell>
-                                            {/*<StyledTableCell align="left">*/}
-                                            {/*    <TextField*/}
-                                            {/*        onChange={e => handleFieldChange(measure.code, 'time_norm', e)}*/}
-                                            {/*        required*/}
-                                            {/*        fullWidth*/}
-                                            {/*        id="outlined-required"*/}
-                                            {/*        label="Change Time Norm"*/}
-                                            {/*        type={'number'}*/}
-                                            {/*        // InputProps={{*/}
-                                            {/*        //     inputProps: {min: 0},*/}
-                                            {/*        //     startAdornment: <InputAdornment*/}
-                                            {/*        //         position="start">(c*h)</InputAdornment>*/}
-                                            {/*        // }}*/}
-                                            {/*        value={measure.time_norm}*/}
-                                            {/*    />*/}
-                                            {/*</StyledTableCell>*/}
-                                            {/*<StyledTableCell align="left">*/}
-                                            {/*    <TextField*/}
-                                            {/*        onChange={e => handleFieldChange(measure.code, 'rate', e)}*/}
-                                            {/*        required*/}
-                                            {/*        fullWidth*/}
-                                            {/*        id="outlined-required"*/}
-                                            {/*        label="Change rate"*/}
-                                            {/*        type={'number'}*/}
-                                            {/*        // InputProps={{*/}
-                                            {/*        //     inputProps: {min: 0},*/}
-                                            {/*        //     startAdornment: <InputAdornment*/}
-                                            {/*        //         position="start">(€/h)</InputAdornment>*/}
-                                            {/*        // }}*/}
-                                            {/*        value={measure.rate}*/}
-                                            {/*    />*/}
-                                            {/*</StyledTableCell>*/}
-                                            {/*<StyledTableCell align="left">*/}
-                                            {/*    <TextField*/}
-                                            {/*        onChange={e => handleFieldChange(measure.code, 'salary', e)}*/}
-                                            {/*        required*/}
-                                            {/*        fullWidth*/}
-                                            {/*        id="outlined-required"*/}
-                                            {/*        label="Change salary"*/}
-                                            {/*        type={'number'}*/}
-                                            {/*        // InputProps={{*/}
-                                            {/*        //     inputProps: {min: 0},*/}
-                                            {/*        //     startAdornment: <InputAdornment*/}
-                                            {/*        //         position="start">(€)</InputAdornment>*/}
-                                            {/*        // }}*/}
-                                            {/*        value={measure.salary}*/}
-                                            {/*    />*/}
-                                            {/*</StyledTableCell>*/}
-                                            {/*<StyledTableCell align="left">*/}
-                                            {/*    <TextField*/}
-                                            {/*        onChange={e => handleFieldChange(measure.code, 'materials', e)}*/}
-                                            {/*        required*/}
-                                            {/*        fullWidth*/}
-                                            {/*        id="outlined-required"*/}
-                                            {/*        label="Change materials"*/}
-                                            {/*        type={'number'}*/}
-                                            {/*        // InputProps={{*/}
-                                            {/*        //     inputProps: {min: 0},*/}
-                                            {/*        //     startAdornment: <InputAdornment*/}
-                                            {/*        //         position="start">(€)</InputAdornment>*/}
-                                            {/*        // }}*/}
-                                            {/*        value={measure.materials}*/}
-                                            {/*    />*/}
-                                            {/*</StyledTableCell>*/}
-                                            {/*<StyledTableCell align="left">*/}
-                                            {/*    <TextField*/}
-                                            {/*        onChange={e => handleFieldChange(measure.code, 'transport_mechanisms', e)}*/}
-                                            {/*        required*/}
-                                            {/*        fullWidth*/}
-                                            {/*        id="outlined-required"*/}
-                                            {/*        label="Change transport mechanisms"*/}
-                                            {/*        type={'number'}*/}
-                                            {/*        // InputProps={{*/}
-                                            {/*        //     inputProps: {min: 0},*/}
-                                            {/*        //     startAdornment: <InputAdornment*/}
-                                            {/*        //         position="start">(€)</InputAdornment>*/}
-                                            {/*        // }}*/}
-                                            {/*        value={measure.transport_mechanisms}*/}
-                                            {/*    />*/}
-                                            {/*</StyledTableCell>*/}
-                                            {/*<StyledTableCell align="left">*/}
-                                            {/*    <TextField*/}
-                                            {/*        onChange={e => handleFieldChange(measure.code, 'total_per_unit', e)}*/}
-                                            {/*        required*/}
-                                            {/*        fullWidth*/}
-                                            {/*        id="outlined-required"*/}
-                                            {/*        label="Change total per unit"*/}
-                                            {/*        type={'number'}*/}
-                                            {/*        // InputProps={{*/}
-                                            {/*        //     inputProps: {min: 0},*/}
-                                            {/*        //     startAdornment: <InputAdornment*/}
-                                            {/*        //         position="start">(€)</InputAdornment>*/}
-                                            {/*        // }}*/}
-                                            {/*        value={measure.total_per_unit}*/}
-                                            {/*    />*/}
-                                            {/*</StyledTableCell>*/}
                                             <StyledTableCell align="left">
                                                 <TextField
                                                     onChange={e => handleFieldChange(measure.code, 'total_per_unit_with_profit', e)}
@@ -446,14 +331,14 @@ const EnergyMeasuresAdminPage = () => {
                                                         onClick={() => handleSave(index, measure.code)}
                                                         startIcon={<EditAttributesIcon/>}
                                                         disabled={!measure.code || !measure.unit || !measure.labda || !measure.total_per_unit_with_profit}>
-                                                    SAVE
+                                                    {dictionary.save}
                                                 </Button>
                                             </StyledTableCell>
                                             <StyledTableCell align="right">
                                                 <Button size={'small'} variant="contained" color={'success'}
                                                         startIcon={<RestartAltIcon/>}
                                                         onClick={() => handleReset(measure.energy_measure_id)}>
-                                                    RESET
+                                                    {dictionary.reset}
                                                 </Button>
                                             </StyledTableCell>
                                             <StyledTableCell align="right">
@@ -475,6 +360,7 @@ const EnergyMeasuresAdminPage = () => {
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
+                        labelRowsPerPage={localization.labelDisplayedRows}
                     />
                     {loading &&
                         <Box justifyContent={'center'} alignItems={'center'} p={5}>
