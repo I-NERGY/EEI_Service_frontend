@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, {useEffect, useState, useContext} from 'react';
+import {Link, useParams} from 'react-router-dom';
 import axios from 'axios';
-import { LanguageContext } from "../context/LanguageContext";
-import { multilingual } from "../multilingual";
+import {LanguageContext} from "../context/LanguageContext";
+import {multilingual} from "../multilingual";
 
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
@@ -16,12 +16,13 @@ import Select from '@mui/material/Select';
 import Stack from "@mui/material/Stack";
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+
+import ChevronRight from "@mui/icons-material/ChevronRight";
 
 import Breadcrumb from "../components/layout/Breadcrumb";
 import InvestmentSelectQuickInfo from "../components/InvestmentSelect/InvestmentSelectQuickInfo";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import ChevronRight from "@mui/icons-material/ChevronRight";
 import InvestmentExpectedResults from "../components/InvestmentSelect/InvestmentExpectedResults";
 import Loading from "../components/layout/Loading";
 
@@ -56,7 +57,7 @@ const style = {
 };
 
 const InvestmentSelect = () => {
-    const { language } = useContext(LanguageContext);
+    const {language} = useContext(LanguageContext);
     const dictionary = language === 'en' ? multilingual.english.selectInvestment : multilingual.latvian.selectInvestment;
 
     const breadcrumbs = [
@@ -76,7 +77,7 @@ const InvestmentSelect = () => {
         </Typography>,
     ];
 
-    const { id } = useParams();
+    const {id} = useParams();
 
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [loadingModal, setLoadingModal] = useState<boolean>(false);
@@ -105,110 +106,6 @@ const InvestmentSelect = () => {
 
         axios.get(`energy_measures/${id}`).then((response) => {
             setMeasures(response.data)
-            // setMeasures([
-            //     {
-            //         categoryName: 'Replacement of windows',
-            //         categoryItems: [
-            //             {
-            //                 id: 1,
-            //                 measureName: 'measure1',
-            //                 cost: 200,
-            //                 checked: false,
-            //             },
-            //             {
-            //                 id: 2,
-            //                 measureName: 'measure2',
-            //                 cost: 345,
-            //                 checked: false,
-            //             },
-            //         ],
-            //     },
-            //     {
-            //         categoryName: 'Replacement of doors',
-            //         categoryItems: [
-            //             {
-            //                 id: 3,
-            //                 measureName: 'measure3',
-            //                 cost: 200,
-            //                 checked: false,
-            //             },
-            //             {
-            //                 id: 4,
-            //                 measureName: 'measure4',
-            //                 cost: 345,
-            //                 checked: false,
-            //             },
-            //         ],
-            //     },
-            //     {
-            //         categoryName: 'Floor slab insulation',
-            //         categoryItems: [
-            //             {
-            //                 id: 3,
-            //                 measureName: 'measure3',
-            //                 cost: 200,
-            //                 checked: false,
-            //             },
-            //             {
-            //                 id: 4,
-            //                 measureName: 'measure4',
-            //                 cost: 345,
-            //                 checked: false,
-            //             },
-            //         ],
-            //     },
-            //     {
-            //         categoryName: 'Ventilation unit',
-            //         categoryItems: [
-            //             {
-            //                 id: 3,
-            //                 measureName: 'measure3',
-            //                 cost: 200,
-            //                 checked: false,
-            //             },
-            //             {
-            //                 id: 4,
-            //                 measureName: 'measure4',
-            //                 cost: 345,
-            //                 checked: false,
-            //             },
-            //         ],
-            //     },
-            //     {
-            //         categoryName: 'Insulation of the roof/attic slab',
-            //         categoryItems: [
-            //             {
-            //                 id: 3,
-            //                 measureName: 'measure3',
-            //                 cost: 200,
-            //                 checked: false,
-            //             },
-            //             {
-            //                 id: 4,
-            //                 measureName: 'measure4',
-            //                 cost: 345,
-            //                 checked: false,
-            //             },
-            //         ],
-            //     },
-            //     {
-            //         categoryName: 'Facade insulation',
-            //         categoryItems: [
-            //             {
-            //                 id: 3,
-            //                 measureName: 'measure3',
-            //                 cost: 200,
-            //                 checked: false,
-            //             },
-            //             {
-            //                 id: 4,
-            //                 measureName: 'measure4',
-            //                 cost: 345,
-            //                 checked: false,
-            //             },
-            //         ],
-            //     },
-            // ]);
         });
     }, []);
 
@@ -254,7 +151,7 @@ const InvestmentSelect = () => {
             const updatedValues = prevValues.filter(
                 (value) => value.categoryId !== categoryId
             );
-            return [...updatedValues, { categoryId, selectedItems }];
+            return [...updatedValues, {categoryId, selectedItems}];
         });
     };
 
@@ -290,10 +187,10 @@ const InvestmentSelect = () => {
             >
                 <Box sx={style}>
                     {loadingModal ? (
-                        <Loading />
+                        <Loading/>
                     ) : (
                         <InvestmentExpectedResults
-                            energyClass={'classAPlus'}
+                            energyClass={'classA'}
                             energyConsumption={380}
                             totalCost={totalCost}
                             handleClose={handleClose}
@@ -301,20 +198,20 @@ const InvestmentSelect = () => {
                     )}
                 </Box>
             </Modal>
-            <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={dictionary.pageTitle} />
-            <Container maxWidth={'xl'} sx={{ my: 5 }}>
+            <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={dictionary.pageTitle}/>
+            <Container maxWidth={'xl'} sx={{my: 5}}>
                 <InvestmentSelectQuickInfo
                     energyClass={energyClass}
                     energyConsumption={energyConsumption}
                 />
             </Container>
 
-            <Container maxWidth={'xl'} sx={{ my: 5 }}>
+            <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Stack direction={'row'}>
-                    <Typography variant={'h4'} fontWeight={'bold'} sx={{ mb: 3, flexGrow: 1 }}>
+                    <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3, flexGrow: 1}}>
                         {dictionary.measures}
                     </Typography>
-                    <Typography variant={'h5'} fontWeight={'bold'} sx={{ mb: 3 }}>
+                    <Typography variant={'h5'} fontWeight={'bold'} sx={{mb: 3}}>
                         {dictionary.totalCost}: {totalCost}€
                     </Typography>
                 </Stack>
@@ -341,7 +238,7 @@ const InvestmentSelect = () => {
                                         )
                                     }
                                     renderValue={(selected) => (
-                                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                                        <div style={{display: 'flex', flexWrap: 'wrap'}}>
                                             {(selected as unknown as string[]).map((item, index) => {
                                                 const selectedMeasure = measure.categoryItems.find(
                                                     (measureItem) => measureItem.measureName === item
@@ -365,7 +262,7 @@ const InvestmentSelect = () => {
                                                 handleCheckboxClick(measure.categoryName, item.id)
                                             }
                                         >
-                                            <Checkbox checked={item.checked} />
+                                            <Checkbox checked={item.checked}/>
                                             <ListItemText
                                                 primary={item.measureName + ` (${item.cost}€)`}
                                             />
@@ -378,9 +275,9 @@ const InvestmentSelect = () => {
                 </Grid>
             </Container>
 
-            <Divider />
+            <Divider/>
 
-            <Container maxWidth={'xl'} sx={{ my: 5 }}>
+            <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Grid
                     container
                     spacing={2}
@@ -395,9 +292,9 @@ const InvestmentSelect = () => {
                             component={'span'}
                             size={'large'}
                             color={'warning'}
-                            sx={{ ml: 'auto' }}
+                            sx={{ml: 'auto'}}
                             fullWidth
-                            endIcon={<ChevronRight />}
+                            endIcon={<ChevronRight/>}
                             onClick={handleSubmit}
                             disabled={selectedMeasures.length < 1}
                         >
