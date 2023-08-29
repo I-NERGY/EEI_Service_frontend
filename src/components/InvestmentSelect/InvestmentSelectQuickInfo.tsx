@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import {useParams} from 'react-router-dom'
 import {LanguageContext} from "../../context/LanguageContext";
 import {multilingual} from "../../multilingual";
 
@@ -8,11 +7,13 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import {handleEnergyClass} from "../../utils";
 import Loading from "../layout/Loading";
+import InvestmentSelectQuickInfoBarChart from "./InvestmentSelectQuickInfoBarChart";
 
 interface Props {
     energyClass: string,
@@ -23,13 +24,15 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
     const {language} = useContext(LanguageContext)
     const dictionary = language === 'en' ? multilingual.english.selectInvestment : multilingual.latvian.selectInvestment
 
-    const {id} = useParams()
     const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
-    const handleChange =
-        (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-            setExpanded(isExpanded ? panel : false);
-        };
+    const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+        setExpanded(isExpanded ? panel : false);
+    };
+
+    const labels = ['', '', 'You are here!', '', '', '', ''];
+
+    const data = [1, 2, 3, 4, 5, 6, 7]
 
     return (
         <>
@@ -46,6 +49,7 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                         {expanded === 'panel1' ? '' : dictionary.clickDetails}
                     </Typography>
                 </AccordionSummary>
+
                 <AccordionDetails sx={{mt: 2}}>
                     {(energyClass && energyConsumption) ?
                         <Grid container display={'flex'} spacing={5}>
@@ -75,6 +79,13 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                     {dictionary.totalConsumption}
                                 </Typography>
                                 <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>
+                            </Grid>
+                            <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+                                <Container>
+                                    <InvestmentSelectQuickInfoBarChart chartData={data}
+                                                                       highlightPosition={2}
+                                                                       labels={labels}/>
+                                </Container>
                             </Grid>
                         </Grid> :
                         <Loading/>
