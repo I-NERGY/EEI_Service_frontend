@@ -13,6 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {handleEnergyClass} from "../../utils";
 import Loading from "../layout/Loading";
 import InvestmentSelectQuickInfoBarChart from "./InvestmentSelectQuickInfoBarChart";
+import InvestmentSelectQuickInfoPieChart from "./InvestmentSelectQuickInfoPieChart";
 
 interface Props {
     energyClass: string,
@@ -29,9 +30,9 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
         setExpanded(isExpanded ? panel : false);
     };
 
-    const labels = ['', '', 'You are here!', '', '', '', ''];
+    const barChartLabels = ['', '', 'You are here!', '', '', '', ''];
 
-    const data = [1, 2, 3, 4, 5, 6, 7]
+    const barChartData = [1, 2, 3, 4, 5, 6, 7]
 
     return (
         <>
@@ -80,9 +81,12 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                 <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>
                             </Grid>
                             <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                                <InvestmentSelectQuickInfoBarChart chartData={data}
+                                <InvestmentSelectQuickInfoBarChart chartData={barChartData}
                                                                    highlightPosition={2}
-                                                                   labels={labels}/>
+                                                                   labels={barChartLabels}/>
+                            </Grid>
+                            <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+                                <InvestmentSelectQuickInfoPieChart/>
                             </Grid>
                         </Grid> :
                         <Loading/>

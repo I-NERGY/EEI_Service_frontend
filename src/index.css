@@ -308,3 +308,19 @@ code {
 .MuiFormControl-root.language .MuiInputLabel-root {
     color: white !important;
 }
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 350px; /* Set the desired height */
+    overflow: hidden; /* Hide any content that overflows the container */
+}
+
+.chart-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensure the chart stays within the container */
+    height: 100%; /* Ensure the chart stays within the container */
+}
