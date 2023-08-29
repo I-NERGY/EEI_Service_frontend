@@ -7,7 +7,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
@@ -81,11 +80,9 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                 <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>
                             </Grid>
                             <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                                <Container>
-                                    <InvestmentSelectQuickInfoBarChart chartData={data}
-                                                                       highlightPosition={2}
-                                                                       labels={labels}/>
-                                </Container>
+                                <InvestmentSelectQuickInfoBarChart chartData={data}
+                                                                   highlightPosition={2}
+                                                                   labels={labels}/>
                             </Grid>
                         </Grid> :
                         <Loading/>

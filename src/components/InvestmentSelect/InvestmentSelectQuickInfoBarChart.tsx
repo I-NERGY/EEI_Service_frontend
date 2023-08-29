@@ -1,6 +1,8 @@
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from "chart.js";
 import {Bar} from "react-chartjs-2";
 
+import Container from "@mui/material/Container";
+
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -47,9 +49,9 @@ const InvestmentSelectQuickInfoBarChart = ({chartData, highlightPosition, labels
     };
 
     return (
-        <>
+        <Container>
             <Bar options={options} data={data}/>
-        </>
+        </Container>
     );
 }
 
