@@ -72,7 +72,7 @@ const UserProfile = () => {
         <>
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={''}/>
 
-            <Box sx={{padding: 3, maxWidth: "100vw"}}>
+            <Box sx={{padding: 3, maxWidth: "100vw"}} data-testid={'useProfileMainSection'}>
                 <Accordion expanded={userInfoExpanded} sx={{width: '100%', maxWidth: '100%', overflowX: 'auto'}}>
                     <AccordionSummary
                         onClick={() => setUserInfoExpanded(!userInfoExpanded)}
