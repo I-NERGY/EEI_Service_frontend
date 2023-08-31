@@ -30,7 +30,7 @@ const MapField = ({address, perimeter}) => {
 
     return (
         <>
-            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'}>
+            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'} data-testid={'planInvestmentMap'}>
                 <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}>
                     <Stack direction="row" spacing={2} sx={{alignItems: 'center', mb: 'auto'}}>
                         <HighlightAltOutlinedIcon fontSize="large"

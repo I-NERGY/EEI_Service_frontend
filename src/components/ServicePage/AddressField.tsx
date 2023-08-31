@@ -43,7 +43,7 @@ const AddressField = ({address, setAddress, setPerimeter}: Props) => {
     }, [address])
 
     return (
-        <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+        <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'} data-testid={'planInvestmentAddress'}>
             <Grid item xs={12} md={6}>
                 <Stack direction="row" spacing={2} sx={{alignItems: 'center'}}>
                     <LocationOnIcon fontSize="large"

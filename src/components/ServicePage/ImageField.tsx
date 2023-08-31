@@ -37,7 +37,7 @@ const ImageField = ({chosenImage, setChosenImage}: Props) => {
 
     return (
         <>
-            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'} sx={{my: 3}}>
+            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'} sx={{my: 3}} data-testid={'planInvestmentImages'}>
                 <Grid item xs={12} md={6}>
                     <Stack direction="row" spacing={2} sx={{alignItems: 'center', mt: 2}}>
                         <PhotoSizeSelectActualIcon fontSize="large"
