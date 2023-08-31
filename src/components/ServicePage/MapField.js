@@ -73,7 +73,7 @@ const MapField = ({address, perimeter}) => {
                                 />
                                 <Marker position={[address.latitude_centroid, address.longitude_centroid]}>
                                     <Popup>
-                                        A pretty CSS3 popup. <br/> Easily customizable.
+                                        {address.address}
                                     </Popup>
                                 </Marker>
 
