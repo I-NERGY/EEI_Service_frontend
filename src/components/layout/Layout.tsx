@@ -254,7 +254,7 @@ export default function PersistentDrawerLeft({children}: Props) {
                         </Typography>
                         {keycloak.authenticated === true && <React.Fragment>
                             <FormControl sx={{ml: 'auto', minWidth: 120}} size="small" className={'language'}>
-                                <InputLabel id="demo-select-small-label">Language</InputLabel>
+                                <InputLabel id="demo-select-small-label">{dictionary.layout.language}</InputLabel>
                                 <Select
                                     sx={{
                                         color: "white",
@@ -274,7 +274,7 @@ export default function PersistentDrawerLeft({children}: Props) {
                                     labelId="demo-select-small-label"
                                     id="demo-select-small"
                                     value={language}
-                                    label="Language"
+                                    label={dictionary.layout.language}
                                     onChange={handleChange}
                                 >
                                     <MenuItem value={'en'}>English</MenuItem>
