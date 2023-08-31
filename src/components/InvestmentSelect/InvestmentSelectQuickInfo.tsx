@@ -1,6 +1,8 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {LanguageContext} from "../../context/LanguageContext";
 import {multilingual} from "../../multilingual";
+import {useParams} from "react-router-dom";
+import axios from 'axios'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -21,6 +23,7 @@ interface Props {
 }
 
 const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
+    const {id} = useParams()
     const {language} = useContext(LanguageContext)
     const dictionary = language === 'en' ? multilingual.english.selectInvestment : multilingual.latvian.selectInvestment
 
@@ -30,9 +33,24 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
         setExpanded(isExpanded ? panel : false);
     };
 
-    const barChartLabels = ['', '', 'You are here!', '', '', '', ''];
+    const [barChartLabels, setBarChartLabels] = useState([])
+    const [barChartData, setBarChartData] = useState([])
+    const [barChartValue, setBarChartValue] = useState()
 
-    const barChartData = [1, 2, 3, 4, 5, 6, 7]
+
+    useEffect(() => {
+        axios.get(`/visualizations/district_heating_data/${id}`)
+            .then(response => {
+                setBarChartData(response.data.data)
+                setBarChartLabels(response.data.labels)
+                setBarChartValue(response.data.value)
+            })
+            .catch(() => console.log('Something went wrong.'))
+    }, [])
+
+    // const barChartLabels = ['', '', 'You are here!', '', '', '', ''];
+    //
+    // const barChartData = [1, 2, 3, 4, 5, 6, 7]
 
     return (
         <>
@@ -80,11 +98,15 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                 </Typography>
                                 <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>
                             </Grid>
-                            <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                                <InvestmentSelectQuickInfoBarChart chartData={barChartData}
-                                                                   highlightPosition={2}
-                                                                   labels={barChartLabels}/>
-                            </Grid>
+                            {barChartData.length > 0 &&
+                                <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}
+                                      alignItems={'center'}>
+                                    <InvestmentSelectQuickInfoBarChart chartData={barChartData}
+                                                                       highlightPosition={1000}
+                                                                       labels={barChartLabels}
+                                                                       value={barChartValue}
+                                    />
+                                </Grid>}
                             <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
                                 <InvestmentSelectQuickInfoPieChart/>
                             </Grid>
