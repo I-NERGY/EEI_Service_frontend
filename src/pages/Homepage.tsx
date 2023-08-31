@@ -9,12 +9,14 @@ const Homepage = () => {
     const servicesHomepage = language === 'en' ? servicesHomepageEnglish : servicesHomepageLatvian
 
     return (
-        <>
+        <div data-testid={"homepageOverall"}>
             {servicesHomepage.map((service, index) => (
-                <HomepageItemFullWidth title={service.title} description={service.description} icon={service.icon}
-                                       image={service.image} link={service.link} index={index} key={service.id}/>
+                <div data-testid={"homepageItem"}>
+                    <HomepageItemFullWidth title={service.title} description={service.description} icon={service.icon}
+                                           image={service.image} link={service.link} index={index} key={service.id}/>
+                </div>
             ))}
-        </>
+        </div>
     );
 }
 
