@@ -300,7 +300,7 @@ const EnergyMeasuresAdminPage = () => {
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
-                                                    label="Change lambda"
+                                                    label={dictionary.changeLambda}
                                                     type={'number'}
                                                     InputProps={{
                                                         inputProps: {min: 0},
@@ -316,7 +316,7 @@ const EnergyMeasuresAdminPage = () => {
                                                     required
                                                     fullWidth
                                                     id="outlined-required"
-                                                    label="Change total cost"
+                                                    label={dictionary.changeTotalCost}
                                                     type={'number'}
                                                     InputProps={{
                                                         inputProps: {min: 0},
