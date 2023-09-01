@@ -37,6 +37,8 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
     const [barChartData, setBarChartData] = useState([])
     const [barChartValue, setBarChartValue] = useState()
 
+    const [pieChartLabels, setPieChartLabels] = useState([])
+    const [pieChartData, setPieChartData] = useState([])
 
     useEffect(() => {
         axios.get(`/visualizations/district_heating_data/${id}`)
@@ -44,6 +46,13 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                 setBarChartData(response.data.data)
                 setBarChartLabels(response.data.labels)
                 setBarChartValue(response.data.value)
+            })
+            .catch(() => console.log('Something went wrong.'))
+
+        axios.get(`/visualizations/heat_loses/${id}`)
+            .then(response => {
+                setPieChartData(response.data.data)
+                setPieChartLabels(response.data.labels)
             })
             .catch(() => console.log('Something went wrong.'))
     }, [])
@@ -107,7 +116,8 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                     />
                                 </Grid>}
                             <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                                <InvestmentSelectQuickInfoPieChart/>
+                                <InvestmentSelectQuickInfoPieChart chartData={pieChartData}
+                                                                   labels={pieChartLabels}/>
                             </Grid>
                         </Grid> :
                         <Loading/>

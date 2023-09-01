@@ -1,17 +1,23 @@
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
+import {Pie} from 'react-chartjs-2';
 
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const InvestmentSelectQuickInfoPieChart = () => {
+interface Props {
+    chartData: Array<number>,
+    labels: Array<string>,
+}
+
+const InvestmentSelectQuickInfoPieChart = ({chartData, labels}: Props) => {
     const data = {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: labels,
         datasets: [
             {
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: '% of heat losses',
+                data: chartData,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -35,8 +41,11 @@ const InvestmentSelectQuickInfoPieChart = () => {
 
     return (
         <Container className="chart-container">
+            <Typography variant={'body2'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
+                Building's heat losses (2017-2020)
+            </Typography>
             <div className="chart-wrapper">
-                <Pie data={data} />
+                <Pie data={data}/>
             </div>
         </Container>
     );
