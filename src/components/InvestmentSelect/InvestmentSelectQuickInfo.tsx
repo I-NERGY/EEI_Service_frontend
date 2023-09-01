@@ -102,7 +102,6 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                 <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}
                                       alignItems={'center'}>
                                     <InvestmentSelectQuickInfoBarChart chartData={barChartData}
-                                                                       highlightPosition={1000}
                                                                        labels={barChartLabels}
                                                                        value={barChartValue}
                                     />

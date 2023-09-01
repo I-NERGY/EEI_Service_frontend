@@ -15,14 +15,12 @@ ChartJS.register(
 
 interface Props {
     chartData: Array<number>,
-    highlightPosition: number,
     labels: Array<string>,
     value: number | undefined
 }
 
-const InvestmentSelectQuickInfoBarChart = ({chartData, highlightPosition, labels, value}: Props) => {
-    const baseColor = 'rgba(54, 162, 235, 0.5)'; // Base color for other bars
-    const highlightColor = 'rgba(255, 0, 0, 0.7)'; // Color for the highlighted bar
+const InvestmentSelectQuickInfoBarChart = ({chartData, labels, value}: Props) => {
+    const baseColor = 'rgba(54, 162, 235, 0.5)'; // Base color for the bars
 
     const options = {
         responsive: true,
