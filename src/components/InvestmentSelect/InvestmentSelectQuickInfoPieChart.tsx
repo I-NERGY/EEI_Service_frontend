@@ -1,5 +1,9 @@
+import {useContext} from "react";
 import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Pie} from 'react-chartjs-2';
+
+import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -12,11 +16,14 @@ interface Props {
 }
 
 const InvestmentSelectQuickInfoPieChart = ({chartData, labels}: Props) => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.selectInvestment : multilingual.latvian.selectInvestment
+
     const data = {
         labels: labels,
         datasets: [
             {
-                label: '% of heat losses',
+                label: dictionary.pieChartLabel,
                 data: chartData,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -42,7 +49,7 @@ const InvestmentSelectQuickInfoPieChart = ({chartData, labels}: Props) => {
     return (
         <Container className="chart-container">
             <Typography variant={'body2'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
-                Building's heat losses (2017-2020)
+                {dictionary.measurement2}
             </Typography>
             <div className="chart-wrapper">
                 <Pie data={data}/>
