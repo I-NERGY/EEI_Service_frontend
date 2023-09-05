@@ -298,7 +298,7 @@ const InvestmentSelect = () => {
                             onClick={handleSubmit}
                             disabled={selectedMeasures.length < 1}
                         >
-                            <Typography variant={'h6'}>CALCULATE</Typography>
+                            <Typography variant={'h6'}>{dictionary.button}</Typography>
                         </Button>
                     </Grid>
                 </Grid>
