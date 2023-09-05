@@ -30,6 +30,7 @@ interface MeasureItem {
     id: number;
     measureName: string;
     cost: number;
+    thickness: number;
     checked: boolean;
 }
 
@@ -190,8 +191,8 @@ const InvestmentSelect = () => {
                         <Loading/>
                     ) : (
                         <InvestmentExpectedResults
-                            energyClass={'classA'}
-                            energyConsumption={40}
+                            energyClass={'classB'}
+                            energyConsumption={60}
                             totalCost={totalCost}
                             handleClose={handleClose}
                         />
@@ -218,7 +219,7 @@ const InvestmentSelect = () => {
 
                 <Grid container spacing={2}>
                     {measures?.map((measure) => (
-                        <Grid item xs={12} md={4} key={measure.categoryName}>
+                        <Grid item xs={12} md={6} key={measure.categoryName}>
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">
                                     {measure.categoryName}
@@ -264,7 +265,7 @@ const InvestmentSelect = () => {
                                         >
                                             <Checkbox checked={item.checked}/>
                                             <ListItemText
-                                                primary={item.measureName + ` (${item.cost}€)`}
+                                                primary={item.measureName + ` (Thickness: ${item.thickness}mm)` + ` (${item.cost}€)`}
                                             />
                                         </MenuItem>
                                     ))}
