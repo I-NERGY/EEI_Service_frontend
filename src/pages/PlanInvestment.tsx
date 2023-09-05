@@ -15,9 +15,10 @@ import Divider from "@mui/material/Divider";
 import ChevronRight from '@mui/icons-material/ChevronRight';
 
 import Breadcrumb from "../components/layout/Breadcrumb";
-import AddressField from "../components/ServicePage/AddressField";
-import ImageField from "../components/ServicePage/ImageField";
-import MapField from "../components/ServicePage/MapField";
+import AddressField from "../components/PlanInvestment/AddressField";
+import ImageField from "../components/PlanInvestment/ImageField";
+import MapField from "../components/PlanInvestment/MapField";
+import BuildingMaterials from "../components/PlanInvestment/BuildingMaterials";
 
 const PlanInvestment = () => {
     const {language} = useContext(LanguageContext)
@@ -38,14 +39,17 @@ const PlanInvestment = () => {
     const [address, setAddress] = useState<AddressOptionType | null>(null);
     const [chosenImage, setChosenImage] = useState<number | null>(null)
     const [perimeter, setPerimeter] = useState<number | null>(null)
+    const [heavyBuildingMaterials, setHeavyBuildingMaterials] = useState<boolean | null>(true)
 
     useEffect(() => window.scrollTo(0, 0), [])
 
     const handleButton = () => {
         let payload = {
             serie: chosenImage,
-            cadastre_number: address?.cadastre_number
+            cadastre_number: address?.cadastre_number,
+            heavy: heavyBuildingMaterials
         }
+
         axios.post('/series/', payload)
             .then(response => {
                 navigate(`/energy-measures/id/${address?.cadastre_number}`)
@@ -61,6 +65,8 @@ const PlanInvestment = () => {
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>{dictionary.configuration}</Typography>
                 <AddressField address={address} setAddress={setAddress} setPerimeter={setPerimeter}/>
+                <BuildingMaterials heavyBuildingMaterials={heavyBuildingMaterials} setHeavyBuildingMaterials={setHeavyBuildingMaterials}/>
+
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
                 <MapField address={address} perimeter={perimeter}/>
             </Container>
