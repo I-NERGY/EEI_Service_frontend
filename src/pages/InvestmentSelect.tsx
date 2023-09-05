@@ -84,7 +84,7 @@ const InvestmentSelect = () => {
     const [loadingModal, setLoadingModal] = useState<boolean>(false);
 
     const [energyClass, setEnergyClass] = useState('');
-    const [energyConsumption, setEnergyConsumption] = useState(null);
+    const [energyConsumption, setEnergyConsumption] = useState(0);
 
     const [totalCost, setTotalCost] = useState<number | 0>(0);
 
@@ -195,6 +195,7 @@ const InvestmentSelect = () => {
                             energyConsumption={60}
                             totalCost={totalCost}
                             handleClose={handleClose}
+                            initialEnergyConsumption={energyConsumption}
                         />
                     )}
                 </Box>

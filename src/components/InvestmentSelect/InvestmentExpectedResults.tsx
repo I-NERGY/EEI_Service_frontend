@@ -15,10 +15,17 @@ interface Props {
     energyClass: string,
     energyConsumption: number,
     totalCost: number,
-    handleClose: Function
+    handleClose: Function,
+    initialEnergyConsumption: number
 }
 
-const InvestmentExpectedResults = ({energyClass, energyConsumption, totalCost, handleClose}: Props) => {
+const InvestmentExpectedResults = ({
+                                       energyClass,
+                                       energyConsumption,
+                                       totalCost,
+                                       handleClose,
+                                       initialEnergyConsumption
+                                   }: Props) => {
     let navigate = useNavigate();
     const {language} = useContext(LanguageContext);
     const dictionary = language === 'en' ? multilingual.english.selectInvestment : multilingual.latvian.selectInvestment;
@@ -58,7 +65,11 @@ const InvestmentExpectedResults = ({energyClass, energyConsumption, totalCost, h
                     <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
                         {dictionary.totalConsumption}:
                     </Typography>
-                    <Typography variant={'h3'} my={'auto'} align={'center'}>{energyConsumption} kWh</Typography>
+                    <Typography variant={'h3'} my={'auto'} align={'center'}>{energyConsumption} kWh <span
+                        style={{fontSize: '24px'}}>(-{((initialEnergyConsumption - energyConsumption) * 100 / initialEnergyConsumption).toFixed()}%)</span>
+                    </Typography>
+                    {/*{initialEnergyConsumption && <Typography variant={'h5'} my={'auto'}*/}
+                    {/*             align={'center'}>(- {(initialEnergyConsumption - energyConsumption) * 100 / initialEnergyConsumption}%)</Typography>}*/}
                 </Grid>
             </Grid>
             <Divider/>
