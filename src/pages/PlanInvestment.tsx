@@ -66,7 +66,6 @@ const PlanInvestment = () => {
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>{dictionary.configuration}</Typography>
                 <AddressField address={address} setAddress={setAddress} setPerimeter={setPerimeter}/>
                 <BuildingMaterials heavyBuildingMaterials={heavyBuildingMaterials} setHeavyBuildingMaterials={setHeavyBuildingMaterials}/>
-
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
                 <MapField address={address} perimeter={perimeter}/>
             </Container>
