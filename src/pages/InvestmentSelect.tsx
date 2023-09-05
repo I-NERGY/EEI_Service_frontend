@@ -212,7 +212,7 @@ const InvestmentSelect = () => {
                         {dictionary.measures}
                     </Typography>
                     <Typography variant={'h5'} fontWeight={'bold'} sx={{mb: 3}}>
-                        {dictionary.totalCost}: {totalCost}€
+                        {dictionary.totalCost}: {totalCost.toFixed(2)}€
                     </Typography>
                 </Stack>
 

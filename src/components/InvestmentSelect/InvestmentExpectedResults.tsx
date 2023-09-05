@@ -22,7 +22,7 @@ const InvestmentExpectedResults = ({energyClass, energyConsumption, totalCost, h
         <>
             <Stack direction={'row'} sx={{mt: 2}}>
                 <Typography variant={'h4'} sx={{py: 0}} flexGrow={1}>Expected Results</Typography>
-                <Typography variant={'h5'}>Total cost: {totalCost}€</Typography>
+                <Typography variant={'h5'}>Total cost: {totalCost.toFixed(2)}€</Typography>
             </Stack>
 
             <Divider/>
