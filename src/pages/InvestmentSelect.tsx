@@ -107,7 +107,7 @@ const InvestmentSelect = () => {
         axios.get(`energy_measures/${id}`).then((response) => {
             setMeasures(response.data)
         });
-    }, []);
+    }, [id]);
 
     const [measures, setMeasures] = useState<MeasureCategory[]>([]);
 
@@ -191,7 +191,7 @@ const InvestmentSelect = () => {
                     ) : (
                         <InvestmentExpectedResults
                             energyClass={'classA'}
-                            energyConsumption={380}
+                            energyConsumption={40}
                             totalCost={totalCost}
                             handleClose={handleClose}
                         />
