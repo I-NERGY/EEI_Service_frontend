@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
 import L from 'leaflet';
 import {MapContainer, TileLayer, Popup, Marker} from 'react-leaflet'
@@ -23,9 +25,12 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const MapField = ({address, perimeter}) => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.planInvestment : multilingual.latvian.planInvestment
+
     return (
         <>
-            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'}>
+            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'} data-testid={'planInvestmentMap'}>
                 <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}>
                     <Stack direction="row" spacing={2} sx={{alignItems: 'center', mb: 'auto'}}>
                         <HighlightAltOutlinedIcon fontSize="large"
@@ -37,19 +42,22 @@ const MapField = ({address, perimeter}) => {
                                                       my: 1
                                                   }}/>
                         <Box>
-                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Building Location & Surroundings</Typography>
-                            <Typography variant={'subtitle1'}>A map displaying the chosen building's location.</Typography>
+                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>
+                                {dictionary.sectionTitle3}
+                            </Typography>
+                            <Typography variant={'subtitle1'}>
+                                {dictionary.sectionDesc3}
+                            </Typography>
                         </Box>
                     </Stack>
 
                     {address &&
                         <Grid sx={{ml: 'auto'}}>
-                            <TextField id="outlined-basic" label="Perimeter (m)" variant="outlined"
+                            <TextField id="outlined-basic" label={dictionary.perimeter + ' (m)'} variant="outlined"
                                        sx={{mx: 1}} value={perimeter}
                                        InputProps={{inputProps: {min: 0}}}
                             />
                         </Grid>}
-
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -65,7 +73,7 @@ const MapField = ({address, perimeter}) => {
                                 />
                                 <Marker position={[address.latitude_centroid, address.longitude_centroid]}>
                                     <Popup>
-                                        A pretty CSS3 popup. <br/> Easily customizable.
+                                        {address.address}
                                     </Popup>
                                 </Marker>
 
@@ -81,7 +89,7 @@ const MapField = ({address, perimeter}) => {
                             {/*</Grid>*/}
 
                         </>}
-                    {!address && <Alert severity="warning">Please select an address first!</Alert>}
+                    {!address && <Alert severity="warning">{dictionary.sectionWarn3}</Alert>}
                 </Grid>
             </Grid>
         </>

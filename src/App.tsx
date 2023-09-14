@@ -5,14 +5,15 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 
 import Layout from "./components/layout/Layout";
 import Homepage from "./pages/Homepage";
-import BuildingInfo from "./pages/BuildingInfo";
+import PlanInvestment from "./pages/PlanInvestment";
 import SignIn from "./pages/SignIn";
 
 import RequireAuth from "./RequireAuth";
 import RequireNotAuth from "./RequireNotAuth";
 import UserProfile from "./pages/UserProfile";
 import InvestmentSelect from "./pages/InvestmentSelect";
-import EnergyMeasuresEdit from "./pages/EnergyMeasuresEdit";
+import EnergyMeasuresAdminPage from "./pages/EnergyMeasuresAdminPage";
+import EnergyMeasuresAdd from "./pages/EnergyMeasuresAdd";
 
 // Set primary color here
 let primary = '#97A94D'
@@ -50,7 +51,7 @@ function App() {
 
                     {/* Routes not accessible to logged-out users */}
                     <Route element={<RequireAuth/>}>
-                        <Route path="/building-info" element={<BuildingInfo/>}/>
+                        <Route path="/building-info" element={<PlanInvestment/>}/>
                     </Route>
 
                     <Route element={<RequireAuth/>}>
@@ -62,7 +63,11 @@ function App() {
                     </Route>
 
                     <Route element={<RequireAuth/>}>
-                        <Route path="/energy-measures/edit" element={<EnergyMeasuresEdit/>}/>
+                        <Route path="/energy-measures/edit" element={<EnergyMeasuresAdminPage/>}/>
+                    </Route>
+
+                    <Route element={<RequireAuth/>}>
+                        <Route path="/energy-measures/add" element={<EnergyMeasuresAdd/>}/>
                     </Route>
 
                     {/* Routes not accessible to logged-in users */}

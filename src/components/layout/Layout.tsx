@@ -1,10 +1,15 @@
-import React, {ReactNode, useEffect, useState} from 'react';
+import React, {ReactNode, useEffect, useState, useContext} from 'react';
 import {useNavigate, useLocation} from "react-router-dom";
 import {styled, useTheme} from '@mui/material/styles';
-import useAuthContext from "../../hooks/useAuthContext";
 import {useLogout} from "../../hooks/useLogout";
+import {useKeycloak} from "@react-keycloak/web";
+import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
-import {appbarMenuButtonItems} from "../../appbarMenuButtonItems";
+import {
+    appbarMenuButtonItemsEnglish,
+    appbarMenuButtonItemsEnglishLatvian
+} from "../../appbarMenuButtonItems";
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -19,17 +24,24 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, {SelectChangeEvent} from '@mui/material/Select';
 
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import EngineeringOutlinedIcon from '@mui/icons-material/EngineeringOutlined';
 
 import MenuButton from "./MenuButton";
 import SignedOutLinks from "./SignedOutLinks";
 import SignedInLinks from "./SignedInLinks";
 import FooterContent from "./FooterContent";
+
+import DictionaryType from "../../interfaces/DictionaryType";
 
 const drawerWidth = 260;
 
@@ -106,10 +118,25 @@ interface Props {
 }
 
 export default function PersistentDrawerLeft({children}: Props) {
+    const {keycloak, initialized} = useKeycloak();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const {language, changeLanguage} = useContext(LanguageContext);
+    const [dictionary, setDictionary] = useState<any>(multilingual.english)
 
-    const {user, roles} = useAuthContext()
+    useEffect(() => {
+        if (language === 'en') {
+            setDictionary(multilingual.english)
+        }
+        if (language === 'lat') {
+            setDictionary(multilingual.latvian)
+        }
+    }, [language])
+
+    const handleChange = (event: SelectChangeEvent) => {
+        changeLanguage(event.target.value);
+    };
+
     const {logout} = useLogout()
 
     const navigate = useNavigate()
@@ -119,8 +146,9 @@ export default function PersistentDrawerLeft({children}: Props) {
 
     const handleSignOut = () => {
         logout()
+        keycloak.logout()
         setMenu(navItems)
-        navigate('/signin')
+        // navigate('/signin')
     }
 
     interface navItem {
@@ -129,22 +157,43 @@ export default function PersistentDrawerLeft({children}: Props) {
         path: string
     }
 
+    // useEffect(() => {
+    // const dictionary = language === 'en' ? multilingual.english : multilingual.latvian
+    // }, [language])
+
     const navItems = [
-        {title: 'Homepage', icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>, path: '/'},
+        {
+            title: dictionary?.layout?.menuItem1,
+            icon: <HomeOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
+            path: '/'
+        },
     ];
 
     useEffect(() => {
-        if (user) {
+        let roles = keycloak.realmAccess?.roles
+        if (roles && roles?.length > 0) {
             navItems.push(
                 {
-                    title: 'Plan Investment',
-                    icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
+                    title: dictionary?.layout?.menuItem2,
+                    icon: <EngineeringOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
                     path: '/building-info'
                 }
             )
             setMenu(navItems)
         }
-    }, [user])
+
+        if (roles && roles?.includes('inergy_admin')) {
+            navItems.push(
+                {
+                    title: dictionary?.layout?.menuItem3,
+                    icon: <SettingsOutlinedIcon sx={{color: theme.palette.primary.main}}/>,
+                    path: '/energy-measures/edit'
+                }
+            )
+            setMenu(navItems)
+        }
+
+    }, [initialized, dictionary])
 
     const [menu, setMenu] = useState<navItem[]>(navItems)
 
@@ -178,8 +227,9 @@ export default function PersistentDrawerLeft({children}: Props) {
             </List>
             <Divider/>
             <List>
-                {!user && <SignedOutLinks navigate={navigate} location={location}/>}
-                {user && <SignedInLinks navigate={navigate} location={location} handleSignOut={handleSignOut}/>}
+                {!keycloak.authenticated && <SignedOutLinks navigate={navigate} location={location}/>}
+                {keycloak.authenticated &&
+                    <SignedInLinks navigate={navigate} location={location} handleSignOut={handleSignOut}/>}
             </List>
         </Box>
     );
@@ -202,10 +252,41 @@ export default function PersistentDrawerLeft({children}: Props) {
                         <Typography variant="h6" noWrap component="div" color={'white'} fontWeight={'bold'}>
                             I-NERGY UC13 Dashboard
                         </Typography>
-                        {user && <React.Fragment>
+                        {keycloak.authenticated === true && <React.Fragment>
+                            <FormControl sx={{ml: 'auto', minWidth: 120}} size="small" className={'language'}>
+                                <InputLabel id="demo-select-small-label">{dictionary.layout.language}</InputLabel>
+                                <Select
+                                    sx={{
+                                        color: "white",
+                                        '.MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgba(255, 255, 255, 1)',
+                                        },
+                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgba(255, 255, 255, 1)',
+                                        },
+                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'rgba(255, 255, 255, 1)',
+                                        },
+                                        '.MuiSvgIcon-root ': {
+                                            fill: "white !important",
+                                        }
+                                    }}
+                                    labelId="demo-select-small-label"
+                                    id="demo-select-small"
+                                    value={language}
+                                    label={dictionary.layout.language}
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value={'en'}>English</MenuItem>
+                                    <MenuItem value={'lat'}>Latvian</MenuItem>
+                                </Select>
+                            </FormControl>
                             <Typography
-                                style={{marginLeft: 'auto', color: 'white'}}>Welcome, {user.username}</Typography>
-                            <MenuButton subLinks={appbarMenuButtonItems} signout={handleSignOut}/>
+                                style={{
+                                    marginLeft: '20px',
+                                    color: 'white'
+                                }}>{dictionary.layout.welcome}, {keycloak?.tokenParsed?.preferred_username}</Typography>
+                            <MenuButton subLinks={language === 'en' ? appbarMenuButtonItemsEnglish : appbarMenuButtonItemsEnglishLatvian} signout={handleSignOut}/>
                         </React.Fragment>}
                     </Toolbar>
                 </AppBar>

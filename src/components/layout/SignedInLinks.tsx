@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
     NavigateFunction,
     Location
 } from 'react-router-dom';
-
+import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -20,6 +21,9 @@ interface Props {
 }
 
 const SignedInLinks = ({navigate, location, handleSignOut}: Props) => {
+    const {language} = useContext(LanguageContext)
+    let dictionary = language === 'en' ? multilingual.english : multilingual.latvian
+
     return (
         <>
             <ListItem disablePadding
@@ -32,7 +36,7 @@ const SignedInLinks = ({navigate, location, handleSignOut}: Props) => {
                     <ListItemText primary={
                         <Typography fontWeight={500} fontSize={17} align={'left'}
                                     color={location.pathname === '/user/profile' ? 'white' : 'normal'}>
-                            {'My Profile'}
+                            {dictionary.layout.menuItem4}
                         </Typography>}/>
                 </ListItemButton>
             </ListItem>
@@ -45,7 +49,7 @@ const SignedInLinks = ({navigate, location, handleSignOut}: Props) => {
                     <ListItemIcon>{<LogoutOutlinedIcon color="secondary"/>}</ListItemIcon>
                     <ListItemText primary={
                         <Typography fontWeight={500} fontSize={17} align={'left'}>
-                            {'Sign Out'}
+                            {dictionary.layout.menuItem5}
                         </Typography>}/>
                 </ListItemButton>
             </ListItem>

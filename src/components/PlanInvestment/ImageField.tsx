@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -16,6 +18,9 @@ interface Props {
 }
 
 const ImageField = ({chosenImage, setChosenImage}: Props) => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.planInvestment : multilingual.latvian.planInvestment
+
     const building_type_images = [
         {src: 'images/building_types/101.png', id: 101},
         {src: 'images/building_types/102.png', id: 102},
@@ -28,11 +33,12 @@ const ImageField = ({chosenImage, setChosenImage}: Props) => {
         {src: 'images/building_types/464.png', id: 464},
         {src: 'images/building_types/467.png', id: 467},
         {src: 'images/building_types/607.png', id: 607},
+        {src: 'images/building_types/no_similar_image.png', id: 1},
     ]
 
     return (
         <>
-            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'} sx={{my: 3}}>
+            <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'top'} sx={{my: 3}} data-testid={'planInvestmentImages'}>
                 <Grid item xs={12} md={6}>
                     <Stack direction="row" spacing={2} sx={{alignItems: 'center', mt: 2}}>
                         <PhotoSizeSelectActualIcon fontSize="large"
@@ -44,10 +50,12 @@ const ImageField = ({chosenImage, setChosenImage}: Props) => {
                                                        my: 1
                                                    }}/>
                         <Box>
-                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Choose a resembling
-                                photo</Typography>
-                            <Typography variant={'subtitle1'}>Select the image that looks like your building the most.
-                                In this way, the system will understand its characteristics.</Typography>
+                            <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>
+                                {dictionary.sectionTitle2}
+                            </Typography>
+                            <Typography variant={'subtitle1'}>
+                                {dictionary.sectionDesc2}
+                            </Typography>
                         </Box>
                     </Stack>
                 </Grid>

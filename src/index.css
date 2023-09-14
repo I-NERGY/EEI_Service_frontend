@@ -149,32 +149,37 @@ code {
     text-transform: uppercase;
 }
 
-.energy-class div.classAPlusPlusSelected {
+/*.energy-class div.classAPlusPlusSelected {*/
+/*    top: 2px;*/
+/*}*/
+
+/*.energy-class div.classAPlusSelected {*/
+/*    top: 22px;*/
+/*}*/
+
+.energy-class div.classASelected {
+    /*top: 42px;*/
     top: 2px;
 }
 
-.energy-class div.classAPlusSelected {
+.energy-class div.classBSelected {
+    /*top: 62px;*/
     top: 22px;
 }
 
-.energy-class div.classASelected {
+.energy-class div.classCSelected {
+    /*top: 82px;*/
     top: 42px;
 }
 
-.energy-class div.classBSelected {
+.energy-class div.classDSelected {
+    /*top: 102px;*/
     top: 62px;
 }
 
-.energy-class div.classCSelected {
-    top: 82px;
-}
-
-.energy-class div.classDSelected {
-    top: 102px;
-}
-
 .energy-class div.classESelected {
-    top: 122px;
+    /*top: 122px;*/
+    top: 82px;
 }
 
 .energy-class div:after {
@@ -188,12 +193,12 @@ code {
     font-size: 14px;
     text-transform: uppercase;
 }
-.energy-class div.classAPlusPlusSelected:after {
-    content: 'A++';
-}
-.energy-class div.classAPlusSelected:after {
-    content: ' A+ ';
-}
+/*.energy-class div.classAPlusPlusSelected:after {*/
+/*    content: 'A++';*/
+/*}*/
+/*.energy-class div.classAPlusSelected:after {*/
+/*    content: ' A+ ';*/
+/*}*/
 .energy-class div.classASelected:after {
     content: ' A ';
 }
@@ -298,4 +303,24 @@ code {
 
 .breadcrumbLink:hover {
     text-decoration: underline !important;
+}
+
+.MuiFormControl-root.language .MuiInputLabel-root {
+    color: white !important;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 380px; /* Set the desired height */
+    overflow: hidden; /* Hide any content that overflows the container */
+}
+
+.chart-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensure the chart stays within the container */
+    height: 350px; /* Ensure the chart stays within the container */
 }

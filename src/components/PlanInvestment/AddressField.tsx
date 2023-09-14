@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import axios from "axios";
+import {LanguageContext} from "../../context/LanguageContext";
+import {multilingual} from "../../multilingual";
 
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -14,7 +16,6 @@ import AddressOptionType from "../../interfaces/AddressOptionType";
 
 import Loading from "../layout/Loading";
 
-
 interface Props {
     address: AddressOptionType | null,
     setAddress: React.Dispatch<React.SetStateAction<AddressOptionType | null>>,
@@ -22,6 +23,9 @@ interface Props {
 }
 
 const AddressField = ({address, setAddress, setPerimeter}: Props) => {
+    const {language} = useContext(LanguageContext)
+    const dictionary = language === 'en' ? multilingual.english.planInvestment : multilingual.latvian.planInvestment
+
     const [addresses, setAddresses] = useState<AddressOptionType[] | []>([]);
 
     useEffect(() => {
@@ -39,16 +43,18 @@ const AddressField = ({address, setAddress, setPerimeter}: Props) => {
     }, [address])
 
     return (
-        <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'}>
+        <Grid container spacing={2} display={'flex'} justifyContent={'center'} alignItems={'center'} data-testid={'planInvestmentAddress'}>
             <Grid item xs={12} md={6}>
                 <Stack direction="row" spacing={2} sx={{alignItems: 'center'}}>
                     <LocationOnIcon fontSize="large"
                                     sx={{width: '60px', height: '60px', color: '#A1B927', ml: 2, my: 1}}/>
                     <Box>
-                        <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>Select Building
-                            Address</Typography>
-                        <Typography variant={'subtitle1'}>Fill in the dropdown menu with the proper address to open the
-                            map.</Typography>
+                        <Typography variant={'h5'} color={'inherit'} sx={{width: '100%'}}>
+                            {dictionary.sectionTitle1}
+                        </Typography>
+                        <Typography variant={'subtitle1'}>
+                            {dictionary.sectionDesc1}
+                        </Typography>
                     </Box>
                 </Stack>
             </Grid>
@@ -64,7 +70,7 @@ const AddressField = ({address, setAddress, setPerimeter}: Props) => {
                         }}
                         getOptionLabel={(option) => option.address + ', Cadastre: ' + option.cadastre_number}
                         isOptionEqualToValue={(option, value) => option.address === value.address}
-                        renderInput={(params) => <TextField {...params} label="Address"/>}/>
+                        renderInput={(params) => <TextField {...params} label={dictionary.sectionPlaceholder1}/>}/>
                     : <Loading/>}
                 </FormControl>
             </Grid>
