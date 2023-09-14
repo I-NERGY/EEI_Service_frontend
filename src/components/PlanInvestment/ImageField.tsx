@@ -33,6 +33,7 @@ const ImageField = ({chosenImage, setChosenImage}: Props) => {
         {src: 'images/building_types/464.png', id: 464},
         {src: 'images/building_types/467.png', id: 467},
         {src: 'images/building_types/607.png', id: 607},
+        {src: 'images/building_types/no_similar_image.png', id: 1},
     ]
 
     return (

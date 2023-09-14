@@ -93,6 +93,7 @@ const InvestmentSelect = () => {
         setLoadingModal(true);
 
         setTimeout(() => setLoadingModal(false), 2000);
+        console.log(selectedMeasures)
     };
 
     const handleClose = () => {
@@ -103,10 +104,14 @@ const InvestmentSelect = () => {
         axios.get(`building/info/${id}`).then((response) => {
             setEnergyClass(`class${response.data.energy_class}`);
             setEnergyConsumption(response.data.total_energy_consumption);
-        });
+        })
+            .catch(error => {
+                console.log('error')
+            })
 
         axios.get(`energy_measures/${id}`).then((response) => {
             setMeasures(response.data)
+            console.log(response.data)
         });
     }, [id]);
 

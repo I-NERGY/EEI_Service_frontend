@@ -66,10 +66,8 @@ const InvestmentExpectedResults = ({
                         {dictionary.totalConsumption}:
                     </Typography>
                     <Typography variant={'h3'} my={'auto'} align={'center'}>{energyConsumption} kWh <span
-                        style={{fontSize: '24px'}}>(-{((initialEnergyConsumption - energyConsumption) * 100 / initialEnergyConsumption).toFixed()}%)</span>
+                        style={{fontSize: '24px'}}>({((initialEnergyConsumption - energyConsumption) * 100 / initialEnergyConsumption).toFixed()}%)</span>
                     </Typography>
-                    {/*{initialEnergyConsumption && <Typography variant={'h5'} my={'auto'}*/}
-                    {/*             align={'center'}>(- {(initialEnergyConsumption - energyConsumption) * 100 / initialEnergyConsumption}%)</Typography>}*/}
                 </Grid>
             </Grid>
             <Divider/>

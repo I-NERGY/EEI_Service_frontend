@@ -45,7 +45,7 @@ const PlanInvestment = () => {
 
     const handleButton = () => {
         let payload = {
-            serie: chosenImage,
+            serie: chosenImage === 1 ? 0 : chosenImage,
             cadastre_number: address?.cadastre_number,
             heavy: heavyBuildingMaterials
         }
@@ -65,7 +65,8 @@ const PlanInvestment = () => {
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <Typography variant={'h4'} fontWeight={'bold'} sx={{mb: 3}}>{dictionary.configuration}</Typography>
                 <AddressField address={address} setAddress={setAddress} setPerimeter={setPerimeter}/>
-                <BuildingMaterials heavyBuildingMaterials={heavyBuildingMaterials} setHeavyBuildingMaterials={setHeavyBuildingMaterials}/>
+                <BuildingMaterials heavyBuildingMaterials={heavyBuildingMaterials}
+                                   setHeavyBuildingMaterials={setHeavyBuildingMaterials}/>
                 <ImageField chosenImage={chosenImage} setChosenImage={setChosenImage}/>
                 <MapField address={address} perimeter={perimeter}/>
             </Container>

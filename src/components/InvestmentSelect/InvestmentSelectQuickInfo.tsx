@@ -57,10 +57,6 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
             .catch(() => console.log('Something went wrong.'))
     }, [])
 
-    // const barChartLabels = ['', '', 'You are here!', '', '', '', ''];
-    //
-    // const barChartData = [1, 2, 3, 4, 5, 6, 7]
-
     return (
         <>
             <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
