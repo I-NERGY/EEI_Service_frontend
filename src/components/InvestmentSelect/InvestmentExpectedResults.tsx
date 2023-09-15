@@ -45,7 +45,7 @@ const InvestmentExpectedResults = ({
                         {dictionary.energyClass}
                     </Typography>
                     <div className="energy-class" style={{marginTop: '10px'}}>
-                        {/*<span className="classAPlusPlus">A<sup>++</sup></span>*/}
+                        <span className="classAPlusPlus">A<sup>++</sup></span>
                         <span className="classAPlus">A<sup>+</sup></span>
                         <span className="classA">A</span>
                         <span className="classB">B</span>
