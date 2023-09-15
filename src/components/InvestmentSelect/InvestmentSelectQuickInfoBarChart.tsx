@@ -66,7 +66,7 @@ const InvestmentSelectQuickInfoBarChart = ({chartData, labels, value}: Props) =>
 
     return (
         <Container>
-            {value && <Typography variant={'body2'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>{dictionary.measurement1} {value} kWh</Typography>}
+            {value && <Typography variant={'body2'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>{dictionary.measurement1} {value.toFixed(2)} kWh</Typography>}
             <Bar options={options} data={data}/>
         </Container>
     );

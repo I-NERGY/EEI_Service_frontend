@@ -88,12 +88,26 @@ const InvestmentSelect = () => {
 
     const [totalCost, setTotalCost] = useState<number | 0>(0);
 
+    const [newEnergyClass, setNewEnergyClass] = useState('')
+    const [newEergyConsumption, setNewEnergyConsumption] = useState(0);
+
     const handleSubmit = () => {
         setOpenModal(true);
         setLoadingModal(true);
 
-        setTimeout(() => setLoadingModal(false), 2000);
-        console.log(selectedMeasures)
+        axios.post(`recalculations/${id}`, JSON.stringify(selectedMeasures), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                setLoadingModal(false)
+                setNewEnergyConsumption(response.data.total_energy_consumption)
+                setNewEnergyClass(`classAPlus`)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     };
 
     const handleClose = () => {
@@ -111,7 +125,6 @@ const InvestmentSelect = () => {
 
         axios.get(`energy_measures/${id}`).then((response) => {
             setMeasures(response.data)
-            console.log(response.data)
         });
     }, [id]);
 
@@ -196,8 +209,8 @@ const InvestmentSelect = () => {
                         <Loading/>
                     ) : (
                         <InvestmentExpectedResults
-                            energyClass={'classB'}
-                            energyConsumption={60}
+                            energyClass={newEnergyClass}
+                            energyConsumption={newEergyConsumption}
                             totalCost={totalCost}
                             handleClose={handleClose}
                             initialEnergyConsumption={energyConsumption}
@@ -205,7 +218,9 @@ const InvestmentSelect = () => {
                     )}
                 </Box>
             </Modal>
+
             <Breadcrumb breadcrumbs={breadcrumbs} welcome_msg={dictionary.pageTitle}/>
+
             <Container maxWidth={'xl'} sx={{my: 5}}>
                 <InvestmentSelectQuickInfo
                     energyClass={energyClass}

@@ -46,7 +46,7 @@ const InvestmentExpectedResults = ({
                     </Typography>
                     <div className="energy-class" style={{marginTop: '10px'}}>
                         {/*<span className="classAPlusPlus">A<sup>++</sup></span>*/}
-                        {/*<span className="classAPlus">A<sup>+</sup></span>*/}
+                        <span className="classAPlus">A<sup>+</sup></span>
                         <span className="classA">A</span>
                         <span className="classB">B</span>
                         <span className="classC">C</span>
@@ -66,7 +66,7 @@ const InvestmentExpectedResults = ({
                         {dictionary.totalConsumption}:
                     </Typography>
                     <Typography variant={'h3'} my={'auto'} align={'center'}>{energyConsumption} kWh <span
-                        style={{fontSize: '24px'}}>({((initialEnergyConsumption - energyConsumption) * 100 / initialEnergyConsumption).toFixed()}%)</span>
+                        style={{fontSize: '24px'}}>(-{((initialEnergyConsumption - energyConsumption) * 100 / initialEnergyConsumption).toFixed()}%)</span>
                     </Typography>
                 </Grid>
             </Grid>

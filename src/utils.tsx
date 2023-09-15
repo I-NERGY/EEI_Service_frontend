@@ -1,6 +1,6 @@
 export const handleEnergyClass = (className: string) => {
-    // if (className === 'classAPlusPlus') return 'classAPlusPlusSelected'
-    // if (className === 'classAPlus') return 'classAPlusSelected'
+    if (className === 'classAPlusPlus') return 'classAPlusPlusSelected'
+    if (className === 'classAPlus') return 'classAPlusSelected'
     if (className === 'classA') return 'classASelected'
     if (className === 'classB') return 'classBSelected'
     if (className === 'classC') return 'classCSelected'

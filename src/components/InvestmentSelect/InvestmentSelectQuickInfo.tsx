@@ -51,7 +51,7 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
 
         axios.get(`/visualizations/heat_loses/${id}`)
             .then(response => {
-                setPieChartData(response.data.data)
+                setPieChartData(response.data.data[0])
                 setPieChartLabels(response.data.labels)
             })
             .catch(() => console.log('Something went wrong.'))
@@ -81,8 +81,8 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                     {dictionary.energyClass}
                                 </Typography>
                                 <div className="energy-class" style={{marginTop: '10px'}}>
-                                    {/*<span className="classAPlusPlus">A<sup>++</sup></span>*/}
-                                    {/*<span className="classAPlus">A<sup>+</sup></span>*/}
+                                    <span className="classAPlusPlus">A<sup>++</sup></span>
+                                    <span className="classAPlus">A<sup>+</sup></span>
                                     <span className="classA">A</span>
                                     <span className="classB">B</span>
                                     <span className="classC">C</span>
@@ -101,7 +101,7 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                 <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
                                     {dictionary.totalConsumption}
                                 </Typography>
-                                <Typography variant={'h3'} my={'auto'}>{energyConsumption} kWh</Typography>
+                                <Typography variant={'h3'} my={'auto'}>{energyConsumption.toFixed(2)} kWh</Typography>
                             </Grid>
                             {barChartData.length > 0 &&
                                 <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}
