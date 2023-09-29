@@ -65,7 +65,7 @@ const InvestmentExpectedResults = ({
                     <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
                         {dictionary.totalConsumption}:
                     </Typography>
-                    <Typography variant={'h3'} my={'auto'} align={'center'}>{energyConsumption} kWh <span
+                    <Typography variant={'h3'} my={'auto'} align={'center'}>{energyConsumption} MWh/{dictionary.year} <span
                         style={{fontSize: '24px'}}>(-{((initialEnergyConsumption - energyConsumption) * 100 / initialEnergyConsumption).toFixed()}%)</span>
                     </Typography>
                 </Grid>

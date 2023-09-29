@@ -85,6 +85,11 @@ const InvestmentSelect = () => {
 
     const [energyClass, setEnergyClass] = useState('');
     const [energyConsumption, setEnergyConsumption] = useState(0);
+    const [roofArea, setRoofArea] = useState<number>(0)
+    const [facadeArea, setFacadeArea] = useState<number>(0)
+    const [floorArea, setFloorArea] = useState<number>(0)
+    const [windowsArea, setWindowsArea] = useState<number>(0)
+    const [doorsArea, setDoorsArea] = useState<number>(0)
 
     const [totalCost, setTotalCost] = useState<number | 0>(0);
 
@@ -103,7 +108,7 @@ const InvestmentSelect = () => {
             .then(response => {
                 setLoadingModal(false)
                 setNewEnergyConsumption(response.data.total_energy_consumption)
-                setNewEnergyClass(`classAPlus`)
+                setNewEnergyClass(`class${response.data.energy_class}`)
             })
             .catch(error => {
                 console.log(error)
@@ -114,19 +119,50 @@ const InvestmentSelect = () => {
         setOpenModal(false);
     };
 
+    const handleCategory = (category: string) => {
+        if (category === 'Insulation of the roof/attic slab') return roofArea
+        if (category === 'Facade insulation') return facadeArea
+        if (category === 'Floor slab  insulation') return floorArea
+        if (category === 'Replacement of windows') return windowsArea
+        if (category === 'Replacement of doors') return doorsArea
+        else return 1
+    }
+
     useEffect(() => {
         axios.get(`building/info/${id}`).then((response) => {
             setEnergyClass(`class${response.data.energy_class}`);
             setEnergyConsumption(response.data.total_energy_consumption);
+            setRoofArea(response.data.roof.toFixed(2))
+            setFacadeArea(response.data.walls.toFixed(2))
+            setFloorArea(response.data.basement.toFixed(2))
+            setWindowsArea(response.data.windows.toFixed(2))
+            setDoorsArea(response.data.doors.toFixed(2))
+            // console.log(response.data)
+
         })
             .catch(error => {
                 console.log('error')
             })
 
-        axios.get(`energy_measures/${id}`).then((response) => {
-            setMeasures(response.data)
-        });
+
     }, [id]);
+
+    useEffect(() => {
+        if (roofArea) {
+            axios.get(`energy_measures/${id}`).then((response) => {
+                // setMeasures(response.data)
+                const updatedMeasures = response.data.map((category: any) => ({
+                    ...category,
+                    categoryItems: category.categoryItems.map((item: MeasureItem) => ({
+                        ...item,
+                        cost: item.cost * handleCategory(category.categoryName),
+                    })),
+                }));
+
+                setMeasures(updatedMeasures);
+            })
+        }
+    }, [id, roofArea])
 
     const [measures, setMeasures] = useState<MeasureCategory[]>([]);
 
@@ -146,6 +182,7 @@ const InvestmentSelect = () => {
                             return {
                                 ...item,
                                 checked: !item.checked,
+                                // cost: item.cost * handleCategory(categoryId)
                             };
                         }
                         return item;
@@ -265,7 +302,7 @@ const InvestmentSelect = () => {
                                                 const selectedMeasure = measure.categoryItems.find(
                                                     (measureItem) => measureItem.measureName === item
                                                 );
-                                                const label = `${selectedMeasure?.measureName} (${selectedMeasure?.cost}€)`;
+                                                const label = `${selectedMeasure?.measureName} (${selectedMeasure?.cost.toFixed(2)}€)`;
                                                 return (
                                                     <div key={item}>
                                                         {index > 0 && ', '}
@@ -286,7 +323,8 @@ const InvestmentSelect = () => {
                                         >
                                             <Checkbox checked={item.checked}/>
                                             <ListItemText
-                                                primary={item.measureName + ` (Thickness: ${item.thickness}mm)` + ` (${item.cost}€)`}
+                                                primary={item.measureName + ` (Thickness: ${item.thickness}mm)` +
+                                                    ` (${item.cost.toFixed(2)}€)`}
                                             />
                                         </MenuItem>
                                     ))}

@@ -101,7 +101,7 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                 <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
                                     {dictionary.totalConsumption}
                                 </Typography>
-                                <Typography variant={'h3'} my={'auto'}>{energyConsumption.toFixed(2)} kWh</Typography>
+                                <Typography variant={'h3'} my={'auto'}>{energyConsumption.toFixed(2)} MWh/{dictionary.year}</Typography>
                             </Grid>
                             {barChartData.length > 0 &&
                                 <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}
