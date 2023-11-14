@@ -29,7 +29,7 @@ const BuildingMaterials = ({heavyBuildingMaterials, setHeavyBuildingMaterials}: 
     return (
         <>
             <Grid container spacing={2} display={'flex'} sx={{my: 3}} justifyContent={'center'} alignItems={'center'}
-                // data-testid={'planInvestmentAddress'}
+                data-testid={'planInvestmentBuildingMaterials'}
             >
                 <Grid item xs={12} md={6}>
                     <Stack direction="row" spacing={2} sx={{alignItems: 'center'}}>
