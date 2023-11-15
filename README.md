@@ -25,7 +25,7 @@ on your machine.
 You can deploy this dashboard on a VM with docker-compose, following these steps:
 
 1. `Clone the project's repository`
-2. `cd .\consumption-flexibility-prediction-dashboard\`
+2. `cd .\ecp-dashboard\`
 3. `docker compose up --build`
 
 However, this dashboard is integrated with **I-NERGY's Security Framework**, which is based on an open-source identity
