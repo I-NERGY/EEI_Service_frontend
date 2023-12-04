@@ -121,10 +121,15 @@ const InvestmentSelect = () => {
 
     const handleCategory = (category: string) => {
         if (category === 'Insulation of the roof/attic slab') return roofArea
+        if (category === 'Jumta/bēniņu plātnes siltināšana') return roofArea
         if (category === 'Facade insulation') return facadeArea
+        if (category === 'Fasādes siltināšana') return facadeArea
         if (category === 'Floor slab  insulation') return floorArea
+        if (category === 'Grīdas siltināšana') return floorArea
         if (category === 'Replacement of windows') return windowsArea
+        if (category === 'Logu nomaiņa') return windowsArea
         if (category === 'Replacement of doors') return doorsArea
+        if (category === 'Durvju nomaiņa') return doorsArea
         else return 1
     }
 
@@ -137,21 +142,21 @@ const InvestmentSelect = () => {
             setFloorArea(response.data.basement.toFixed(2))
             setWindowsArea(response.data.windows.toFixed(2))
             setDoorsArea(response.data.doors.toFixed(2))
-            // console.log(response.data)
-
         })
             .catch(error => {
                 console.log('error')
             })
-
-
     }, [id]);
 
     useEffect(() => {
+
         if (roofArea) {
             axios.get(`energy_measures/${id}`).then((response) => {
-                // setMeasures(response.data)
-                const updatedMeasures = response.data.map((category: any) => ({
+                // Initialize measures based on language
+
+                let measuresData = language === 'en' ? response.data.english : response.data.latvian;
+
+                const updatedMeasures = measuresData.map((category: any) => ({
                     ...category,
                     categoryItems: category.categoryItems.map((item: MeasureItem) => ({
                         ...item,
@@ -160,9 +165,10 @@ const InvestmentSelect = () => {
                 }));
 
                 setMeasures(updatedMeasures);
-            })
+            });
         }
-    }, [id, roofArea])
+    }, [id, roofArea, language]);
+
 
     const [measures, setMeasures] = useState<MeasureCategory[]>([]);
 
@@ -172,6 +178,12 @@ const InvestmentSelect = () => {
     useEffect(() => {
         updateTotalCost();
     }, [selectedMeasures]);
+
+    useEffect(() => {
+        setMeasures([])
+        setSelectedValues([])
+        setTotalCost(0)
+    }, [language])
 
     const handleCheckboxClick = (categoryId: string, itemId: number) => {
         setMeasures((prevMeasures) => {
