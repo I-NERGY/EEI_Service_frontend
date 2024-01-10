@@ -101,7 +101,8 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                 <Typography variant={'h5'} sx={{mb: 'auto'}} fontWeight={'bold'} align={'center'}>
                                     {dictionary.totalConsumption}
                                 </Typography>
-                                <Typography variant={'h3'} my={'auto'}>{energyConsumption.toFixed(2)} MWh/{dictionary.year}</Typography>
+                                <Typography variant={'h3'}
+                                            my={'auto'}>{energyConsumption.toFixed(2)} MWh/{dictionary.year}</Typography>
                             </Grid>
                             {barChartData.length > 0 &&
                                 <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'}
@@ -113,7 +114,9 @@ const InvestmentSelectQuickInfo = ({energyClass, energyConsumption}: Props) => {
                                 </Grid>}
                             <Grid item xs={12} md={6} display={'flex'} flexDirection={'column'} alignItems={'center'}>
                                 <InvestmentSelectQuickInfoPieChart chartData={pieChartData}
-                                                                   labels={pieChartLabels}/>
+                                                                   labels={language === 'en' ?
+                                                                       ['Basement/Slab', 'Roof/Attic', 'Walls', 'Doors', 'Windows'] :
+                                                                       ['Pagrabs/pagraba pārsegums', 'Jumts/bēniņi', 'Sienas', 'Durvis', 'Logi']}/>
                             </Grid>
                         </Grid> :
                         <Loading/>

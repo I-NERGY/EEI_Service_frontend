@@ -314,7 +314,8 @@ const InvestmentSelect = () => {
                                                 const selectedMeasure = measure.categoryItems.find(
                                                     (measureItem) => measureItem.measureName === item
                                                 );
-                                                const label = `${selectedMeasure?.measureName} (${selectedMeasure?.cost.toFixed(2)}€)`;
+                                                // const label = `${selectedMeasure?.measureName} (${selectedMeasure?.cost.toFixed(2)}€)`;
+                                                const label = `${selectedMeasure?.measureName}`;
                                                 return (
                                                     <div key={item}>
                                                         {index > 0 && ', '}
