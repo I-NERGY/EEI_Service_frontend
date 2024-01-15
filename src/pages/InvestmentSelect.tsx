@@ -153,7 +153,6 @@ const InvestmentSelect = () => {
         if (roofArea) {
             axios.get(`energy_measures/${id}`).then((response) => {
                 // Initialize measures based on language
-
                 let measuresData = language === 'en' ? response.data.english : response.data.latvian;
 
                 const updatedMeasures = measuresData.map((category: any) => ({
@@ -244,6 +243,12 @@ const InvestmentSelect = () => {
         );
         setTotalCost(newTotalCost);
     };
+
+    const [thickness, setThickness] = useState('Thickness')
+    useEffect(() => {
+        if (language === 'en') setThickness('Thickness')
+        if (language === 'lat') setThickness('Biezums')
+    }, [language])
 
     return (
         <>
@@ -336,7 +341,7 @@ const InvestmentSelect = () => {
                                         >
                                             <Checkbox checked={item.checked}/>
                                             <ListItemText
-                                                primary={item.measureName + ` (Thickness: ${item.thickness}mm)` +
+                                                primary={item.measureName + ` (${thickness}: ${item.thickness}mm)` +
                                                     ` (${item.cost.toFixed(2)}€)`}
                                             />
                                         </MenuItem>
