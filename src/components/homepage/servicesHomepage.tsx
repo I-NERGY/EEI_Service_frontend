@@ -7,7 +7,7 @@ export const servicesHomepageEnglish = [
         'title': 'Issue your virtual EPC',
         'description': 'Energy Performance Certificate quickly and easily via a user intuitive UI.',
         'icon': <DocumentScannerIcon style={{color: 'white', fontSize: '80px'}}/>,
-        'image': 'https://img.freepik.com/premium-photo/energy-efficiency-rating-buildings-sustainable-developmentbusinessman-pointing-energy-efficiency-rating-chart-house-icon-concept-performance-efficiency-environmental-conservation_43780-1198.jpg?w=1380',
+        'image': '/images/homepageItems/homepageItem1.jpg',
         'link': ''
     },
     {
@@ -15,7 +15,7 @@ export const servicesHomepageEnglish = [
         'title': 'Visualize energy savings',
         'description': 'Charts and useful information about your energy savings.',
         'icon': <EnergySavingsLeafIcon style={{color: 'white', fontSize: '80px'}}/>,
-        'image': 'https://img.freepik.com/free-photo/green-energy-with-hand-holding-environmental-light-bulb-background_53876-124630.jpg?w=1380&t=st=1667896857~exp=1667897457~hmac=d2ab8c6bda8023155370418b931c534cb4778108938718024c807da8e922e0e4',
+        'image': '/images/homepageItems/homepageItem2.jpg',
         'link': ''
     },
 ]
@@ -26,7 +26,7 @@ export const servicesHomepageLatvian = [
         'title': 'Izsniedziet savu virtuālo Ēkas energosertifikātu',
         'description': 'Energoefektivitātes sertifikāts ātri un vienkārši, izmantojot lietotājam draudzīgu lietotāja saskarni.',
         'icon': <DocumentScannerIcon style={{color: 'white', fontSize: '80px'}}/>,
-        'image': 'https://img.freepik.com/premium-photo/energy-efficiency-rating-buildings-sustainable-developmentbusinessman-pointing-energy-efficiency-rating-chart-house-icon-concept-performance-efficiency-environmental-conservation_43780-1198.jpg?w=1380',
+        'image': '/images/homepageItems/homepageItem1.jpg',
         'link': ''
     },
     {
@@ -34,7 +34,7 @@ export const servicesHomepageLatvian = [
         'title': 'Enerģijas ietaupījuma vizualizēšana',
         'description': 'Diagrammas un noderīga informācija par enerģijas ietaupījumu.',
         'icon': <EnergySavingsLeafIcon style={{color: 'white', fontSize: '80px'}}/>,
-        'image': 'https://img.freepik.com/free-photo/green-energy-with-hand-holding-environmental-light-bulb-background_53876-124630.jpg?w=1380&t=st=1667896857~exp=1667897457~hmac=d2ab8c6bda8023155370418b931c534cb4778108938718024c807da8e922e0e4',
+        'image': '/images/homepageItems/homepageItem2.jpg',
         'link': ''
     },
 ]
