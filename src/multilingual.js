@@ -20,7 +20,7 @@ export const multilingual = {
         planInvestment: {
             breadcrumb1: 'Homepage',
             breadcrumb2: 'Plan Investment',
-            pageTitle: 'Energy Efficiency Investment De-RiskingEnergy Efficiency Investment De-Risking',
+            pageTitle: 'Energy Efficiency Investment De-Risking',
             configuration: 'Configuration',
             sectionTitle1: 'Select Building Address',
             sectionDesc1: 'Fill in the dropdown menu with the proper address to open the map.',
