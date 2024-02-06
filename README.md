@@ -1,6 +1,6 @@
-# EFI-DSS Front-End
+# EEI-DSS Front-End
 
-This is the front-end for **EFI-DSS**, created with [Create React App](https://github.com/facebook/create-react-app)..
+This is the front-end for **EEI-DSS**, created with [Create React App](https://github.com/facebook/create-react-app).
 
 ## How to Run the Project
 
@@ -32,3 +32,13 @@ However, this dashboard is integrated with **I-NERGY's Security Framework**, whi
 and access management solution, namely Keycloak.\
 Unauthorized access is prevented when running this dashboard, and you must have a registered client in the project's
 Security Framework to be able to run it on your VM.
+
+### Application Security, Access Control Policy and User Credentials
+This front-end application is fully integrated with I-NERGY's Security Framework, which is based on Keycloak, an open-source identity and access management solution. 
+
+Thus, upon trying to access the platform without being logged-in, it automatically navigates the users to the common sign-in page (as illustrated below) created for the needs of the project.
+
+#### If you want to acquire user credentials, please contact [contact@i-nergy.eu](mailto:contact@i-nergy.eu)
+
+### EEI DSS main graphical user interface (UI) Documentation
+You can find extensive and detailed documentation on the **EEI DSS main graphical user interface (UI)** [**here**](https://gitlab.epu.ntua.gr/i-nergy/ecp_dashboard/-/wikis/EEI-DSS-main-graphical-user-interface-(UI)-Documentation).
