@@ -1,4 +1,4 @@
-# EFI-DSS Front-End
+# EEI-DSS Front-End
 
 This is the front-end for **EFI-DSS**, created with [Create React App](https://github.com/facebook/create-react-app)..
 
